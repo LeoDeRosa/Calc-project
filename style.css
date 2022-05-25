@@ -1,0 +1,14 @@
+#bigdiv {
+    display:flex;
+    width: 40em;
+    background-color: white;
+    height: 80em;
+    border-width: 3px;
+    border-color: darkgray;
+}
+body{
+    background-color: rgb(211, 211, 211);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
