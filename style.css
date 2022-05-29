@@ -1,11 +1,12 @@
 #bigdiv {
     display:flex;
-    width: 40em;
+    width: 38em;
     background-color: white;
-    height: 45em;
+    height: 44em;
     border-width: 3px;
     border-color: darkgray;
     flex-direction: column;
+    padding: 3em;
 }
 body{
     background-color: rgb(211, 211, 211);
@@ -14,6 +15,19 @@ body{
     justify-content: center;
 }
 button{
-    height: 4em;
+    height: 30px;
     width: 10em;
+}
+.smallerdiv{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+#input{
+    height: 24px;
+    width: 30em;
+}
+p{
+    font-size: large;
 }
