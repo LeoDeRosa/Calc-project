@@ -23,6 +23,7 @@ button{
     align-items: center;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 #input{
     height: 24px;
@@ -30,4 +31,10 @@ button{
 }
 p{
     font-size: large;
+    flex-wrap: wrap;
+    max-width: 30em;
+    word-wrap: break-word;
+}
+.a{
+    text-align: top;
 }

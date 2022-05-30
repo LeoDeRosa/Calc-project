@@ -38,9 +38,24 @@ function derivitive(input)
 //  "a" is the input 
     var a = String;
     a = input;
-//  "b" is the output
-    var b = String;
-    b = "invalid entry";
+//  "b" is the output set as "invalid entry" by default
+    var b = "invalid entry";
+    //chain rule
+    if (a.includes("(")){
+        if (!a.includes("(") && (a.includes(")")))
+            return "error wrong amount of brackets";
+        if (a.indexOf(")") > a.indexOf("("))
+            return "wrong order of bracketts";
+        var q = (indexOf("(") + 1);
+        intq = 1
+        while (intq > 0){
+            if (a.charAt(q) = "(")
+                intq ++
+            else if (a.charAt(q) = ")")
+                intq --
+        }
+        
+    }
     //addition rule
     if (a.includes("+")) {
         b = "";
@@ -57,7 +72,6 @@ function derivitive(input)
             }
         }
     }
-
     //subtraction rule
     else if (a.includes("-")) {
         if (!((a.includes("(")) || a.includes(")")))
@@ -75,7 +89,6 @@ function derivitive(input)
             return b;
         }
     }
-
     //product rule
     else if (a.includes("*")){
         const chunksofathesecond = a.split("*");
@@ -97,8 +110,8 @@ function derivitive(input)
         }
     }
     //power rule 
-    else if (a.includes("x")){
-        if (a.includes("^")){
+    else {
+        if (a.includes("^") && a.includes("x")){
             var constant = String;
             constant = "";
             var power = String;
@@ -124,16 +137,15 @@ function derivitive(input)
             else
                 b = (constant + "x")
         }
-        else{
+        else if (a.includes("x")){
             if (a == "x")
                 b="1"
             else
                 b=a.replace("x", "")
-            
         }
-    }
-    else if (!a.includes("x")){
-        b="0";
+        else {
+            b=0;
+        }
     }
     return b;
 }
