@@ -63,6 +63,7 @@ function derivitive(input)
         if (!((a.includes("(")) || a.includes(")")))
         {
             var x = String;
+            b = "";
             const chunksofa = a.split("-");
             for(var q=0; q<chunksofa.length;q++){
                 if (q != 0)
