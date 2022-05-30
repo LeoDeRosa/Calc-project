@@ -89,18 +89,24 @@ function derivitive(input)
     else if (a.includes("x")){
         if (a.includes("^")){
             var constant = String;
+            constant = "";
             var power = String;
             var intconstant = 0;
             var intpower = 0;
             var locationofsign = 0;
             locationofsign = a.indexOf("^");
-            constant = a.substring(0, (locationofsign - 1));
-            intconstant = parseInt(constant);
             power = a.substring((locationofsign + 1));
             intpower = parseInt(power);
-            intconstant = (intconstant * intpower);
+            if (locationofsign != 1) {
+                constant = a.substring(0, (locationofsign - 1));
+                intconstant = parseInt(constant);
+                intconstant = (intconstant * intpower);
+                constant = intconstant.toString();
+            }
+            else{
+                constant = (power)
+            }
             intpower = (intpower - 1);
-            constant = intconstant.toString();
             power = intpower.toString();
             if (power > 1)
                 b = (constant + "x^" + power);
