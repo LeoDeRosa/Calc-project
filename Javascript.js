@@ -76,6 +76,15 @@ function derivitive(input)
         }
     }
 
+    //product rule
+    else if (a.includes("*")){
+        var locationofsign = a.indexOf("*");
+        var partA = a.substring(0, locationofsign);
+        var partB = a.substring(locationofsign+1);
+        var partAprime = derivitive(partA);
+        var partBprime = derivitive(partB);
+        b = (partA + "*" + partBprime + "+" + partB + "*" + partAprime);
+    }
     //power rule 
     else if (a.includes("x")){
         if (a.includes("^")){
