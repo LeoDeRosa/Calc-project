@@ -93,7 +93,10 @@ function derivitive(input)
             intpower = (intpower - 1);
             constant = intconstant.toString();
             power = intpower.toString();
-            b = (constant + "x^" + power);
+            if (power > 1)
+                b = (constant + "x^" + power);
+            else
+                b = (constant + "x")
         }
         else{
             b=a.replace("x", "")
