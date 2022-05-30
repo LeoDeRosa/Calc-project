@@ -1,4 +1,3 @@
-
 function beeaans() {
 
     var Beanss = String;
@@ -36,20 +35,71 @@ function checkInput(input){
 }
 function derivitive(input)
 {
+//  "a" is the input 
     var a = String;
-    var b = String;
     a = input;
-
+//  "b" is the output
+    var b = String;
+    b = "invalid entry";
     //addition rule
-    if ((a.includes("-")) || (a.includes("+"))) {
-        if ((a.includes("(")) || a.includes(")")){
-            
+    if (a.includes("+")) {
+        b = "";
+        if (!((a.includes("(")) || a.includes(")")))
+        {
+            var x = String;
+            const chunksofa = a.split("+");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "+");
+                x = (chunksofa[q]);
+                x = derivitive(x);
+                b = (b + x);
+            }
+        }
+    }
+
+    //subtraction rule
+    else if (a.includes("-")) {
+        if (!((a.includes("(")) || a.includes(")")))
+        {
+            var x = String;
+            const chunksofa = a.split("-");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "-");
+                x = (chunksofa[q]);
+                x = derivitive(x);
+                b = (b + x);
+            }
+            return b;
+        }
+    }
+
+    //power rule 
+    else if (a.includes("x")){
+        if (a.includes("^")){
+            var constant = String;
+            var power = String;
+            var intconstant = 0;
+            var intpower = 0;
+            var locationofsign = 0;
+            locationofsign = a.indexOf("^");
+            constant = a.substring(0, (locationofsign - 1));
+            intconstant = parseInt(constant);
+            power = a.substring((locationofsign + 1));
+            intpower = parseInt(power);
+            intconstant = (intconstant * intpower);
+            intpower = (intpower - 1);
+            constant = intconstant.toString();
+            power = intpower.toString();
+            b = (constant + "x^" + power);
         }
         else{
-            
+            b=a.replace("x", "")
         }
     }
-    else{
-        return "false";
+    else if (!a.includes("x")){
+        b="0";
     }
+    return b;
 }
