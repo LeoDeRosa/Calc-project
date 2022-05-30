@@ -78,12 +78,23 @@ function derivitive(input)
 
     //product rule
     else if (a.includes("*")){
-        var locationofsign = a.indexOf("*");
-        var partA = a.substring(0, locationofsign);
-        var partB = a.substring(locationofsign+1);
-        var partAprime = derivitive(partA);
-        var partBprime = derivitive(partB);
-        b = (partA + "*" + partBprime + "+" + partB + "*" + partAprime);
+        const chunksofathesecond = a.split("*");
+        var insert = String;
+        var z2 = 0;
+        b = "";
+        for(var z=0; z<chunksofathesecond.length;z++) {
+            insert = "";
+            if (z != 0)
+                b = (b + "+");
+            z2 = 0;
+            insert = derivitive(chunksofathesecond[z])
+            while(z2<chunksofathesecond.length){
+                if (z2 != z)
+                    insert = (insert + "*" + chunksofathesecond[z2]);
+                z2++
+            }
+            b = (b + insert);
+        }
     }
     //power rule 
     else if (a.includes("x")){
@@ -114,7 +125,11 @@ function derivitive(input)
                 b = (constant + "x")
         }
         else{
-            b=a.replace("x", "")
+            if (a == "x")
+                b="1"
+            else
+                b=a.replace("x", "")
+            
         }
     }
     else if (!a.includes("x")){
