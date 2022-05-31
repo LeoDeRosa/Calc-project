@@ -16,7 +16,8 @@ body{
 }
 button{
     height: 30px;
-    width: 10em;
+    width: 7em;
+    margin-left: 1em;
 }
 .smallerdiv{
     justify-content: center;
@@ -37,4 +38,13 @@ p{
 }
 .a{
     text-align: top;
+}
+#Salsfunfactbox{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+.SalsfunFacts{
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }

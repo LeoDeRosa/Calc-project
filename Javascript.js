@@ -19,7 +19,10 @@ function beeaans() {
     //}
     //else
         //document.getElementById("Invalid Fuction, Please check Initial Fuction")
+    document.getElementById("Salsfunfactbox").style.border = '5px double red';
     document.getElementById("Salsfunfacts").innerText = "Sal's Fun Facts";
+    var x = Salsfunfacts();
+    document.getElementById("Salsfunfacts2").innerText = (x);
 
 }
 function checkInput(input){
@@ -111,6 +114,9 @@ function derivitive(input)
             b = (b + insert);
         }
     }
+    else if (a.includes("/")){
+
+    }
 
     //power rule 
     else {
@@ -152,7 +158,11 @@ function derivitive(input)
     }
     return b;
 }
-function Salsfunfacts(){
+function Salsfunfacts(input){
     var x = String;
-    
+    var y = 0;
+    const z = ["fact0", "fact1", "fact2", "fact3", "fact4", "fact5", "fact6", "fact7", "fact8", "fact9"];
+    y = Math.floor(Math.random() * 10);
+    x = z[y];
+    return x;
 }
