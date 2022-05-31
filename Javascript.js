@@ -18,9 +18,9 @@ function beeaans() {
         document.getElementById("beans3").innerText = "F'(x)=";
         var Beanssses = String;
         Beanssses = derivitive(Beanss);
-        while (Beanssses.includes("<")) {
-            var t = Beanssses.indexOf("<");
-            var y = Beanssses.indexOf(">");
+        while (Beanssses.includes("{")) {
+            var t = Beanssses.indexOf("{");
+            var y = Beanssses.indexOf("}");
             var d = Beanssses.substring((t + 1), y);
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
@@ -60,24 +60,22 @@ function derivitive(input)
             return "wrong order of bracketts";
         var q = (a.indexOf("("));
         var intq = (parseInt(q));
-        var l = 1      
-        while (!(l = 0)){
+        var l = 1  
+        while (!(l == 0)){
             intq ++
-            if (a.charAt(intq) = "(")
+            if (a.charAt(intq) == "(")
                 l ++
-            else if (a.charAt(intq) = ")")
+            else if (a.charAt(intq) == ")")
                 l --
         }
-        return "success";
         var l = a.substring(q, (intq + 1));
         arrayoffunctions.push(l);
-        return "success";
         var p = arrayoffunctions.indexOf(l);
-        if (!(l = "(x)"))
+        var k = ("{" + p + "}");
+        if (l === "(x)")
             a = a.replace("(x)", "x");
         else
-            a = a.replace(l, "<" + p + ">")
-        return "success";
+            a = a.replace(l, k);
     }
 
     //addition rule
@@ -111,7 +109,6 @@ function derivitive(input)
                 x = derivitive(x);
                 b = (b + x);
             }
-            return b;
         }
     }
 
@@ -183,6 +180,15 @@ function derivitive(input)
                 b="1"
             else
                 b=a.replace("x", "")
+        }
+        else if (a.includes("{")){
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            var s = arrayoffunctions[o];
+            var v = s.length;
+            var s2 = s.substring(1, (v - 1));
+            b = derivitive(a.replace(("{" + o + "}"), s2));
         }
         else {
             b=0;
