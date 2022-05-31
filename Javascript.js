@@ -1,3 +1,6 @@
+
+const arrayoffunctions = [];
+
 function beeaans() {
 
     var Beanss = String;
@@ -15,12 +18,18 @@ function beeaans() {
         document.getElementById("beans3").innerText = "F'(x)=";
         var Beanssses = String;
         Beanssses = derivitive(Beanss);
+        while (Beanssses.includes("<")) {
+            var t = Beanssses.indexOf("<");
+            var y = Beanssses.indexOf(">");
+            var d = Beanssses.substring((t + 1), y);
+            var bigd = parseInt(d);
+            var i = arrayoffunctions[bigd];
+            Beanssses = Beanssses.replace(("<" + d + ">"), i)
+        }
         document.getElementById("beans4").innerText = (Beanssses);
     //}
     //else
         //document.getElementById("Invalid Fuction, Please check Initial Fuction")
-    document.getElementById("Salsfunfactbox").style.border = '5px double red';
-    document.getElementById("Salsfunfacts").innerText = "Sal's Fun Facts";
     var x = Salsfunfacts();
     document.getElementById("Salsfunfacts2").innerText = (x);
 
@@ -44,12 +53,12 @@ function derivitive(input)
 //  "b" is the output set as "invalid entry" by default
     var b = "invalid entry";
     //chain rule
-    if (a.includes("(")){
+    while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
-        if (a.indexOf(")") > a.indexOf("("))
+        if (a.indexOf(")") < a.indexOf("("))
             return "wrong order of bracketts";
-        var q = (indexOf("(") + 1);
+        var q = (a.indexOf("(") + 1);
         intq = 1
         while (intq > 0){
             if (a.charAt(q) = "(")
@@ -57,6 +66,14 @@ function derivitive(input)
             else if (a.charAt(q) = ")")
                 intq --
         }
+        var l = a.substring(q, (intq + 1));
+        arrayoffunctions.push(l);
+        var p = arrayoffunctions.indexOf(l);
+        if (!(l = "(x)"))
+            a = a.replace("(x)", "x");
+        else
+            a = a.replace(l, "<" + p + ">")
+        return "success";
     }
 
     //addition rule
@@ -114,8 +131,19 @@ function derivitive(input)
             b = (b + insert);
         }
     }
-    else if (a.includes("/")){
 
+    //division rule
+    else if (a.includes("/")){
+        var positionofsign = a.indexOf("/");
+        var parta = String;
+        var partb = String;
+        var dparta = String;
+        var dpartb = String;
+        parta = a.substring(0, positionofsign);
+        partb = a.substring((positionofsign + 1));
+        dparta = derivitive(parta);
+        dpartb = derivitive(partb);
+        b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
 
     //power rule 
@@ -159,6 +187,8 @@ function derivitive(input)
     return b;
 }
 function Salsfunfacts(input){
+    document.getElementById("Salsfunfactbox").style.border = '5px double red';
+    document.getElementById("Salsfunfacts").innerText = "Sal's Fun Facts";
     var x = String;
     var y = 0;
     const z = ["fact0", "fact1", "fact2", "fact3", "fact4", "fact5", "fact6", "fact7", "fact8", "fact9"];
