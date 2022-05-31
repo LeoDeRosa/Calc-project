@@ -58,16 +58,20 @@ function derivitive(input)
             return "error wrong amount of brackets";
         if (a.indexOf(")") < a.indexOf("("))
             return "wrong order of bracketts";
-        var q = (a.indexOf("(") + 1);
-        intq = 1
-        while (intq > 0){
-            if (a.charAt(q) = "(")
-                intq ++
-            else if (a.charAt(q) = ")")
-                intq --
+        var q = (a.indexOf("("));
+        var intq = (parseInt(q));
+        var l = 1      
+        while (!(l = 0)){
+            intq ++
+            if (a.charAt(intq) = "(")
+                l ++
+            else if (a.charAt(intq) = ")")
+                l --
         }
+        return "success";
         var l = a.substring(q, (intq + 1));
         arrayoffunctions.push(l);
+        return "success";
         var p = arrayoffunctions.indexOf(l);
         if (!(l = "(x)"))
             a = a.replace("(x)", "x");
