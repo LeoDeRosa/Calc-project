@@ -24,12 +24,12 @@ function beeaans() {
             var d = Beanssses.substring((t + 1), y);
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
-            Beanssses = Beanssses.replace(("<" + d + ">"), i)
+            Beanssses = Beanssses.replace(("{" + d + "}"), i)
         }
         document.getElementById("beans4").innerText = (Beanssses);
     //}
     //else
-        //document.getElementById("Invalid Fuction, Please check Initial Fuction")
+        //document.getElementById("beans3").innerText = ("Invalid Fuction, Please check Initial Fuction")
     var x = Salsfunfacts();
     document.getElementById("Salsfunfacts2").innerText = (x);
 
@@ -206,4 +206,9 @@ function Salsfunfacts(input){
     y = Math.floor(Math.random() * 10);
     x = z[y];
     return x;
+}
+function Salssimplifyingfuction(input){
+    var output = String;
+    //add sal code here
+    return output;
 }
