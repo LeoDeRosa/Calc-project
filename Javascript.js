@@ -6,6 +6,7 @@ function beeaans() {
     var Beanss = String;
     Beanss = document.getElementById('input');
     Beanss = Beanss.value;
+    var coolcat = 0;
 
     
     if (checkInput(Beanss))
@@ -30,7 +31,7 @@ function beeaans() {
         document.getElementById("beans3").innerText = "Invalid Input";
         document.getElementById("beans1").innerText = "";
         document.getElementById("Salsfunfacts2").innerText = "";   
-        var coolcat = 1
+        coolcat = 1;
     }
     if (coolcat != 1)
     {
@@ -41,11 +42,47 @@ function beeaans() {
 
 }
 function checkInput(input){
-    const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z"];
+    const badInputs = ["a","b","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","u","v","w","y","z"];
     var daNewArray = input.split("");
 
     for (var x = 0; x <= daNewArray.length; x++) {
         if (badInputs.includes(daNewArray[x])){
+            return false;
+        }
+        else if (daNewArray[x] == "s")
+        {
+            if (daNewArray[(x + 1)] == "i")
+            {
+                if (daNewArray[(x + 2)] == "n")
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        else if(daNewArray[x] == "t") 
+        {
+            if (daNewArray[(x + 1)] == "a")
+            {
+                if (daNewArray[(x + 2)] == "n")
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        else if(daNewArray[x] == "c")
+        {
+            if (daNewArray[(x + 1)] == "o")
+            {
+                if (daNewArray[(x + 2)] == "s")
+                {
+                    return true;
+                }
+                return false;
+            }
             return false;
         }
     }
