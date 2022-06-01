@@ -24,7 +24,7 @@ function beeaans() {
             var d = Beanssses.substring((t + 1), y);
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
-            Beanssses = Beanssses.replace(("{" + d + "}"), i)
+            Beanssses = Beanssses.replace(("{" + d + "}"), i) 
         }
         document.getElementById("beans4").innerText = (Beanssses);
     //}
