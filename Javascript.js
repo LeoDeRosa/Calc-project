@@ -11,7 +11,6 @@ function beeaans() {
     
     if (checkInput(Beanss))
     {
-
         document.getElementById("beans1").innerText = "f(x)=";
         document.getElementById('beans2').innerText = (Beanss);
         document.getElementById("beans3").innerText = "f'(x)=";
@@ -24,6 +23,9 @@ function beeaans() {
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
             Beanssses = Beanssses.replace(("{" + d + "}"), i);
+        }
+        while (Beanssses.includes("@")){
+            Beanssses = Beanssses.replace("@")
         }
         document.getElementById("beans4").innerText = (Beanssses);
     }
@@ -196,7 +198,7 @@ function derivitive(input)
     else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
         if (a.includes("sin")){
             if (a.includes("{")){
-                b = a.replace("sin", "cos");
+                a = a.replace("sin", "cos");
                 var m = a.indexOf("{");
                 var n = a.indexOf("}");
                 var o = a.substring((m+1), n);
