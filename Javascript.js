@@ -6,7 +6,6 @@ function beeaans() {
     var Beanss = String;
     Beanss = document.getElementById('input');
     Beanss = Beanss.value;
-    var coolcat = 0;
     
     if (checkInput(Beanss))
     {
@@ -28,12 +27,8 @@ function beeaans() {
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
         document.getElementById("beans4").innerText = (Beanssses);
-<<<<<<< HEAD
         var x = Salsfunfacts();
         document.getElementById("Salsfunfacts2").innerText = (x);
-=======
-        coolcat = 0;
->>>>>>> b676934167b25fbbb8a828267317ac4eaf63ce6b
     }
     else{
         document.getElementById("beans3").innerText = "Invalid Input";
@@ -41,7 +36,6 @@ function beeaans() {
         document.getElementById("beans1").innerText = "";
         document.getElementById("Salsfunfacts2").innerText = "";   
         document.getElementById("beans4").innerText = "";
-        coolcat = 1;
     }
 
 }
@@ -243,17 +237,18 @@ function derivitive(input)
         }
         if (a.includes("tan")){
             if (a.includes("{")){
-                a = a.replace("tan", "(sec#)^2");
                 var m = a.indexOf("{");
                 var n = a.indexOf("}");
                 var o = a.substring((m+1), n);
                 var p = arrayoffunctions[o];
                 var l = derivitive(p);
-                
-                b = (a + "*" + l)
+                var j = a.substring(0, (a.indexOf("tan")));
+                b = (j + "(sec" + p + ")^2" + "*" + l);
             }
             else{
-                b = a.replace("cos", "@sin");
+                var y = a.substring(0, (a.indexOf("tan")));
+                var n = a.substring(((a.indexOf("tan")) + 3));
+                b = (y + "(sec" + n + ")^2");
             }
         }
     }
