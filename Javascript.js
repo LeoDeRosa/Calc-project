@@ -232,7 +232,9 @@ function derivitive(input)
                 b = (a + "*" + l)
             }
             else{
-                b = a.replace("cos", "@sin");
+                var y = a.substring(0, (a.indexOf("cos")));
+                var n = a.substring(((a.indexOf("cos")) + 3));
+                b = ("@" + y + "sin" + n);
             }
         }
         else if (a.includes("tan")){
@@ -259,12 +261,12 @@ function derivitive(input)
                 var p = arrayoffunctions[o];
                 var l = derivitive(p);
                 var j = a.substring(0, (a.indexOf("csc")));
-                b = (j + "*@csc(" + p + ")*cot(" + p + ")*" + l);
+                b = ("@" + j + "csc" + p + "*cot" + p + "*" + l);
             }
             else{
                 var y = a.substring(0, (a.indexOf("csc")));
                 var n = a.substring(((a.indexOf("csc")) + 3));
-                b = (y + "*@csc(x)*cot(x)");
+                b = ("@" + y + "cscx*cotx");
             }
         }
         else if (a.includes("sec")){
@@ -274,13 +276,29 @@ function derivitive(input)
                 var o = a.substring((m+1), n);
                 var p = arrayoffunctions[o];
                 var l = derivitive(p);
-                var j = a.substring(0, (a.indexOf("csc")));
-                b = (j + "*@sec(" + p + ")*tan(" + p + ")*" + l);
+                var j = a.substring(0, (a.indexOf("sec")));
+                b = (j + "sec" + p + "*tan" + p + "*" + l);
             }
             else{
-                var y = a.substring(0, (a.indexOf("csc")));
-                var n = a.substring(((a.indexOf("csc")) + 3));
+                var y = a.substring(0, (a.indexOf("sec")));
+                var n = a.substring(((a.indexOf("sec")) + 3));
                 b = (y + "secx*tanx");
+            }
+        }
+        else if (a.includes("cot")){
+            if (a.includes("{")){
+                var m = a.indexOf("{");
+                var n = a.indexOf("}");
+                var o = a.substring((m+1), n);
+                var p = arrayoffunctions[o];
+                var l = derivitive(p);
+                var j = a.substring(0, (a.indexOf("cot")));
+                b = ("@" + j + "(sec" + p + ")^2" + "*" + l);
+            }
+            else{
+                var y = a.substring(0, (a.indexOf("cot")));
+                var n = a.substring(((a.indexOf("cot")) + 3));
+                b = ("@" + y + "(csc" + n + ")^2");
             }
         }
     }
