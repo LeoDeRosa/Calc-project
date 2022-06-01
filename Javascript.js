@@ -51,13 +51,14 @@ function derivitive(input)
     var a = String;
     a = input;
 //  "b" is the output set as "invalid entry" by default
-    var b = "invalid entry";
+    var b = String;
+
     //chain rule
     while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
         if (a.indexOf(")") < a.indexOf("("))
-            return "wrong order of bracketts";
+            return "wrong order of brackets";
         var q = (a.indexOf("("));
         var intq = (parseInt(q));
         var l = 1  
