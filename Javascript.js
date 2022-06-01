@@ -156,8 +156,19 @@ function derivitive(input)
     }
 
     //trig rules
-    else if (a.includes("sin")){
-
+    else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
+        if (a.includes("sin")){
+            if (a.includes("{")){
+                b = a.replace("sin", "cos");
+                var m = a.indexOf("{");
+                var n = a.indexOf("}");
+                var o = a.substring((m+1), n);
+                b = (a + o)
+            }
+            else{
+                b = a.replace("sin", "cos");
+            }
+        }
     }
 
     //power rule 
