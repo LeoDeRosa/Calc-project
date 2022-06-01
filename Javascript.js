@@ -7,15 +7,13 @@ function beeaans() {
     Beanss = document.getElementById('input');
     Beanss = Beanss.value;
 
-    if (Beanss.value != "")
+    
+    if (checkInput(Beanss))
     {
-        document.getElementById("beans1").innerText = "F(x)=";
-        document.getElementById('beans2').innerText = (Beanss);
-    }
 
-    //if (checkInput(Beanss))
-    //{
-        document.getElementById("beans3").innerText = "F'(x)=";
+        document.getElementById("beans1").innerText = "f(x)=";
+        document.getElementById('beans2').innerText = (Beanss);
+        document.getElementById("beans3").innerText = "f'(x)=";
         var Beanssses = String;
         Beanssses = derivitive(Beanss);
         while (Beanssses.includes("{")) {
@@ -24,25 +22,34 @@ function beeaans() {
             var d = Beanssses.substring((t + 1), y);
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
-            Beanssses = Beanssses.replace(("{" + d + "}"), i) 
+            Beanssses = Beanssses.replace(("{" + d + "}"), i);
         }
         document.getElementById("beans4").innerText = (Beanssses);
-    //}
-    //else
-        //document.getElementById("beans3").innerText = ("Invalid Fuction, Please check Initial Fuction")
-    var x = Salsfunfacts();
-    document.getElementById("Salsfunfacts2").innerText = (x);
+    }
+    else{
+        document.getElementById("beans3").innerText = "Invalid Input";
+        document.getElementById("beans1").innerText = "";
+        document.getElementById("Salsfunfacts2").innerText = "";   
+        var coolcat = 1
+    }
+    if (coolcat != 1)
+    {
+        var x = Salsfunfacts();
+        document.getElementById("Salsfunfacts2").innerText = (x);
+    }
+
 
 }
 function checkInput(input){
     const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z"];
+    var daNewArray = input.split("");
 
-    for (i in Range(input)) {
-        if (badInputs.includes(i)){
-            return(false)
+    for (var x = 0; x <= daNewArray.length; x++) {
+        if (badInputs.includes(daNewArray[x])){
+            return false;
         }
     }
-    return(true)
+    return true;
 
 }
 function derivitive(input)
@@ -79,7 +86,7 @@ function derivitive(input)
             a = a.replace(l, k);
     }
 
-    //addition rule
+    //sum rule
     if (a.includes("+")) {
         b = "";
         if (!((a.includes("(")) || a.includes(")")))
@@ -96,7 +103,7 @@ function derivitive(input)
         }
     }
 
-    //subtraction rule
+    //difference rule
     else if (a.includes("-")) {
         if (!((a.includes("(")) || a.includes(")")))
         {
@@ -148,6 +155,11 @@ function derivitive(input)
         b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
 
+    //trig rules
+    else if (a.includes("sin")){
+
+    }
+
     //power rule 
     else {
         if (a.includes("^") && a.includes("x")){
@@ -175,6 +187,37 @@ function derivitive(input)
                 b = (constant + "x^" + power);
             else
                 b = (constant + "x")
+        }
+        else if (a.includes("^") && a.includes("{")){
+            var constant = String;
+            constant = "";
+            var power = String;
+            var intconstant = 0;
+            var intpower = 0;
+            var locationofsign = 0;
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring(m, (n + 1));
+            var v = o.length;
+
+            locationofsign = a.indexOf("^");
+            power = a.substring((locationofsign + 1));
+            intpower = parseInt(power);
+            if (a.indexOf("{") != 0) {
+                constant = a.substring(0, (locationofsign - v));
+                intconstant = parseInt(constant);
+                intconstant = (intconstant * intpower);
+                constant = intconstant.toString();
+            }
+            else{
+                constant = (power)
+            }
+            intpower = (intpower - 1);
+            power = intpower.toString();
+            if (power > 1)
+                b = (constant + o + "^" + power + "*" + derivitive(o));
+            else
+                b = (constant + o + "*" + derivitive(o))
         }
         else if (a.includes("x")){
             if (a == "x")
