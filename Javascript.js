@@ -202,7 +202,7 @@ function derivitive(input)
                 var o = a.substring((m+1), n);
                 var p = arrayoffunctions[o];
                 var l = derivitive(p);
-                b = (a + l)
+                b = (a + "*" + l)
             }
             else{
                 b = a.replace("sin", "cos");
