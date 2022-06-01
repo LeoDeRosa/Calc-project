@@ -7,7 +7,6 @@ function beeaans() {
     Beanss = document.getElementById('input');
     Beanss = Beanss.value;
     var coolcat = 0;
-
     
     if (checkInput(Beanss))
     {
@@ -25,9 +24,12 @@ function beeaans() {
             Beanssses = Beanssses.replace(("{" + d + "}"), i);
         }
         while (Beanssses.includes("@")){
-            Beanssses = Beanssses.replace("@")
+            Beanssses = Beanssses.replace("@", "-")
+            Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
         document.getElementById("beans4").innerText = (Beanssses);
+        var x = Salsfunfacts();
+        document.getElementById("Salsfunfacts2").innerText = (x);
     }
     else{
         document.getElementById("beans3").innerText = "Invalid Input";
@@ -35,12 +37,6 @@ function beeaans() {
         document.getElementById("Salsfunfacts2").innerText = "";   
         coolcat = 1;
     }
-    if (coolcat != 1)
-    {
-        var x = Salsfunfacts();
-        document.getElementById("Salsfunfacts2").innerText = (x);
-    }
-
 
 }
 function checkInput(input){
@@ -210,6 +206,35 @@ function derivitive(input)
                 b = a.replace("sin", "cos");
             }
         }
+        if (a.includes("cos")){
+            if (a.includes("{")){
+                a = a.replace("cos", "@sin");
+                var m = a.indexOf("{");
+                var n = a.indexOf("}");
+                var o = a.substring((m+1), n);
+                var p = arrayoffunctions[o];
+                var l = derivitive(p);
+                b = (a + "*" + l)
+            }
+            else{
+                b = a.replace("cos", "@sin");
+            }
+        }
+        if (a.includes("tan")){
+            if (a.includes("{")){
+                a = a.replace("tan", "(sec#)^2");
+                var m = a.indexOf("{");
+                var n = a.indexOf("}");
+                var o = a.substring((m+1), n);
+                var p = arrayoffunctions[o];
+                var l = derivitive(p);
+                
+                b = (a + "*" + l)
+            }
+            else{
+                b = a.replace("cos", "@sin");
+            }
+        }
     }
 
     //power rule 
@@ -302,7 +327,7 @@ function Salsfunfacts(input){
     x = z[y];
     return x;
 }
-function Salssimplifyingfuction(input){
+function simplifying(input){
     var output = String;
     //add sal code here
     return output;
