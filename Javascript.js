@@ -221,7 +221,7 @@ function derivitive(input)
                 b = a.replace("sin", "cos");
             }
         }
-        if (a.includes("cos")){
+        else if (a.includes("cos")){
             if (a.includes("{")){
                 a = a.replace("cos", "@sin");
                 var m = a.indexOf("{");
@@ -235,7 +235,7 @@ function derivitive(input)
                 b = a.replace("cos", "@sin");
             }
         }
-        if (a.includes("tan")){
+        else if (a.includes("tan")){
             if (a.includes("{")){
                 var m = a.indexOf("{");
                 var n = a.indexOf("}");
@@ -249,6 +249,38 @@ function derivitive(input)
                 var y = a.substring(0, (a.indexOf("tan")));
                 var n = a.substring(((a.indexOf("tan")) + 3));
                 b = (y + "(sec" + n + ")^2");
+            }
+        }
+        else if (a.includes("csc")){
+            if (a.includes("{")){
+                var m = a.indexOf("{");
+                var n = a.indexOf("}");
+                var o = a.substring((m+1), n);
+                var p = arrayoffunctions[o];
+                var l = derivitive(p);
+                var j = a.substring(0, (a.indexOf("csc")));
+                b = (j + "*@csc(" + p + ")*cot(" + p + ")*" + l);
+            }
+            else{
+                var y = a.substring(0, (a.indexOf("csc")));
+                var n = a.substring(((a.indexOf("csc")) + 3));
+                b = (y + "*@csc(x)*cot(x)");
+            }
+        }
+        else if (a.includes("sec")){
+            if (a.includes("{")){
+                var m = a.indexOf("{");
+                var n = a.indexOf("}");
+                var o = a.substring((m+1), n);
+                var p = arrayoffunctions[o];
+                var l = derivitive(p);
+                var j = a.substring(0, (a.indexOf("csc")));
+                b = (j + "*@sec(" + p + ")*tan(" + p + ")*" + l);
+            }
+            else{
+                var y = a.substring(0, (a.indexOf("csc")));
+                var n = a.substring(((a.indexOf("csc")) + 3));
+                b = (y + "secx*tanx");
             }
         }
     }

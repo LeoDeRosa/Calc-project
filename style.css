@@ -4,20 +4,19 @@
     background-color: white;
     height: 44em;
     border-width: 3px;
-    border-color: darkgray;
     flex-direction: column;
     padding: 3em;
 }
 body{
-    background-color: rgb(211, 211, 211);
+    background-color: rgb(87, 87, 87);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 button{
     height: 30px;
-    width: 7em;
-    margin-left: 1em;
+    width: 6em;
+    margin-left: 0.5em;
 }
 .smallerdiv{
     justify-content: center;
@@ -27,7 +26,7 @@ button{
     flex-wrap: wrap;
 }
 #input{
-    height: 24px;
+    height: 26px;
     width: 30em;
 }
 p{
