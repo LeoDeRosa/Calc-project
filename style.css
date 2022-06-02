@@ -1,14 +1,18 @@
 #bigdiv {
     display:flex;
-    width: 38em;
-    background-color: white;
+    width: 34em;
+    background-color:rgb(228, 19, 148) ;
     height: 44em;
     border-width: 3px;
     flex-direction: column;
     padding: 3em;
+    font-family:"Comic Sans MS", "Comic Sans", cursive;
+    color:rgb(200,200,200);
+    border: 12px solid black;
+    border-radius: 24px;
 }
 body{
-    background-color: rgb(87, 87, 87);
+    background-color:rgb(33, 181, 222);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,20 +27,19 @@ button{
     align-items: center;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
 }
 #input{
     height: 26px;
     width: 30em;
 }
 p{
-    font-size: large;
     flex-wrap: wrap;
     max-width: 30em;
     word-wrap: break-word;
 }
 .a{
     text-align: top;
+    font-size: large;
 }
 #Salsfunfactbox{
     padding-left: 1em;
@@ -46,4 +49,7 @@ p{
     align-items: center;
     justify-content: center;
     display: flex;
+}
+h{
+    font-size: xx-large;
 }

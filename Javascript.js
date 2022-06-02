@@ -384,7 +384,7 @@ function derivitive(input)
     return b;
 }
 function Salsfunfacts(input){
-    document.getElementById("Salsfunfactbox").style.border = '5px double red';
+    document.getElementById("Salsfunfactbox").style.border = '7px double yellow';
     document.getElementById("Salsfunfacts").innerText = "Sal's Fun Facts";
     var x = String;
     var y = 0;
