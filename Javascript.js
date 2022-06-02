@@ -378,7 +378,7 @@ function derivitive(input)
             b = derivitive(a.replace(("{" + o + "}"), s2));
         }
         else {
-            b=0;
+            b = "0";
         }
     }
     return b;
