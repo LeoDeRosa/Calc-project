@@ -440,20 +440,28 @@ function integral(input)
     {
         var x = input.indexOf("x");
         var power = globalLinearSearch(input,x);
-        console.log(power)
-
-        
+        power = getmenumber(input,power);
+        power = parseInt(power);
+        //adds up all the numbers for the power, 
+        function getmenumber(input,power)
+        {
+            let total = String;
+            for(let num of power){
+                total = total + input[num];
+            }
+            return total;
+        }
+        //gets the index of all the numbers that x will be to the power of
         function globalLinearSearch(input, x){
             let results = []
             for(let i = x; i < input.length; i++){
                 if(!isNaN(input[i])){
-                    results.push(i)
+                    results.push(i);
                 }
             }
             if(!results){
-                document.getElementById("beans3").innerText = "Invalid Input";
+                return 0
             }
-        
             return results
         }
 
