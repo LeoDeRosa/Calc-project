@@ -54,7 +54,7 @@ function bakedbeans(){
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
         Beanssses = integral(Beanss);
-        while (Beanssses.includes("{")) {
+        /*while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
             var y = Beanssses.indexOf("}");
             var d = Beanssses.substring((t + 1), y);
@@ -65,7 +65,7 @@ function bakedbeans(){
         while (Beanssses.includes("@")){
             Beanssses = Beanssses.replace("@", "-")
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
-        }
+        }*/
         document.getElementById("beans4").innerText = (Beanssses);
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
     }
@@ -438,7 +438,6 @@ function integral(input)
     }*/
     if(input.includes("x") && input.includes("^"))
     {
-
         //power is the power for x, x is the index of x
         var x = input.indexOf("x");
         var power = globalLinearSearch(input,x);
@@ -464,12 +463,19 @@ function integral(input)
                 else{
                     return results;
                 }
-
             }
+            if(results.length = 0) 
+                return 0;
             return results;
         }
-
     }
+    //straight up number
+    if(!input.includes("x"))
+        return input + "x";
+
+    
+
+
 }
 function epicpictures(){
     const x = [
