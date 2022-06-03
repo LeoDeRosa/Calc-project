@@ -396,7 +396,7 @@ function Salsfunfacts(){
     x = z[y];
     return x;
 }
-function simplifying(input){
+function simplify(input){
     var output = String;
     //add sal code here
     return output;
@@ -490,7 +490,8 @@ function epicpictures(){
     }
     else{
         y = (y / 3)
-        z = x[y]
+        z = x[0]
     }
-    document.getElementById("image").src=z.src;
+    document.getElementById("img").src = img.src.replace("", z)
+    document.getElementById("Salsfunfactbox").style.border = '3px solid black';
 }

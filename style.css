@@ -5,7 +5,9 @@
     height: 44em;
     border-width: 3px;
     flex-direction: column;
-    padding: 3em;
+    padding-top: 3em;
+    padding-right: 3em;
+    padding-left: 3em;
     font-family:"Comic Sans MS", "Comic Sans", cursive;
     color:rgb(200,200,200);
     border: 12px solid black;
@@ -52,4 +54,10 @@ p{
 }
 h{
     font-size: xx-large;
+}
+img{
+    height: 15em;
+    width: 12em;
+    border-radius: 5px;
+    margin: 2em;
 }
