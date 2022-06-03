@@ -107,7 +107,7 @@ function derivitive(input)
 //  "a" is the input 
     var a = String;
     a = input;
-//  "b" is the output set as "invalid entry" by default
+//  "b" is the output 
     var b = String;
 
     //chain rule
