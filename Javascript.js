@@ -381,7 +381,7 @@ function derivitive(input)
     }
     return b;
 }
-function Salsfunfacts(input){
+function Salsfunfacts(){
     document.getElementById("Salsfunfactbox").style.border = '7px double yellow';
     document.getElementById("Salsfunfacts").innerText = "Leo and Jacobs Fun Facts";
     var x = String;
@@ -409,7 +409,39 @@ function simplifying(input){
 
 function integral(input)
 {
+    //sum rule
+    if (a.includes("+")) {
+        b = "";
+        if (!((a.includes("(")) || a.includes(")")))
+        {
+            var x = String;
+            const chunksofa = a.split("+");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "+");
+                x = (chunksofa[q]);
+                x = integral(x);
+                b = (b + x);
+            }
+        }
+    }
 
+    //difference rule
+    else if (a.includes("-")) {
+        if (!((a.includes("(")) || a.includes(")")))
+        {
+            var x = String;
+            b = "";
+            const chunksofa = a.split("-");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "-");
+                x = (chunksofa[q]);
+                x = integral(x);
+                b = (b + x);
+            }
+        }
+    }
     if(input.includes("x") && input.includes("^"))
     {
         var x = input.indexOf("x");
