@@ -1,6 +1,4 @@
-
 const arrayoffunctions = [];
-
 function beeaans() {
 
     var Beanss = String;
@@ -42,7 +40,6 @@ function beeaans() {
     }
 
 }
-
 function bakedbeans(){
     var Beanss = String;
     Beanss = document.getElementById('input');
@@ -78,7 +75,6 @@ function bakedbeans(){
         document.getElementById("beans4").innerText = "";
     }
 }
-
 function checkInput(input){
     const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
     const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^x","log"]
@@ -405,8 +401,6 @@ function simplifying(input){
     //add sal code here
     return output;
 }
-
-
 function integral(input)
 {
     //sum rule
