@@ -398,3 +398,44 @@ function simplifying(input){
     //add sal code here
     return output;
 }
+function bakedbeans(){
+    var Beanss = String;
+    Beanss = document.getElementById('input');
+    Beanss = Beanss.value;
+    
+    if (checkInput(Beanss))
+    {
+        document.getElementById("beans1").innerText = "f(x)=";
+        document.getElementById('beans2').innerText = (Beanss);
+        document.getElementById("beans3").innerText = "f'(x)=";
+        var Beanssses = String;
+        Beanssses = derivitive(Beanss);
+        while (Beanssses.includes("{")) {
+            var t = Beanssses.indexOf("{");
+            var y = Beanssses.indexOf("}");
+            var d = Beanssses.substring((t + 1), y);
+            var bigd = parseInt(d);
+            var i = arrayoffunctions[bigd];
+            Beanssses = Beanssses.replace(("{" + d + "}"), i);
+        }
+        while (Beanssses.includes("@")){
+            Beanssses = Beanssses.replace("@", "-")
+            Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
+        }
+        document.getElementById("beans4").innerText = (Beanssses);
+        var x = Salsfunfacts();
+        document.getElementById("Salsfunfacts2").innerText = (x);
+    }
+    else{
+        document.getElementById("beans3").innerText = "Invalid Input";
+        document.getElementById("beans2").innerText = "";
+        document.getElementById("beans1").innerText = "";
+        document.getElementById("Salsfunfacts2").innerText = "";   
+        document.getElementById("beans4").innerText = "";
+    }
+
+}
+
+function integral(input){
+
+}
