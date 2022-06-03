@@ -35,6 +35,8 @@ function beeaans() {
         document.getElementById("beans3").innerText = "Invalid Input";
         document.getElementById("beans2").innerText = "";
         document.getElementById("beans1").innerText = "";
+        document.getElementById("Salsfunfacts").innerText = "";
+        document.getElementById("Salsfunfactbox").style.border = '0px double yellow';
         document.getElementById("Salsfunfacts2").innerText = "ENTER A VALID INPUT TO RECEIVE YOUR FUN FACT";   
         document.getElementById("beans4").innerText = "";
     }
