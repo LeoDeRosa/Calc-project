@@ -80,8 +80,6 @@ function bakedbeans(){
 
 }
 
-
-
 function checkInput(input){
     const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
     const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^x","log"]
@@ -385,10 +383,19 @@ function derivitive(input)
 }
 function Salsfunfacts(input){
     document.getElementById("Salsfunfactbox").style.border = '7px double yellow';
-    document.getElementById("Salsfunfacts").innerText = "Sal's Fun Facts";
+    document.getElementById("Salsfunfacts").innerText = "Leo and Jacobs Fun Facts";
     var x = String;
     var y = 0;
-    const z = ["fact0", "fact1", "fact2", "fact3", "fact4", "fact5", "fact6", "fact7", "fact8", "fact9"];
+    const z = ["Although some historians give credit to the ancient Greeks for discovering calculus, many scholars recognize Sir Isaac Newton and Gottfried Wilhelm von Leibniz who, independent of one another, developed its concepts.",
+     "Newton wanted to have a new way to predict where to see planets in the sky, because astronomy had always been a popular and useful form of science, and knowing more about the motions of the objects in the night sky was important for navigation of ships. So he started to work on Calculus",
+      "Leibniz wanted to measure the space (area) under a curve (a line that is not straight).",
+       "The name calculus was the Latin word for a small stone the ancient Romans used in counting and gambling. The English word calculate comes from the same Latin word.",
+        "Some parts of modern calculus come from Newton, such as its uses in physics. Other parts come from Leibniz, such as the symbols used to write it.",
+         "Both Newton and Leibniz were the first to design a system that describes how things change over time, and can predict how they will change in the future.",
+          "Until calculus was invented, the only way to work this out was to cut the time into smaller and smaller pieces, so the average speed over the smaller time would get closer and closer to the actual speed at a point in time. This was a very long and hard process, and had to be done each time people wanted to work something out.",
+           "In the 1670s and 1680s, Sir Isaac Newton in England and Gottfried Leibniz in Germany figured out calculus at the same time, working separately from each other.",
+            "Before Newton and Leibniz, the word “calculus” referred to any body of mathematics, but in the following years, calculus became a popular term for a field of mathematics based upon their insights.",
+             "By the middle of the 17th century, European mathematics had changed its primary repository of knowledge. In comparison to the last century which maintained Hellenistic mathematics as the starting point for research, Newton, Leibniz and their contemporaries increasingly looked towards the works of more modern thinkers"];
     y = Math.floor(Math.random() * 10);
     x = z[y];
     return x;
@@ -400,8 +407,31 @@ function simplifying(input){
 }
 
 
-function integral(input){
+function integral(input)
+{
 
+    if(input.includes("x") && input.includes("^"))
+    {
+        var x = input.indexOf("x");
+        var power = globalLinearSearch(input,x);
+        console.log(power)
+
+        
+        function globalLinearSearch(input, x){
+            let results = []
+            for(let i = x; i < input.length; i++){
+                if(!isNaN(input[i])){
+                    results.push(i)
+                }
+            }
+            if(!results){
+                document.getElementById("beans3").innerText = "Invalid Input";
+            }
+        
+            return results
+        }
+
+    }
     
 
 
