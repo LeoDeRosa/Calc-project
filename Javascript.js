@@ -403,7 +403,7 @@ function simplifying(input){
 }
 function integral(input)
 {
-    //sum rule
+    /*sum rule
     if (a.includes("+")) {
         b = "";
         if (!((a.includes("(")) || a.includes(")")))
@@ -435,34 +435,38 @@ function integral(input)
                 b = (b + x);
             }
         }
-    }
+    }*/
     if(input.includes("x") && input.includes("^"))
     {
+
+        //power is the power for x, x is the index of x
         var x = input.indexOf("x");
         var power = globalLinearSearch(input,x);
         power = getmenumber(input,power);
-        power = parseInt(power);
+        power = +power;
+        console.log(power);
         //adds up all the numbers for the power, 
         function getmenumber(input,power)
         {
-            let total = String;
-            for(let num of power){
-                total = total + input[num];
+            var total = '';
+            for(let q = 0; q < power.length; q++){
+                total = total + input[power[q]];
             }
             return total;
         }
         //gets the index of all the numbers that x will be to the power of
         function globalLinearSearch(input, x){
-            let results = []
-            for(let i = x; i < input.length; i++){
+            let results = [];
+            for(let i = x + 2; i < input.length; i++){
                 if(!isNaN(input[i])){
                     results.push(i);
                 }
+                else{
+                    return results;
+                }
+
             }
-            if(!results){
-                return 0
-            }
-            return results
+            return results;
         }
 
     }
