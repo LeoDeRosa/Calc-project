@@ -409,7 +409,7 @@ function bakedbeans(){
         document.getElementById('beans2').innerText = (Beanss);
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
-        Beanssses = derivitive(Beanss);
+        Beanssses = integral(Beanss);
         while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
             var y = Beanssses.indexOf("}");
