@@ -84,10 +84,10 @@ function checkInput(input){
     const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^x","log"]
     var p = Boolean;
     var u = String;
-    for (var x = 0; x < (input.length); x++) {
+    for (let x = 0; x < (input.length);) {
         p = false;
         if ((badInputs.indexOf(input.charAt(x))) != -1){
-            for (var c = 0; c < GoodInputs.length; c++){
+            for (c = 0; c < GoodInputs.length; c++){
                 if (input.indexOf(GoodInputs[c]) == x){
                     p = true;
                     x = (x + ((GoodInputs[c]).length) - 1);
@@ -96,6 +96,7 @@ function checkInput(input){
             if (!p)
                 return false;
         }
+        input = input.substring(1);
     }
     return true;
 }
