@@ -77,7 +77,6 @@ function bakedbeans(){
         document.getElementById("Salsfunfacts2").innerText = "";   
         document.getElementById("beans4").innerText = "";
     }
-
 }
 
 function checkInput(input){
