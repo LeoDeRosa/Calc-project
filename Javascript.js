@@ -39,6 +39,46 @@ function beeaans() {
     }
 
 }
+
+function bakedbeans(){
+    var Beanss = String;
+    Beanss = document.getElementById('input');
+    Beanss = Beanss.value;
+    
+    if (checkInput(Beanss))
+    {
+        document.getElementById("beans1").innerText = "f(x)=";
+        document.getElementById('beans2').innerText = (Beanss);
+        document.getElementById("beans3").innerText = "F(x)=";
+        var Beanssses = String;
+        Beanssses = integral(Beanss);
+        while (Beanssses.includes("{")) {
+            var t = Beanssses.indexOf("{");
+            var y = Beanssses.indexOf("}");
+            var d = Beanssses.substring((t + 1), y);
+            var bigd = parseInt(d);
+            var i = arrayoffunctions[bigd];
+            Beanssses = Beanssses.replace(("{" + d + "}"), i);
+        }
+        while (Beanssses.includes("@")){
+            Beanssses = Beanssses.replace("@", "-")
+            Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
+        }
+        document.getElementById("beans4").innerText = (Beanssses);
+        document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
+    }
+    else{
+        document.getElementById("beans3").innerText = "Invalid Input";
+        document.getElementById("beans2").innerText = "";
+        document.getElementById("beans1").innerText = "";
+        document.getElementById("Salsfunfacts2").innerText = "";   
+        document.getElementById("beans4").innerText = "";
+    }
+
+}
+
+
+
 function checkInput(input){
     const badInputs = ["a","b","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
     var daNewArray = input.split("");
@@ -398,42 +438,7 @@ function simplifying(input){
     //add sal code here
     return output;
 }
-function bakedbeans(){
-    var Beanss = String;
-    Beanss = document.getElementById('input');
-    Beanss = Beanss.value;
-    
-    if (checkInput(Beanss))
-    {
-        document.getElementById("beans1").innerText = "f(x)=";
-        document.getElementById('beans2').innerText = (Beanss);
-        document.getElementById("beans3").innerText = "F(x)=";
-        var Beanssses = String;
-        Beanssses = integral(Beanss);
-        while (Beanssses.includes("{")) {
-            var t = Beanssses.indexOf("{");
-            var y = Beanssses.indexOf("}");
-            var d = Beanssses.substring((t + 1), y);
-            var bigd = parseInt(d);
-            var i = arrayoffunctions[bigd];
-            Beanssses = Beanssses.replace(("{" + d + "}"), i);
-        }
-        while (Beanssses.includes("@")){
-            Beanssses = Beanssses.replace("@", "-")
-            Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
-        }
-        document.getElementById("beans4").innerText = (Beanssses);
-        document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
-    }
-    else{
-        document.getElementById("beans3").innerText = "Invalid Input";
-        document.getElementById("beans2").innerText = "";
-        document.getElementById("beans1").innerText = "";
-        document.getElementById("Salsfunfacts2").innerText = "";   
-        document.getElementById("beans4").innerText = "";
-    }
 
-}
 
 function integral(input){
 
