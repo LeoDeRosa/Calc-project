@@ -407,7 +407,7 @@ function bakedbeans(){
     {
         document.getElementById("beans1").innerText = "f(x)=";
         document.getElementById('beans2').innerText = (Beanss);
-        document.getElementById("beans3").innerText = "f'(x)=";
+        document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
         Beanssses = derivitive(Beanss);
         while (Beanssses.includes("{")) {
@@ -423,8 +423,7 @@ function bakedbeans(){
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
         document.getElementById("beans4").innerText = (Beanssses);
-        var x = Salsfunfacts();
-        document.getElementById("Salsfunfacts2").innerText = (x);
+        document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
     }
     else{
         document.getElementById("beans3").innerText = "Invalid Input";
