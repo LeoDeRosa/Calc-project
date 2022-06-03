@@ -14,7 +14,7 @@ function beeaans() {
         document.getElementById("beans3").innerText = "f'(x)=";
         var Beanssses = String;
         while (Beanss.includes(" ")){
-            Beanss = Beanss.replace(" ", "");
+            Beanss = Beanss.replace(" ", "")
         }
         Beanssses = derivitive(Beanss);
         while (Beanssses.includes("{")) {
@@ -83,24 +83,21 @@ function bakedbeans(){
 
 
 function checkInput(input){
-    var i = String;
-    i = input;
     const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
     const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^x","log"]
     var p = Boolean;
     var u = String;
-    for (var x = 0; x < (i.length); x++) {
+    for (var x = 0; x < (input.length); x++) {
         p = false;
-        if ((badInputs.indexOf(i.charAt(x))) != -1){
+        if ((badInputs.indexOf(input.charAt(x))) != -1){
             for (var c = 0; c < GoodInputs.length; c++){
-                if (i.indexOf(GoodInputs[c]) == x){
+                if (input.indexOf(GoodInputs[c]) == x){
                     p = true;
                     x = (x + ((GoodInputs[c]).length) - 1);
                 }
             }
-            if (!p){
+            if (!p)
                 return false;
-            }
         }
     }
     return true;
