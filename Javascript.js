@@ -403,39 +403,6 @@ function simplify(input){
 }
 function integral(input)
 {
-    /*sum rule
-    if (a.includes("+")) {
-        b = "";
-        if (!((a.includes("(")) || a.includes(")")))
-        {
-            var x = String;
-            const chunksofa = a.split("+");
-            for(var q=0; q<chunksofa.length;q++){
-                if (q != 0)
-                    b = (b + "+");
-                x = (chunksofa[q]);
-                x = integral(x);
-                b = (b + x);
-            }
-        }
-    }
-
-    //difference rule
-    else if (a.includes("-")) {
-        if (!((a.includes("(")) || a.includes(")")))
-        {
-            var x = String;
-            b = "";
-            const chunksofa = a.split("-");
-            for(var q=0; q<chunksofa.length;q++){
-                if (q != 0)
-                    b = (b + "-");
-                x = (chunksofa[q]);
-                x = integral(x);
-                b = (b + x);
-            }
-        }
-    }*/
     if(input.includes("x") && input.includes("^"))
     {
         //power is the power for x, x is the index of x
@@ -472,10 +439,6 @@ function integral(input)
     //straight up number
     if(!input.includes("x"))
         return input + "x";
-
-    
-
-
 }
 function epicpictures(){
     const x = [
@@ -492,7 +455,7 @@ function epicpictures(){
     y = Math.floor(Math.random() * 31);
     var z = String
     if (y == 30){
-//insert code to ocasionally have us show up on the picture
+        //insert code to ocasionally have us show up on the picture
     }
     else{
         y = (y / 3)
@@ -500,4 +463,105 @@ function epicpictures(){
     }
     document.getElementById("img").src = img.src.replace("", z)
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
+}
+function calculate(){
+    while (a.includes("(")){
+        if (!a.includes("(") && (a.includes(")")))
+            return "error wrong amount of brackets";
+        if (a.indexOf(")") < a.indexOf("("))
+            return "wrong order of brackets";
+        var q = (a.indexOf("("));
+        var intq = (parseInt(q));
+        var l = 1  
+        while (!(l == 0)){
+            intq ++
+            if (a.charAt(intq) == "(")
+                l ++
+            else if (a.charAt(intq) == ")")
+                l --
+        }
+        var l = a.substring(q, (intq + 1));
+        arrayoffunctions.push(l);
+        var p = arrayoffunctions.indexOf(l);
+        var k = ("{" + p + "}");
+        if (l === "(x)")
+            a = a.replace("(x)", "x");
+        else
+            a = a.replace(l, k);
+    }
+
+    //sum 
+    if (a.includes("+")) {
+        {
+            var x = 0;
+            const chunksofa = a.split("+");
+            for(var q=0; q<chunksofa.length;q++){
+                x = (chunksofa[q]);
+                x = calculate(x);
+                b = b + x;
+            }
+        }
+    }
+
+    //difference 
+    else if (a.includes("-")) {
+        {
+            var x = 0;
+            const chunksofa = a.split("-");
+            for(var q=0; q<chunksofa.length;q++){
+                x = (chunksofa[q]);
+                x = calculate(x);
+                b = b - x;
+            }
+        }
+    }
+    //product
+    if (a.includes("*")) {
+        {
+            var x = 0;
+            const chunksofa = a.split("*");
+            for(var q=0; q<chunksofa.length;q++){
+                x = (chunksofa[q]);
+                x = calculate(x);
+                b = b * x;
+            }
+        }
+    }
+
+    //difference 
+    else if (a.includes("/")) {
+        {
+            var x = 0;
+            const chunksofa = a.split("/");
+            for(var q=0; q<chunksofa.length;q++){
+                x = (chunksofa[q]);
+                x = calculate(x);
+                b = b / x;
+            }
+        }
+    }
+    
+    //sin
+    else if (a.includes("sin")) {
+        var t = a.indexOf("sin")
+        var m = a.indexOf("{");
+        var n = a.indexOf("}");
+        var o = a.substring((m+1), n);
+        var p = arrayoffunctions[o];
+        var w = calculate(p)
+        while (w > 360)
+            w = w - 360
+        while (w < 0)
+            w = w + 360
+        if (w < 180){
+            w = w - 180
+            b = ((t * ((4 * w * (180 - w)) / (4050 - (w * (180 - w))))) * -1)
+        }
+        else{
+            b = (t * ((4 * w * (180 - w)) / (4050 - (w * (180 - w)))))
+        }
+    }
+
+    //cosine
+    return b;
 }
