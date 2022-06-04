@@ -442,26 +442,42 @@ function integral(input)
 }
 function epicpictures(){
     const x = [
-"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Portrait_of_Sir_Isaac_Newton%2C_1689.jpg/220px-Portrait_of_Sir_Isaac_Newton%2C_1689.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg/170px-Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Bolton-newton.jpg/170px-Bolton-newton.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Portrait_of_Sir_Isaac_Newton_%284670220%29.jpg/170px-Portrait_of_Sir_Isaac_Newton_%284670220%29.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Newton_25.jpg/170px-Newton_25.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Christoph_Bernhard_Francke_-_Bildnis_des_Philosophen_Leibniz_%28ca._1695%29.jpg/220px-Christoph_Bernhard_Francke_-_Bildnis_des_Philosophen_Leibniz_%28ca._1695%29.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Gottfried-Wilhelm-Leibniz-Louis-Dutens-opera-omnia_MG_1180.tif/lossy-page1-220px-Gottfried-Wilhelm-Leibniz-Louis-Dutens-opera-omnia_MG_1180.tif.jpg",
-"https://cdn.britannica.com/18/150318-050-6422D72B/Gottfried-Wilhelm-Leibniz.jpg",
-"https://cdn.britannica.com/47/130347-050-15B28AB6/Gottfried-Wilhelm-Leibniz.jpg",
-"https://compote.slate.com/images/0bfe6ee8-301b-4a0c-a95e-4dd63648f362.jpg?width=840",];
+        "./Assets/Leib1.jpg",
+        "./Assets/Leib2.jpg",
+        "./Assets/Leib3.jpg",
+        "./Assets/Leib4.jpg",
+        "./Assets/Leib5.jpg",
+        "./Assets/Newt1.jpg",
+        "./Assets/Newt2.jpg",
+        "./Assets/Newt3.jpg",
+        "./Assets/Newt4.jpg",
+        "./Assets/Newt5.jpg",
+        "./Assets/QUbe.png",
+        "./Assets/URBOI.png"
+
+    ]
     y = Math.floor(Math.random() * 31);
     var z = String
     if (y == 30){
+<<<<<<< Updated upstream
         //insert code to ocasionally have us show up on the picture
+=======
+        y = Math.round(y);
+        z = x[10];
+    }
+    else if(y == 31){
+        y = Math.round(y);
+        z = x[11];
+>>>>>>> Stashed changes
     }
     else{
-        y = (y / 3)
-        z = x[0]
+
+        y = (y / 3);
+        y = Math.round(y);
+        console.log(y)
+        z = x[y];
     }
-    document.getElementById("img").src = img.src.replace("", z)
+    document.getElementById("img").src = z;
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
 }
 function calculate(){
