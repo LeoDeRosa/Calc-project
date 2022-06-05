@@ -1,5 +1,6 @@
 const arrayoffunctions = [];
 var findingvalue = false;
+var valueofx = 0.0;
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -46,9 +47,11 @@ function beeaans() {
         console.log(findingvalue);
         if (findingvalue){
             var r = document.getElementById('input2');
-            var r2 = parseFloat(r);
-            document.getElementById('beans8').innerText = (calculate(Beanss, r2));
-            document.getElementById('beans9').innerText = (calculate(Beanssses, r2));
+            var valueofx = parseFloat(r);
+            document.getElementById('beans8').innerText = (calculate(Beanss));
+            document.getElementById('beans9').innerText = (calculate(Beanssses));
+            document.getElementById("beans3").innerText = "f'(" + valueofx + ")=";
+            document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
         } 
         var x = Salsfunfacts();
         document.getElementById("Salsfunfacts2").innerText = (x);
@@ -573,7 +576,7 @@ function epicpictures(){
     document.getElementById("img").src = z;
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
 }
-function calculate(input, valueofx){
+function calculate(input){
     var a = String;
     a = input.toString();
     var b = 0.0;
@@ -608,7 +611,7 @@ function calculate(input, valueofx){
             const chunksofa = a.split("+");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x, valueofx);
+                x = calculate(x);
                 b = b + x;
             }
         }
@@ -620,7 +623,7 @@ function calculate(input, valueofx){
             const chunksofa = a.split("-");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x, valueofx);
+                x = calculate(x);
                 b = b - x;
             }
         }
@@ -632,7 +635,7 @@ function calculate(input, valueofx){
             const chunksofa = a.split("*");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x, valueofx);
+                x = calculate(x);
                 b = b * x;
             }
         }
@@ -644,7 +647,7 @@ function calculate(input, valueofx){
             const chunksofa = a.split("/");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x , valueofx);
+                x = calculate(x);
                 b = b / x;
             }
         }
@@ -665,9 +668,8 @@ function calculate(input, valueofx){
         var g = a.substring(0, t)
         if (g = "")
             g = 1 
-        
-        var w = calculate(p, valueofx);
-        b = sinner(g, w)
+        var w = calculate(p);
+        b = (sinner(w) * g)
     }
     //cosine
     else if (a.includes("cos")) {
@@ -703,6 +705,6 @@ if (input < 180){
     input = input - 180;
     b = -1;
 }
-b = (b * (constant * ((4 * input * (180 - input)) / (40500 - (input * (180 - input))))))
+b = (b * ((4 * input * (180 - input)) / (40500 - (input * (180 - input)))));
 return b;
 }
