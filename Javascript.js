@@ -47,9 +47,11 @@ function beeaans() {
         console.log(findingvalue);
         if (findingvalue){
             var r = document.getElementById('input2');
+            r = r.value;
             var valueofx = parseFloat(r);
-            document.getElementById('beans8').innerText = (calculate(Beanss));
-            document.getElementById('beans9').innerText = (calculate(Beanssses));
+            console.log(valueofx);
+            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
+            document.getElementById('beans9').innerText = ("=" + calculate(Beanssses));
             document.getElementById("beans3").innerText = "f'(" + valueofx + ")=";
             document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
         } 
@@ -610,8 +612,7 @@ function calculate(input){
             var x = 0;
             const chunksofa = a.split("+");
             for(var q=0; q<chunksofa.length;q++){
-                x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(chunksofa[q]);
                 b = b + x;
             }
         }
@@ -622,8 +623,7 @@ function calculate(input){
             var x = 0;
             const chunksofa = a.split("-");
             for(var q=0; q<chunksofa.length;q++){
-                x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(chunksofa[q])
                 b = b - x;
             }
         }
@@ -634,8 +634,7 @@ function calculate(input){
             var x = 0;
             const chunksofa = a.split("*");
             for(var q=0; q<chunksofa.length;q++){
-                x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(chunksofa[q])
                 b = b * x;
             }
         }
@@ -646,8 +645,7 @@ function calculate(input){
             var x = 0;
             const chunksofa = a.split("/");
             for(var q=0; q<chunksofa.length;q++){
-                x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(chunksofa[q])
                 b = b / x;
             }
         }
@@ -688,7 +686,10 @@ function calculate(input){
         if (a == "x")
             b = valueofx;
         else
-            b = (parseInt(a.substring(0, a.indexOf("x"))) * valueofx)
+            var r = a.indexOf("x");
+            var c = a.substring(0, r);
+            var y = parseFloat(c);
+            b = (valueofx * y);
     }
     else{
         b = parseInt(input);
