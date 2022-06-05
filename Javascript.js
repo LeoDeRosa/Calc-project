@@ -413,9 +413,10 @@ function integral(input)
         var power = power_getter(input,x);
         power = getmenumber(input,power);
         power = +power + 1;
-        console.log(power);
+
         var constant = constant_getter(input,x);
         constant = getmenumber(input,constant);
+        console.log(constant);  
         //adds up all the numbers for the power, 
         function getmenumber(input,power)
         {
@@ -442,9 +443,10 @@ function integral(input)
         //gets index of constants
         function constant_getter(input, x){
             let results = [];
-            for(let i = x - 1; i <= 0; i--){
+            for(let i = x - 1; i >= 0; i--){
                 if(!isNaN(input[i])){
                     results.push(i);
+                    console.log(i)
                 }
                 else{
                     return results;
@@ -487,15 +489,20 @@ function integral(input)
             b =  (constant + "/" + power  + "x^" + power);
         return b;
     }
-    else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
-        
+    else if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot")){
+        if(input.includes("sin")) {
+
+        }
+        else if (input.includes("cos")){
+
+        }
 
 
 
     }
 
     //straight up number
-    if(input == '')
+    if(input == 0 || input == '' )
         return "";
     else if(!input.includes("x"))
         return input + "x";
@@ -522,7 +529,7 @@ function epicpictures(){
         y = Math.round(y);
         z = x[10];
     }
-    else if(y == 31){
+    else if(y == 25){
         y = Math.round(y);
         z = x[11];
     }
