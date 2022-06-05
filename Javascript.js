@@ -1,6 +1,6 @@
 const arrayoffunctions = [];
 var findingvalue = false;
-var valueofx = 0.0;
+let valueofx;
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -677,7 +677,7 @@ function calculate(input){
         var o = a.substring((m+1), n);
         var g = a.substring(0, t)
         var p = arrayoffunctions[o];
-        var w = calculate(p, valueofx)
+        var w = calculate(p)
         w = w - 90;
         b = sinner(g, w)
     }
@@ -689,6 +689,10 @@ function calculate(input){
             var r = a.indexOf("x");
             var c = a.substring(0, r);
             var y = parseFloat(c);
+            console.log("value of x");
+            console.log(valueofx);
+            console.log("value of y");
+            console.log(y);
             b = (valueofx * y);
     }
     else{
@@ -696,7 +700,7 @@ function calculate(input){
     }
     return (b.toString());
 }
-function sinner(constant, input) {
+function sinner(input) {
 let b = 0.0;
 while (input > 360)
     input = input - 360;
