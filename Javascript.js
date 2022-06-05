@@ -43,11 +43,13 @@ function beeaans() {
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
         document.getElementById("beans4").innerText = (Beanssses);
-        if (findingvalue)
+        console.log(findingvalue);
+        if (findingvalue){
             var r = document.getElementById('input2');
             var r2 = parseFloat(r);
-            document.getElementById('beans2.0').innerText = (calculate(Beanss, r2));
-            document.getElementById('beans4.0').innerText = (calculate(Beanssses, r2));
+            document.getElementById('beans8').innerText = (calculate(Beanss, r2));
+            document.getElementById('beans9').innerText = (calculate(Beanssses, r2));
+        } 
         var x = Salsfunfacts();
         document.getElementById("Salsfunfacts2").innerText = (x);
         epicpictures();
