@@ -1,6 +1,6 @@
 const arrayoffunctions = [];
 var findingvalue = false;
-let valueofx;
+var valueofx;
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -48,7 +48,7 @@ function beeaans() {
         if (findingvalue){
             var r = document.getElementById('input2');
             r = r.value;
-            var valueofx = parseFloat(r);
+            valueofx = parseFloat(r);
             console.log(valueofx);
             document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
             document.getElementById('beans9').innerText = ("=" + calculate(Beanssses));
