@@ -486,7 +486,16 @@ function integral(input)
             }
         }
         else if(!input.includes("-") && !input.includes("+"))
-            b =  (constant + "/" + power  + "x^" + power);
+            if(constant == '')
+                b = ("1/" + power  + "x^" + power);
+            else if(power == ''){
+                power = 2;
+                constant = constant / power;
+                console.log("k we are here") //ERROR ON INPUT 2x 
+                b = (constant + "/" + power  + "x^" + power);
+            }
+            else
+                b = (constant + "/" + power  + "x^" + power);
         return b;
     }
     else if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot")){
@@ -496,6 +505,8 @@ function integral(input)
         else if (input.includes("cos")){
 
         }
+        else
+            return " we are way too dumb for those trig functions";
 
 
 
