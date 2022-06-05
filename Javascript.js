@@ -487,10 +487,16 @@ function integral(input)
             b =  (constant + "/" + power  + "x^" + power);
         return b;
     }
+    else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
+        
+
+
+
+    }
 
     //straight up number
     if(input == '')
-        return "Thats blank foo, gimme a num";
+        return "";
     else if(!input.includes("x"))
         return input + "x";
 }
