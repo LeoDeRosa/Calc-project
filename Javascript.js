@@ -543,8 +543,10 @@ function epicpictures(){
     document.getElementById("img").src = z;
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
 }
-function calculate(input){
-    var a = input;
+function calculate(input, valueofx){
+    var a = String;
+    a = input.toString();
+    var b = 0.0;
     while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
@@ -569,7 +571,6 @@ function calculate(input){
         else
             a = a.replace(l, k);
     }
-
     //sum 
     if (a.includes("+")) {
         {
@@ -577,12 +578,11 @@ function calculate(input){
             const chunksofa = a.split("+");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(x, valueofx);
                 b = b + x;
             }
         }
     }
-
     //difference 
     else if (a.includes("-")) {
         {
@@ -590,7 +590,7 @@ function calculate(input){
             const chunksofa = a.split("-");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(x, valueofx);
                 b = b - x;
             }
         }
@@ -602,12 +602,11 @@ function calculate(input){
             const chunksofa = a.split("*");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(x, valueofx);
                 b = b * x;
             }
         }
     }
-
     //quotient 
     else if (a.includes("/")) {
         {
@@ -615,26 +614,31 @@ function calculate(input){
             const chunksofa = a.split("/");
             for(var q=0; q<chunksofa.length;q++){
                 x = (chunksofa[q]);
-                x = calculate(x);
+                x = calculate(x , valueofx);
                 b = b / x;
             }
         }
     }
-    
-    //sin
+    //sine
     else if (a.includes("sin")) {
-        var t = a.indexOf("sin")
-        var m = a.indexOf("{");
-        var n = a.indexOf("}");
-        var o = a.substring((m+1), n);
+        var t = a.indexOf("sin");
+        var p;
+        if (a.includes("{")) {
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            p = arrayoffunctions[o];
+        }
+        else{
+            p = a.substring((a.indexOf("sin")) + 3)
+        }
         var g = a.substring(0, t)
         if (g = "")
             g = 1 
-        var p = arrayoffunctions[o];
-        var w = calculate(p)
+        
+        var w = calculate(p, valueofx);
         b = sinner(g, w)
     }
-
     //cosine
     else if (a.includes("cos")) {
         var t = a.indexOf("sin")
@@ -643,22 +647,29 @@ function calculate(input){
         var o = a.substring((m+1), n);
         var g = a.substring(0, t)
         var p = arrayoffunctions[o];
-        var w = calculate(p)
+        var w = calculate(p, valueofx)
         w = w - 90;
         b = sinner(g, w)
     }
-    else if (a == "x"){
-        b = 1
+    //only x and a constant left
+    else if (a.includes("x")){
+        if (a == "x")
+            b = valueofx;
+        else
+            b = (parseInt(a.substring(0, a.indexOf("x"))) * valueofx)
+    }
+    else{
+        b = parseInt(input);
     }
     return (b.toString());
 }
 function sinner(constant, input) {
-var b = 1;
+let b = 0.0;
 while (input > 360)
     input = input - 360;
-while (w < 0)
+while (input < 0)
     input = input + 360;
-if (w < 180){
+if (input < 180){
     input = input - 180;
     b = -1;
 }
