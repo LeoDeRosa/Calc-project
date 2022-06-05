@@ -54,7 +54,7 @@ function bakedbeans(){
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
         Beanssses = integral(Beanss);
-        /*while (Beanssses.includes("{")) {
+        while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
             var y = Beanssses.indexOf("}");
             var d = Beanssses.substring((t + 1), y);
@@ -65,9 +65,10 @@ function bakedbeans(){
         while (Beanssses.includes("@")){
             Beanssses = Beanssses.replace("@", "-")
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
-        }*/
+        }
         document.getElementById("beans4").innerText = (Beanssses);
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
+        epicpictures();
     }
     else{
         document.getElementById("beans3").innerText = "Invalid Input";
@@ -403,25 +404,30 @@ function simplify(input){
 }
 function integral(input)
 {
+    //b is the output
+    var b = String;
     if(input.includes("x") && input.includes("^"))
     {
         //power is the power for x, x is the index of x
         var x = input.indexOf("x");
-        var power = globalLinearSearch(input,x);
+        var power = power_getter(input,x);
         power = getmenumber(input,power);
-        power = +power;
+        power = +power + 1;
         console.log(power);
+        var constant = constant_getter(input,x);
+        constant = getmenumber(input,constant);
         //adds up all the numbers for the power, 
         function getmenumber(input,power)
         {
             var total = '';
             for(let q = 0; q < power.length; q++){
                 total = total + input[power[q]];
+                console.log(total)
             }
             return total;
         }
         //gets the index of all the numbers that x will be to the power of
-        function globalLinearSearch(input, x){
+        function power_getter(input, x){
             let results = [];
             for(let i = x + 2; i < input.length; i++){
                 if(!isNaN(input[i])){
@@ -431,13 +437,61 @@ function integral(input)
                     return results;
                 }
             }
-            if(results.length = 0) 
-                return 0;
             return results;
         }
+        //gets index of constants
+        function constant_getter(input, x){
+            let results = [];
+            for(let i = x - 1; i <= 0; i--){
+                if(!isNaN(input[i])){
+                    results.push(i);
+                }
+                else{
+                    return results;
+                }
+            }
+            return results;
+        }
+        //addition
+        if (input.includes("+")) {
+            {
+                b = '';
+                var x = String;
+                const chunksofa = input.split("+");
+                for(var q=0; q<chunksofa.length;q++){
+                    if (q != 0)
+                        b = (b + "+");
+                    x = (chunksofa[q]);
+                    x = integral(x);
+                    b = (b + x);
+                }
+            }
+        }
+    
+        //subtractions
+        else if (input.includes("-")) {
+            {
+                b = '';
+                var x = String;
+                const chunksofa = input.split("-");
+                for(var q=0; q<chunksofa.length;q++){
+                    if (q != 0)
+                        b = (b + "-");
+                    x = (chunksofa[q]);
+                    x = integral(x);
+                    b = (b + x);
+                }
+            }
+        }
+        else if(!input.includes("-") && !input.includes("+"))
+            b =  (constant + "/" + power  + "x^" + power);
+        return b;
     }
+
     //straight up number
-    if(!input.includes("x"))
+    if(input == '')
+        return "Thats blank foo, gimme a num";
+    else if(!input.includes("x"))
         return input + "x";
 }
 function epicpictures(){
@@ -457,7 +511,7 @@ function epicpictures(){
 
     ]
     y = Math.floor(Math.random() * 31);
-    var z = String
+    var z = String;
     if (y == 30){
         y = Math.round(y);
         z = x[10];
