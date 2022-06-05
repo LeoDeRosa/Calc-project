@@ -459,16 +459,12 @@ function epicpictures(){
     y = Math.floor(Math.random() * 31);
     var z = String
     if (y == 30){
-<<<<<<< Updated upstream
-        //insert code to ocasionally have us show up on the picture
-=======
         y = Math.round(y);
         z = x[10];
     }
     else if(y == 31){
         y = Math.round(y);
         z = x[11];
->>>>>>> Stashed changes
     }
     else{
 
@@ -480,7 +476,8 @@ function epicpictures(){
     document.getElementById("img").src = z;
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
 }
-function calculate(){
+function calculate(input){
+    var a = input;
     while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
@@ -544,7 +541,7 @@ function calculate(){
         }
     }
 
-    //difference 
+    //quotient 
     else if (a.includes("/")) {
         {
             var x = 0;
@@ -563,21 +560,41 @@ function calculate(){
         var m = a.indexOf("{");
         var n = a.indexOf("}");
         var o = a.substring((m+1), n);
+        var g = a.substring(0, t)
+        if (g = "")
+            g = 1 
         var p = arrayoffunctions[o];
         var w = calculate(p)
-        while (w > 360)
-            w = w - 360
-        while (w < 0)
-            w = w + 360
-        if (w < 180){
-            w = w - 180
-            b = ((t * ((4 * w * (180 - w)) / (4050 - (w * (180 - w))))) * -1)
-        }
-        else{
-            b = (t * ((4 * w * (180 - w)) / (4050 - (w * (180 - w)))))
-        }
+        b = sinner(g, w)
     }
 
     //cosine
-    return b;
+    else if (a.includes("cos")) {
+        var t = a.indexOf("sin")
+        var m = a.indexOf("{");
+        var n = a.indexOf("}");
+        var o = a.substring((m+1), n);
+        var g = a.substring(0, t)
+        var p = arrayoffunctions[o];
+        var w = calculate(p)
+        w = w - 90;
+        b = sinner(g, w)
+    }
+    else if (a == "x"){
+        b = 1
+    }
+    return (b.toString());
+}
+function sinner(constant, input) {
+var b = 1;
+while (input > 360)
+    input = input - 360;
+while (w < 0)
+    input = input + 360;
+if (w < 180){
+    input = input - 180;
+    b = -1;
+}
+b = (b * (constant * ((4 * input * (180 - input)) / (40500 - (input * (180 - input))))))
+return b;
 }
