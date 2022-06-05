@@ -1,4 +1,19 @@
 const arrayoffunctions = [];
+var findingvalue = false;
+function changeinput() {
+    var x = document.getElementById("checkbocks").checked;
+    if (x){
+    document.getElementById("findvalueat").innerText = "Find Value At:";
+    document.getElementById("input2").type = "text";
+    findingvalue = true;
+    }
+    else {
+    document.getElementById("findvalueat").innerText = "";
+    document.getElementById("input2").type = "hidden";
+    findingvalue = false;
+    }
+    console.log(findingvalue);
+}
 function beeaans() {
 
     var Beanss = String;
@@ -28,6 +43,11 @@ function beeaans() {
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
         document.getElementById("beans4").innerText = (Beanssses);
+        if (findingvalue)
+            var r = document.getElementById('input2');
+            var r2 = parseFloat(r);
+            document.getElementById('beans2.0').innerText = (calculate(Beanss, r2));
+            document.getElementById('beans4.0').innerText = (calculate(Beanssses, r2));
         var x = Salsfunfacts();
         document.getElementById("Salsfunfacts2").innerText = (x);
         epicpictures();
@@ -507,9 +527,6 @@ function integral(input)
         }
         else
             return " we are way too dumb for those trig functions";
-
-
-
     }
 
     //straight up number
