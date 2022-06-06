@@ -132,8 +132,7 @@ function derivitive(input)
     a = input;
 //  "b" is the output 
     var b = String;
-
-    //chain rule  (someone will have to explain why this is the chair rule to me. -Sal)
+    //chain rule 
     while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
@@ -142,23 +141,22 @@ function derivitive(input)
         var q = (a.indexOf("("));
         var intq = (parseInt(q));
         var l = 1  
-        while (!(l == 0)){ //finds the indexes of the first set of brackets "()"
+        while (!(l == 0)){ 
             intq ++
             if (a.charAt(intq) == "(")
                 l ++
             else if (a.charAt(intq) == ")")
                 l --
         }
-        var l = a.substring(q, (intq + 1)); //converts all the terms of the function stored in the input ("a") to a stored array of terms
+        var l = a.substring(q, (intq + 1)); 
         arrayoffunctions.push(l);
         var p = arrayoffunctions.indexOf(l);
         var k = ("{" + p + "}"); 
         if (l === "(x)")
             a = a.replace("(x)", "x");
         else
-            a = a.replace(l, k); // "a" will now store all the indexes of the terms stored in "arrayoffunctions"
+            a = a.replace(l, k); 
     }
-
     //sum rule
     if (a.includes("+")) {
         b = "";
@@ -174,7 +172,6 @@ function derivitive(input)
             }
         }
     }
-
     //difference rule
     else if (a.includes("-")) {
         {
@@ -190,7 +187,6 @@ function derivitive(input)
             }
         }
     }
-
     //product rule
     else if (a.includes("*")){
         const chunksofathesecond = a.split("*");
@@ -211,7 +207,6 @@ function derivitive(input)
             b = (b + insert);
         }
     }
-
     //division rule
     else if (a.includes("/")){
         var positionofsign = a.indexOf("/");
@@ -225,7 +220,6 @@ function derivitive(input)
         dpartb = derivitive(partb);
         b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
-
     //trig rules
     else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
         if (a.includes("sin")){
@@ -323,7 +317,6 @@ function derivitive(input)
             }
         }
     }
-
     //power rule 
     else {
         if (a.includes("^") && a.includes("x")){
@@ -363,7 +356,6 @@ function derivitive(input)
             var n = a.indexOf("}");
             var o = a.substring(m, (n + 1));
             var v = o.length;
-
             locationofsign = a.indexOf("^");
             power = a.substring((locationofsign + 1));
             intpower = parseInt(power);
