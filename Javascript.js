@@ -422,22 +422,26 @@ function Salsfunfacts(){
 
 class Term {
 
-    constructor(termConstant, exponent, base){
+    constructor(termConstant, exponent, functionType){
 
         this.termConstant = termConstant
         this.exponent = exponent
-        this.base = base
+        this.functionType = functionType
     }
 
     StoreFunctionValues(inputFunction) {
-        
+        for (i = 0; i < inputFunction.length; i++){
+            
+        }
     }
 };
 
 function simplify(input)
 {
-    for (i=0; i < arrayoffunctions.length; i++){
+    for (i = 0; i < arrayoffunctions.length; i++){
+
         let newTerm = new Term();
+        newTerm.StoreFunctionValues(arrayoffunctions[i])
     }
 
     var b = String;
