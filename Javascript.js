@@ -25,6 +25,8 @@ function changeinput() {
     document.getElementById("findvalueat").innerText = "";
     document.getElementById("input2").type = "hidden";
     findingvalue = false;
+    document.getElementById('beans8').innerText = ("");
+    document.getElementById('beans9').innerText = ("");
     }
     console.log(findingvalue);
 }
@@ -338,7 +340,19 @@ function derivitive(input)
             
     }
     else if (a.includes("ln")){
+        if (a.includes("{")){
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            var p = arrayoffunctions[o];
+            var l = derivitive(p);
+        }
         
+        else{
+            var p = a.substring((a.indexOf("ln")) + 2);
+            l = derivitive(p);
+        }
+        return (l + "/" + p);
     }
     else {
         if (a.includes("^") && a.includes("x")){
