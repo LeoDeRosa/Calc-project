@@ -505,16 +505,18 @@ function integral(input)
             }
         }
         else if(!input.includes("-") && !input.includes("+"))
+        {
             if(constant == '')
-                b = ("1/" + power  + "x^" + power);
+                b = ("1/" + power  + "x^" + power + "+c");
             else if(power == ''){
                 power = 2;
                 constant = constant / power;
                 console.log("k we are here") //ERROR ON INPUT 2x 
-                b = (constant + "/" + power  + "x^" + power);
+                b = (constant + "/" + power  + "x^" + power + "+c");
             }
             else
-                b = (constant + "/" + power  + "x^" + power);
+                b = (constant + "/" + power  + "x^" + power + "+c");
+        }
         return b;
     }
     else if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot")){
