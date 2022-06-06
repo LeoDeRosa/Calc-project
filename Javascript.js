@@ -83,14 +83,14 @@ function bakedbeans(){
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
         Beanssses = integral(Beanss);
-        while (Beanssses.includes("{")) {
+        /*while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
             var y = Beanssses.indexOf("}");
             var d = Beanssses.substring((t + 1), y);
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
             Beanssses = Beanssses.replace(("{" + d + "}"), i);
-        }
+        }*/
         while (Beanssses.includes("@")){
             Beanssses = Beanssses.replace("@", "-")
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
@@ -454,18 +454,16 @@ function integral(input)
         var x = input.indexOf("x");
         var power = power_getter(input,x);
         power = getmenumber(input,power);
-        power = +power + 1;
 
         var constant = constant_getter(input,x);
+        constant = constant.reverse();
         constant = getmenumber(input,constant);
-        console.log(constant);  
         //adds up all the numbers for the power, 
         function getmenumber(input,power)
         {
             var total = '';
             for(let q = 0; q < power.length; q++){
                 total = total + input[power[q]];
-                console.log(total)
             }
             return total;
         }
@@ -488,7 +486,6 @@ function integral(input)
             for(let i = x - 1; i >= 0; i--){
                 if(!isNaN(input[i])){
                     results.push(i);
-                    console.log(i)
                 }
                 else{
                     return results;
@@ -527,30 +524,41 @@ function integral(input)
                 }
             }
         }
-        else if(!input.includes("-") && !input.includes("+"))
+
+        console.log("power" + power)
+        console.log("constant" + constant)
+        if(constant == '')
         {
-            if(constant == '')
-                b = ("1/" + power  + "x^" + power + "+c");
-            else if(power == ''){
-                power = 2;
-                constant = constant / power;
-                console.log("k we are here") //ERROR ON INPUT 2x 
-                b = (constant + "/" + power  + "x^" + power + "+c");
-            }
-            else
-                b = (constant + "/" + power  + "x^" + power + "+c");
+            power = +power + 1;
+            b = ("1/" + power  + "x^" + power + "+c");
         }
+        else if(power.length === 0)
+        {
+            power = 2;
+            constant = parseInt(constant);
+            constant = (constant / power);
+            console.log("k we are here"); //ERROR ON INPUT 2x 
+            b = (constant + "/" + power  + "x^" + power + "+c");
+        }
+        else
+        {
+            power = +power + 1;
+            b = (constant + "/" + power  + "x^" + power + "+c");
+        }
+
         return b;
     }
     else if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot")){
-        if(input.includes("sin")) {
+        if(input.includes("sin")){
 
         }
         else if (input.includes("cos")){
 
         }
-        else
+        else{
             return " we are way too dumb for those trig functions";
+        }
+
     }
 
     //straight up number
