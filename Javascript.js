@@ -589,23 +589,22 @@ function calculate(input){
             return "wrong order of brackets";
         var q = (a.indexOf("("));
         var intq = (parseInt(q));
+        var intq2 = intq;
         var l = 1  
         while (!(l == 0)){
             intq ++
-            if (a.charAt(intq) == "(")
+            if (a.charAt(intq) == "("){
                 l ++
+                intq2 = intq;
+            }
             else if (a.charAt(intq) == ")")
-                l --
+                l = 0;
         }
-        var l = a.substring(q, (intq + 1));
-        arrayoffunctions.push(l);
-        var p = arrayoffunctions.indexOf(l);
-        var k = ("{" + p + "}");
-        if (l === "(x)")
-            a = a.replace("(x)", "x");
-        else
-            a = a.replace(l, k);
+        var h = a.substring((intq2 + 1), intq)
+        var z = calculate(h);
+        a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
+    console.log("result of epic fuction = " + a);
     //sum 
     if (a.includes("+")) {
         {
@@ -686,7 +685,7 @@ function calculate(input){
         if (g == "")
             g = 1;
         var w = calculate(p);
-        b = (sinner(w + 90) * g)
+        b = (sinner(w - 90) * g)
     }
     else if (a.includes("x") && (a.includes("^"))){
         b = 1.0;
@@ -700,19 +699,25 @@ function calculate(input){
         }
         b = b * e;
     }
-    //only x and a constant left
+    else if (a.includes("^")){
+        b = 1.0;
+        s = a.indexOf("^");
+        e = a.substring(0, (s));
+        f = a.substring((s + 1))
+        j = parseFloat(f);
+        while (j > 0){
+            b = b * e
+            j --
+        }
+    }
     else if (a.includes("x")){
+        console.log("right spot")
             var r = a.indexOf("x");
             var c = a.substring(0, r);
             if (c != "")
-                var y = parseFloat(c);
+            b = (valueofx * parseFloat(c)); 
             else
-                var y = 1;
-            console.log("value of x");
-            console.log(valueofx);
-            console.log("value of y");
-            console.log(y);
-            b = (valueofx * y);
+                b = (valueofx * 1);
     }
     else{
         b = parseInt(input);
