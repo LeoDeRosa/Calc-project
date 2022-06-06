@@ -631,6 +631,7 @@ function calculate(input){
                 x = calculate(chunksofa[q])
                 b = b * x;
             }
+            alert;
         }
     }
     //quotient 
