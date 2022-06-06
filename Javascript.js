@@ -18,7 +18,7 @@ function changeinput() {
     }
     console.log(findingvalue);
 }
-function beeaans() {
+function beeaans() { 
 
     var Beanss = String;
     Beanss = document.getElementById('input');
@@ -654,6 +654,7 @@ function calculate(input){
                 x = calculate(chunksofa[q])
                 b = b * x;
             }
+            alert;
         }
     }
     //quotient 
@@ -684,7 +685,7 @@ function calculate(input){
     }
     //cosine
     else if (a.includes("cos")) {
-        var t = a.indexOf("cso");
+        var t = a.indexOf("cos");
         var p;
         if (a.includes("{")) {
             var m = a.indexOf("{");
@@ -752,7 +753,7 @@ if (input > 180){
     b = -1;
 }
 console.log("sinnersays" + input);
-b = (b * ((4 * input * (180 - input)) / (40500 - (input * (180 - input)))));
+b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
 console.log("sinnersays" + b);
 return b;
 }
