@@ -161,7 +161,6 @@ function derivitive(input)
         else
             a = a.replace(l, k);
     }
-
     //sum rule
     if (a.includes("+")) {
         b = "";
@@ -177,7 +176,6 @@ function derivitive(input)
             }
         }
     }
-
     //difference rule
     else if (a.includes("-")) {
         {
@@ -193,7 +191,6 @@ function derivitive(input)
             }
         }
     }
-
     //product rule
     else if (a.includes("*")){
         const chunksofathesecond = a.split("*");
@@ -214,7 +211,6 @@ function derivitive(input)
             b = (b + insert);
         }
     }
-
     //division rule
     else if (a.includes("/")){
         var positionofsign = a.indexOf("/");
@@ -228,7 +224,6 @@ function derivitive(input)
         dpartb = derivitive(partb);
         b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
-
     //trig rules
     else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
         if (a.includes("sin")){
@@ -326,7 +321,6 @@ function derivitive(input)
             }
         }
     }
-
     //power rule 
     else {
         if (a.includes("^") && a.includes("x")){
@@ -366,7 +360,6 @@ function derivitive(input)
             var n = a.indexOf("}");
             var o = a.substring(m, (n + 1));
             var v = o.length;
-
             locationofsign = a.indexOf("^");
             power = a.substring((locationofsign + 1));
             intpower = parseInt(power);
@@ -535,16 +528,18 @@ function integral(input)
             }
         }
         else if(!input.includes("-") && !input.includes("+"))
+        {
             if(constant == '')
-                b = ("1/" + power  + "x^" + power);
+                b = ("1/" + power  + "x^" + power + "+c");
             else if(power == ''){
                 power = 2;
                 constant = constant / power;
                 console.log("k we are here") //ERROR ON INPUT 2x 
-                b = (constant + "/" + power  + "x^" + power);
+                b = (constant + "/" + power  + "x^" + power + "+c");
             }
             else
-                b = (constant + "/" + power  + "x^" + power);
+                b = (constant + "/" + power  + "x^" + power + "+c");
+        }
         return b;
     }
     else if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot")){
