@@ -15,7 +15,7 @@ function changeinput() {
     }
     console.log(findingvalue);
 }
-function beeaans() { //Why is everything named beans. It makes this literally impossble to understand and also makes me hungry thanks alot guys
+function beeaans() { 
 
     var Beanss = String;
     Beanss = document.getElementById('input');
@@ -661,7 +661,7 @@ function calculate(input){
     }
     //cosine
     else if (a.includes("cos")) {
-        var t = a.indexOf("cso");
+        var t = a.indexOf("cos");
         var p;
         if (a.includes("{")) {
             var m = a.indexOf("{");
@@ -730,7 +730,7 @@ if (input > 180){
 }
 var x = input;
 console.log("sinnersays" + input);
-b = (b * ((((2 * x) * ((13 * x) - 69300) * (x - 7200)) - ((15 * x) * (x - 4500) * (x - 8100) * (1.7320508075))) / (524880000000)));
+b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
 console.log("sinnersays" + b);
 return b;
 }
