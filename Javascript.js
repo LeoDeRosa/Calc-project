@@ -202,7 +202,7 @@ function derivitive(input)
             if (z != 0)
                 b = (b + "+");
             z2 = 0;
-            insert = derivitive(chunksofathesecond[z])
+            insert = ("(" + derivitive(chunksofathesecond[z]) + ")")
             while(z2<chunksofathesecond.length){
                 if (z2 != z)
                     insert = (insert + "*" + chunksofathesecond[z2]);
@@ -733,8 +733,9 @@ if (input > 180){
     input = (input - 180);
     b = -1;
 }
+var x = input;
 console.log("sinnersays" + input);
-b = (b * ((4 * input * (180 - input)) / (40500 - (input * (180 - input)))));
+b = (b * ((((2 * x) * ((13 * x) - 69300) * (x - 7200)) - ((15 * x) * (x - 4500) * (x - 8100) * (1.7320508075))) / (524880000000)));
 console.log("sinnersays" + b);
 return b;
 }
