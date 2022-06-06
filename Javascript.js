@@ -140,13 +140,9 @@ function checkInput(input){
 }
 function derivitive(input)
 {
-//  "a" is the input 
     var a = String;
     a = input;
-//  "b" is the output 
     var b = String;
-
-    //chain rule
     while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
@@ -171,7 +167,6 @@ function derivitive(input)
         else
             a = a.replace(l, k);
     }
-    //sum rule
     if (a.includes("+")) {
         b = "";
         {
@@ -186,7 +181,6 @@ function derivitive(input)
             }
         }
     }
-    //difference rule
     else if (a.includes("-")) {
         {
             var x = String;
@@ -201,7 +195,6 @@ function derivitive(input)
             }
         }
     }
-    //product rule
     else if (a.includes("*")){
         const chunksofathesecond = a.split("*");
         var insert = String;
@@ -221,7 +214,6 @@ function derivitive(input)
             b = (b + insert);
         }
     }
-    //division rule
     else if (a.includes("/")){
         var positionofsign = a.indexOf("/");
         var parta = String;
@@ -234,7 +226,6 @@ function derivitive(input)
         dpartb = derivitive(partb);
         b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
-    //trig rules
     else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
         if (a.includes("sin")){
             if (a.includes("{")){
@@ -340,13 +331,15 @@ function derivitive(input)
             var l = derivitive(p);
         }
         else{
-            var p = a.substring(a.indexOf("^"));
+            var p = a.substring((a.indexOf("^")) + 1);
             l = derivitive(p);
         }
         return ("e^" + p + "*" + l);
             
     }
-    //power rule 
+    else if (a.includes("ln")){
+        
+    }
     else {
         if (a.includes("^") && a.includes("x")){
             var constant = String;
