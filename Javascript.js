@@ -653,20 +653,16 @@ function calculate(input){
     else if (a.includes("sin")) {
         var t = a.indexOf("sin");
         var p;
-        if (a.includes("{")) {
-            var m = a.indexOf("{");
-            var n = a.indexOf("}");
-            var o = a.substring((m+1), n);
-            p = arrayoffunctions[o];
-        }
-        else{
-            p = a.substring((a.indexOf("sin")) + 3)
-        }
+        p = a.substring((a.indexOf("sin")) + 3)
         var g = ("" + a.substring(0, t));
         if (g == "")
             g = 1;
-        var w = calculate(p);
-        b = (sinner(w) * g)
+        if (a.includes("x"))
+            var p = calculate(p);
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        b = (sinner(p) * g)
     }
     //cosine
     else if (a.includes("cos")) {
