@@ -1,9 +1,19 @@
 const arrayoffunctions = [];
 var findingvalue = false;
 var valueofx;
+class Term {
 
+    constructor(termConstant, exponent, base){
 
+        this.termConstant = termConstant
+        this.exponent = exponent
+        this.base = base
+    }
 
+    StoreFunctionValues(inputFunction) {
+        
+    }
+}
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -109,7 +119,7 @@ function bakedbeans(){
 }
 function checkInput(input){
     const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
-    const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^x","log"]
+    const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^","log"]
     var p = Boolean;
     var u = String;
     for (let x = 0; x < (input.length);) {
@@ -321,6 +331,21 @@ function derivitive(input)
             }
         }
     }
+    else if (a.includes("e^")){
+        if (a.includes("{")){
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            var p = arrayoffunctions[o];
+            var l = derivitive(p);
+        }
+        else{
+            var p = a.substring(a.indexOf("^"));
+            l = derivitive(p);
+        }
+        return ("e^" + p + "*" + l);
+            
+    }
     //power rule 
     else {
         if (a.includes("^") && a.includes("x")){
@@ -419,21 +444,6 @@ function Salsfunfacts(){
     x = z[y];
     return x;
 }
-
-class Term {
-
-    constructor(termConstant, exponent, base){
-
-        this.termConstant = termConstant
-        this.exponent = exponent
-        this.base = base
-    }
-
-    StoreFunctionValues(inputFunction) {
-        
-    }
-};
-
 function simplify(input)
 {
     for (i=0; i < arrayoffunctions.length; i++){
@@ -443,7 +453,6 @@ function simplify(input)
     var b = String;
     return output;
 }
-
 function integral(input)
 {
     //b is the output
@@ -657,12 +666,12 @@ function calculate(input){
     if (a.includes("*")) {
         {
             var x = 0;
+            b = calculate(chunksofa[0]);
             const chunksofa = a.split("*");
-            for(var q=0; q<chunksofa.length;q++){
+            for(var q=1; q<chunksofa.length;q++){
                 x = calculate(chunksofa[q])
                 b = b * x;
             }
-            alert;
         }
     }
     //quotient 
@@ -670,7 +679,8 @@ function calculate(input){
         {
             var x = 0;
             const chunksofa = a.split("/");
-            for(var q=0; q<chunksofa.length;q++){
+            b = calculate(chunksofa[0]);
+            for(var q=1; q<chunksofa.length;q++){
                 x = calculate(chunksofa[q])
                 b = b / x;
             }
@@ -715,12 +725,13 @@ function calculate(input){
         s = a.indexOf("^");
         e = a.substring(0, (s - 1));
         f = a.substring((s + 1))
-        j = parseFloat(f);
+        j = parseInt(f);
         while (j > 0){
             b = b * valueofx
             j --
         }
-        b = b * e;
+        if (s != 1)
+            b = b * e;
     }
     else if (a.includes("^")){
         b = 1.0;
@@ -738,7 +749,7 @@ function calculate(input){
             var r = a.indexOf("x");
             var c = a.substring(0, r);
             if (c != "")
-            b = (valueofx * parseFloat(c)); 
+                b = (valueofx * parseFloat(c)); 
             else
                 b = (valueofx * 1);
     }
@@ -760,6 +771,7 @@ if (input > 180){
     input = (input - 180);
     b = -1;
 }
+x = input;
 console.log("sinnersays" + input);
 b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
 console.log("sinnersays" + b);
