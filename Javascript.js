@@ -15,7 +15,7 @@ function changeinput() {
     }
     console.log(findingvalue);
 }
-function beeaans() {
+function beeaans() { //Why is everything named beans. It makes this literally impossble to understand and also makes me hungry thanks alot guys
 
     var Beanss = String;
     Beanss = document.getElementById('input');
@@ -133,7 +133,7 @@ function derivitive(input)
 //  "b" is the output 
     var b = String;
 
-    //chain rule
+    //chain rule  (someone will have to explain why this is the chair rule to me. -Sal)
     while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
@@ -142,21 +142,21 @@ function derivitive(input)
         var q = (a.indexOf("("));
         var intq = (parseInt(q));
         var l = 1  
-        while (!(l == 0)){
+        while (!(l == 0)){ //finds the indexes of the first set of brackets "()"
             intq ++
             if (a.charAt(intq) == "(")
                 l ++
             else if (a.charAt(intq) == ")")
                 l --
         }
-        var l = a.substring(q, (intq + 1));
+        var l = a.substring(q, (intq + 1)); //converts all the terms of the function stored in the input ("a") to a stored array of terms
         arrayoffunctions.push(l);
         var p = arrayoffunctions.indexOf(l);
-        var k = ("{" + p + "}");
+        var k = ("{" + p + "}"); 
         if (l === "(x)")
             a = a.replace("(x)", "x");
         else
-            a = a.replace(l, k);
+            a = a.replace(l, k); // "a" will now store all the indexes of the terms stored in "arrayoffunctions"
     }
 
     //sum rule
@@ -418,7 +418,8 @@ function Salsfunfacts(){
           "Until calculus was invented, the only way to work this out was to cut the time into smaller and smaller pieces, so the average speed over the smaller time would get closer and closer to the actual speed at a point in time. This was a very long and hard process, and had to be done each time people wanted to work something out.",
            "In the 1670s and 1680s, Sir Isaac Newton in England and Gottfried Leibniz in Germany figured out calculus at the same time, working separately from each other.",
             "Before Newton and Leibniz, the word “calculus” referred to any body of mathematics, but in the following years, calculus became a popular term for a field of mathematics based upon their insights.",
-             "By the middle of the 17th century, European mathematics had changed its primary repository of knowledge. In comparison to the last century which maintained Hellenistic mathematics as the starting point for research, Newton, Leibniz and their contemporaries increasingly looked towards the works of more modern thinkers"];
+        "By the middle of the 17th century, European mathematics had changed its primary repository of knowledge. In comparison to the last century which maintained Hellenistic mathematics as the starting point for research, Newton, Leibniz and their contemporaries increasingly looked towards the works of more modern thinkers"
+    ];
     y = Math.floor(Math.random() * 10);
     x = z[y];
     return x;
