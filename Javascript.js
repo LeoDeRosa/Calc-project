@@ -44,7 +44,6 @@ function beeaans() {
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
         document.getElementById("beans4").innerText = (Beanssses);
-        console.log(findingvalue);
         if (findingvalue){
             var r = document.getElementById('input2');
             r = r.value;
@@ -579,6 +578,7 @@ function epicpictures(){
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
 }
 function calculate(input){
+    console.log("inputting" + input);
     var a = String;
     a = input.toString();
     var b = 0.0;
@@ -663,32 +663,51 @@ function calculate(input){
         else{
             p = a.substring((a.indexOf("sin")) + 3)
         }
-        var g = a.substring(0, t)
-        if (g = "")
-            g = 1 
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
         var w = calculate(p);
         b = (sinner(w) * g)
     }
     //cosine
     else if (a.includes("cos")) {
-        var t = a.indexOf("sin")
-        var m = a.indexOf("{");
-        var n = a.indexOf("}");
-        var o = a.substring((m+1), n);
-        var g = a.substring(0, t)
-        var p = arrayoffunctions[o];
-        var w = calculate(p)
-        w = w - 90;
-        b = sinner(g, w)
+        var t = a.indexOf("cso");
+        var p;
+        if (a.includes("{")) {
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            p = arrayoffunctions[o];
+        }
+        else{
+            p = a.substring((a.indexOf("cos")) + 3)
+        }
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        var w = calculate(p);
+        b = (sinner(w + 90) * g)
+    }
+    else if (a.includes("x") && (a.includes("^"))){
+        b = 1.0;
+        s = a.indexOf("^");
+        e = a.substring(0, (s - 1));
+        f = a.substring((s + 1))
+        j = parseFloat(f);
+        while (j > 0){
+            b = b * valueofx
+            j --
+        }
+        b = b * e;
     }
     //only x and a constant left
     else if (a.includes("x")){
-        if (a == "x")
-            b = valueofx;
-        else
             var r = a.indexOf("x");
             var c = a.substring(0, r);
-            var y = parseFloat(c);
+            if (c != "")
+                var y = parseFloat(c);
+            else
+                var y = 1;
             console.log("value of x");
             console.log(valueofx);
             console.log("value of y");
@@ -698,18 +717,23 @@ function calculate(input){
     else{
         b = parseInt(input);
     }
-    return (b.toString());
+    console.log("outputting" + b);
+    return (b);
 }
 function sinner(input) {
-let b = 0.0;
+console.log("sinnersays" + input);
+let b = 1.0;
+input = parseFloat(input);
 while (input > 360)
-    input = input - 360;
+    input = (input - 360);
 while (input < 0)
-    input = input + 360;
-if (input < 180){
-    input = input - 180;
+    input = (input + 360);
+if (input > 180){
+    input = (input - 180);
     b = -1;
 }
+console.log("sinnersays" + input);
 b = (b * ((4 * input * (180 - input)) / (40500 - (input * (180 - input)))));
+console.log("sinnersays" + b);
 return b;
 }
