@@ -96,17 +96,21 @@ function bakedbeans(){
         var Beanssses = String;
         Beanssses = integral(Beanss);
 
-        /*while (Beanssses.includes("{")) {
+        while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
             var y = Beanssses.indexOf("}");
             var d = Beanssses.substring((t + 1), y);
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
             Beanssses = Beanssses.replace(("{" + d + "}"), i);
-        }*/
+        }
         while (Beanssses.includes("@")){
             Beanssses = Beanssses.replace("@", "-")
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
+        }
+        while (Beanssses.includes("q") || Beanssses.includes("z")){
+            Beanssses = Beanssses.replace("q","-cos");
+            Beanssses = Beanssses.replace("z","sin");
         }
         document.getElementById("beans4").innerText = (Beanssses);
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
@@ -521,10 +525,10 @@ function integral(input)
     }
     if (isTrigFunction(input)){
         if(input.includes("sin")){
-            input = input.replace("sin","-cos");
+            b = input.replace("sin","q");
         }
         else if (input.includes("cos")){  
-            input = input.replace("cos","sin");
+            b = input.replace("cos","z");
         }
         else{
             return "we are way too dumb for those trig functions";
