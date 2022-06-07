@@ -551,6 +551,7 @@ function integral(input)
 
 }
 function isTrigFunction(input){
+    //checks if the input includes a trig function
     if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot"))
         return true;
     else
