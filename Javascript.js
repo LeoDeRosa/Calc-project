@@ -93,6 +93,7 @@ function bakedbeans(){
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
         Beanssses = integral(Beanss);
+        Beanssses = Beanssses + "+c"
 
         while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
@@ -513,7 +514,7 @@ function integral(input)
         
         else
         {
-            b = (constant + "/" + power  + "x^" + power + "+c");
+            b = (constant + "/" + power  + "x^" + power);
         }
 
         return b;
@@ -540,7 +541,7 @@ function integral(input)
         power = 2;
         constant = parseFloat(constant);
         constant = (constant / power);
-        b = (constant + "x^" + power + "+c");
+        b = (constant + "x^" + power );
     }
     return b;
 
