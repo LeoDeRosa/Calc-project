@@ -741,7 +741,71 @@ function calculate(input){
         if (g == "")
             g = 1;
         var w = calculate(p);
-        b = (sinner(w - 90) * g)
+        b = (sinner(w + 90) * g)
+    }
+    else if (a.includes("tan")){
+        var t = a.indexOf("tan");
+        var p;
+        if (a.includes("{")) {
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            p = arrayoffunctions[o];
+        }
+        else{
+            p = a.substring((a.indexOf("tan")) + 3)
+        }
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        var w = calculate(p);
+        b = (g * (sinner(w)) / (sinner(w + 90)))
+    }
+    else if (a.includes("csc")) {
+        var t = a.indexOf("csc");
+        var p;
+        p = a.substring((a.indexOf("csc")) + 3)
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        if (a.includes("x"))
+            var p = calculate(p);
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        b = (g / sinner(p))
+    }
+    else if (a.includes("sec")) {
+        var t = a.indexOf("sec");
+        var p;
+        p = a.substring((a.indexOf("sec")) + 3)
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        if (a.includes("x"))
+            var p = calculate(p);
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        b = (g / sinner(p + 90))
+    }
+    else if (a.includes("cot")){
+        var t = a.indexOf("cot");
+        var p;
+        if (a.includes("{")) {
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            p = arrayoffunctions[o];
+        }
+        else{
+            p = a.substring((a.indexOf("cot")) + 3)
+        }
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        var w = calculate(p);
+        b = (g / (sinner(w)) / (sinner(w + 90)))
     }
     else if (a.includes("e^")){
         var o = a.indexOf("e^");
@@ -756,6 +820,19 @@ function calculate(input){
         b = (y * (2.718281828459045 ** p))
     }
     else if (a.includes("x") && (a.includes("^"))){
+        var b = 1.0;
+        var s = a.indexOf("^");
+        var e = a.substring(0, (s - 1));
+        var f = a.substring((s + 1))
+        var j = parseFloat(f);
+        while (j > 0){
+            b = b * valueofx
+            j --
+        }
+        if (s != 1)
+            b = b * e;
+    }
+    else if (a.includes("{") && (a.includes("^"))){
         var b = 1.0;
         var s = a.indexOf("^");
         var e = a.substring(0, (s - 1));
