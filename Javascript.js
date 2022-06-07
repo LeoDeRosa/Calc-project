@@ -646,54 +646,50 @@ function calculate(input){
         var z = calculate(h);
         a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
-    //sum 
     if (a.includes("+")) {
         {
-            var x = 0;
+            let x = 0;
             const chunksofa = a.split("+");
             console.log(chunksofa);
-            for(var q=0; q<chunksofa.length;q++){
+            for(let q=0; q<chunksofa.length; q++){
+                x = 0.0;
                 x = calculate(chunksofa[q]);
-                b = b + x;
+                b = (b + x);
             }
         }
     }
-    //difference 
     else if (a.includes("-")) {
         {
-            var x = 0;
+            let x = 0;
             const chunksofa = a.split("-");
-            for(var q=0; q<chunksofa.length;q++){
+            for(let q=0; q<chunksofa.length; q++){
                 x = calculate(chunksofa[q])
                 b = b - x;
             }
         }
     }
-    //product
-    if (a.includes("*")) {
+    else if (a.includes("*")) {
         {
-            var x = 1;
+            let x = 1;
             b = 1;
             const chunksofa = a.split("*");
-            for(var q=0; q<chunksofa.length;q++){
+            for(let q=0; q<chunksofa.length; q++){
                 x = calculate(chunksofa[q])
                 b = b * x;
             }
         }
     }
-    //quotient 
     else if (a.includes("/")) {
         {
-            var x = 0;
+            let x = 0;
             const chunksofa = a.split("/");
             b = calculate(chunksofa[0]);
-            for(var q=1; q<chunksofa.length;q++){
+            for(let q=1; q<chunksofa.length; q++){
                 x = calculate(chunksofa[q])
                 b = b / x;
             }
         }
     }
-    //sine
     else if (a.includes("sin")) {
         var t = a.indexOf("sin");
         var p;
@@ -708,7 +704,6 @@ function calculate(input){
             g = 1;
         b = (sinner(p) * g)
     }
-    //cosine
     else if (a.includes("cos")) {
         var t = a.indexOf("cos");
         var p;
@@ -727,15 +722,24 @@ function calculate(input){
         var w = calculate(p);
         b = (sinner(w - 90) * g)
     }
-    else if (a.includes("ln")){
-
+    else if (a.includes("e^")){
+        var o = a.indexOf("e^");
+        var u = a.substring((o + 1));
+        if (o == 0){
+            var y = 1.0;
+        }
+        else{
+            var y = a.substring(0, o);
+        }
+        var p = calculate(u);
+        b = (y * (2.718281828459045 ** p))
     }
     else if (a.includes("x") && (a.includes("^"))){
-        b = 1.0;
-        s = a.indexOf("^");
-        e = a.substring(0, (s - 1));
-        f = a.substring((s + 1))
-        j = parseInt(f);
+        var b = 1.0;
+        var s = a.indexOf("^");
+        var e = a.substring(0, (s - 1));
+        var f = a.substring((s + 1))
+        var j = parseInt(f);
         while (j > 0){
             b = b * valueofx
             j --
@@ -744,18 +748,17 @@ function calculate(input){
             b = b * e;
     }
     else if (a.includes("^")){
-        b = 1.0;
-        s = a.indexOf("^");
-        e = a.substring(0, (s));
-        f = a.substring((s + 1))
-        j = parseFloat(f);
+        var b = 1.0;
+        var s = a.indexOf("^");
+        var e = a.substring(0, (s));
+        var f = a.substring((s + 1))
+        var j = parseFloat(f);
         while (j > 0){
             b = b * e
             j --
         }
     }
     else if (a.includes("x")){
-        console.log("right spot")
             var r = a.indexOf("x");
             var c = a.substring(0, r);
             if (c != "")
