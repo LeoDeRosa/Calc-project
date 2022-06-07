@@ -646,12 +646,12 @@ function calculate(input){
         var z = calculate(h);
         a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
-    console.log("result of epic fuction = " + a);
     //sum 
     if (a.includes("+")) {
         {
             var x = 0;
             const chunksofa = a.split("+");
+            console.log(chunksofa);
             for(var q=0; q<chunksofa.length;q++){
                 x = calculate(chunksofa[q]);
                 b = b + x;
@@ -672,10 +672,10 @@ function calculate(input){
     //product
     if (a.includes("*")) {
         {
-            var x = 0;
-            b = calculate(chunksofa[0]);
+            var x = 1;
+            b = 1;
             const chunksofa = a.split("*");
-            for(var q=1; q<chunksofa.length;q++){
+            for(var q=0; q<chunksofa.length;q++){
                 x = calculate(chunksofa[q])
                 b = b * x;
             }
@@ -726,6 +726,9 @@ function calculate(input){
             g = 1;
         var w = calculate(p);
         b = (sinner(w - 90) * g)
+    }
+    else if (a.includes("ln")){
+
     }
     else if (a.includes("x") && (a.includes("^"))){
         b = 1.0;
