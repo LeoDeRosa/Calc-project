@@ -421,37 +421,67 @@ function Salsfunfacts(){
     return x;
 }
 
+
 class Term {
-
-    constructor(termConstant, exponent, base){
-
-        this.termConstant = termConstant;
-        this.exponent = exponent;
-        this.base = base;
+    /*
+    constructor(termConstant, exponent, base, evaluationPriority){
+        this.termConstant = termConstant
+        this.exponent = exponent
+        this.base = base
+        this.evaluaionPriority = evaluationPriority
     }
 
     StoreFunctionValues(inputFunction) {
-        let xIndex = inputFunction.indexOf("x");
-        this.termConstant = constant_getter(inputFunction, xIndex);
-        this.exponent = power_getter(inputFunction, xIndex);
+        let xIndex = inputFunction.indexOf("x")
+        this.termConstant = constant_getter(inputFunction, xIndex)
+        this.exponent = power_getter(inputFunction, xIndex)
     }
-};
+    */
+}
 
 function simplify(input)
 {
-    let splitAddition = input.split("+");
-    let splitFull = [];
+    console.log("start")
+    let leftBracketIndexes = []
+    let rightBracketIndexes = []
 
-    for (i = 0; i < splitAddition.length; i++){
-        splitFull.push(splitAddition[i].split("-"))
+    for (i = 0; i < input.length; i++){
+
+        if (input[i] == "("){
+            leftBracketIndexes.push(i)
+        }
+
+        if (input[i] == ")"){
+            rightBracketIndexes.push(i)
+        }
     }
-    console.log(splitFull)
-    
-    for (i=0; i < splitFull.length; i++){
+
+    console.log(leftBracketIndexes)
+    console.log(rightBracketIndexes)
+
+    let storedPolynomials = []
+
+    for (i = 0; i < rightBracketIndexes.length; i++){
+
+        for (e = 0; e < leftBracketIndexes.length; e++){
+
+            if (rightBracketIndexes[i] < leftBracketIndexes[e]) {
+                storedPolynomials.push(input.substring(leftBracketIndexes[e - 1] + 1, rightBracketIndexes[i]))
+            }
+        }
+    }
+
+    console.log(storedPolynomials)
+
+    function storePolynomials(){
         
     }
 
-    return input;
+    function determineEvalPriority(input) {
+
+    }
+
+    return input
 }
 
 function integral(input)
