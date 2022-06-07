@@ -461,12 +461,19 @@ function simplify(input)
 
     let storedPolynomials = []
 
+    let polyIndex = 0
+
     for (i = 0; i < rightBracketIndexes.length; i++){
 
         for (e = 0; e < leftBracketIndexes.length; e++){
 
             if (rightBracketIndexes[i] < leftBracketIndexes[e]) {
-                storedPolynomials.push(input.substring(leftBracketIndexes[e - 1] + 1, rightBracketIndexes[i]))
+
+                let currentPoly = input.substring(leftBracketIndexes[e - 1] + 1, rightBracketIndexes[i])
+                storedPolynomials.push(currentPoly)
+                input.replace(currentPoly, "{" + polyIndex + "}")
+                
+                polyIndex++
             }
         }
     }
