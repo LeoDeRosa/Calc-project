@@ -229,7 +229,7 @@ function derivitive(input)
         dpartb = derivitive(partb);
         b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
-    else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
+    else if ((a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")) && a.includes("x")){
         if (a.includes("sin")){
             if (a.includes("{")){
                 a = a.replace("sin", "cos");
@@ -560,7 +560,6 @@ function getmenumber(input,power)
     }
     return total;
 }
-//gets the index of all the numbers that x will be to the power of
 function power_getter(input, x){
     let results = [];
     
@@ -574,7 +573,6 @@ function power_getter(input, x){
     }
     return results;
 }
-//gets index of constants
 function constant_getter(input, x){
     let results = [];
     for(let i = x - 1; i >= 0; i--){
@@ -587,9 +585,6 @@ function constant_getter(input, x){
     }
     return results;
 }
-
-
-
 function epicpictures(){
     const x = [
         "./Assets/Leib1.jpg",
