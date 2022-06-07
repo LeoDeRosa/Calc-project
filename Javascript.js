@@ -95,6 +95,7 @@ function bakedbeans(){
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
         Beanssses = integral(Beanss);
+
         /*while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
             var y = Beanssses.indexOf("}");
@@ -464,51 +465,18 @@ function integral(input)
 {
     //b is the output
     var b = String;
+    var x = input.indexOf("x");
+    var constant = constant_getter(input,x);
+    constant = constant.reverse();
+    constant = getmenumber(input,constant);
+    if (constant == '')
+        constant = 1;
     if(input.includes("x") && input.includes("^"))
     {
         //power is the power for x, x is the index of x
-        var x = input.indexOf("x");
         var power = power_getter(input,x);
         power = getmenumber(input,power);
 
-        var constant = constant_getter(input,x);
-        constant = constant.reverse();
-        constant = getmenumber(input,constant);
-        //adds up all the numbers for the power, 
-        function getmenumber(input,power)
-        {
-            var total = '';
-            for(let q = 0; q < power.length; q++){
-                total = total + input[power[q]];
-            }
-            return total;
-        }
-        //gets the index of all the numbers that x will be to the power of
-        function power_getter(input, x){
-            let results = [];
-            for(let i = x + 2; i < input.length; i++){
-                if(!isNaN(input[i])){
-                    results.push(i);
-                }
-                else{
-                    return results;
-                }
-            }
-            return results;
-        }
-        //gets index of constants
-        function constant_getter(input, x){
-            let results = [];
-            for(let i = x - 1; i >= 0; i--){
-                if(!isNaN(input[i])){
-                    results.push(i);
-                }
-                else{
-                    return results;
-                }
-            }
-            return results;
-        }
         //addition
         if (input.includes("+")) {
             {
@@ -519,6 +487,7 @@ function integral(input)
                     if (q != 0)
                         b = (b + "+");
                     x = (chunksofa[q]);
+                    console.log(x)
                     x = integral(x);
                     b = (b + x);
                 }
@@ -541,40 +510,25 @@ function integral(input)
             }
         }
 
-        console.log("power" + power)
-        console.log("constant" + constant)
-        if(constant == '')
-        {
-            power = +power + 1;
-            b = ("1/" + power  + "x^" + power + "+c");
-        }
-        else if(power.length === 0)
-        {
-            power = 2;
-            constant = parseInt(constant);
-            constant = (constant / power);
-            console.log("k we are here"); //ERROR ON INPUT 2x 
-            b = (constant + "/" + power  + "x^" + power + "+c");
-        }
+        
         else
         {
-            power = +power + 1;
             b = (constant + "/" + power  + "x^" + power + "+c");
         }
 
         return b;
+
     }
-    else if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot")){
+    if (isTrigFunction(input)){
         if(input.includes("sin")){
-
+            input = input.replace("sin","-cos");
         }
-        else if (input.includes("cos")){
-
+        else if (input.includes("cos")){  
+            input = input.replace("cos","sin");
         }
         else{
-            return " we are way too dumb for those trig functions";
+            return "we are way too dumb for those trig functions";
         }
-
     }
 
     //straight up number
@@ -582,7 +536,60 @@ function integral(input)
         return "";
     else if(!input.includes("x"))
         return input + "x";
+    else if(power == null && isTrigFunction(input) == false){
+        power = 2;
+        constant = parseInt(constant);
+        constant = (constant / power);
+        b = (constant + "x^" + power + "+c");
+    }
+    return b;
+
+
 }
+function isTrigFunction(input){
+    if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot"))
+        return true;
+    else
+        return false;
+}
+function getmenumber(input,power)
+{
+    var total = '';
+    for(let q = 0; q < power.length; q++){
+        total = total + input[power[q]];
+    }
+    return total;
+}
+//gets the index of all the numbers that x will be to the power of
+function power_getter(input, x){
+    let results = [];
+    
+    for(let i = x + 2; i < input.length; i++){
+        if(!isNaN(input[i])){
+            results.push(i);
+        }
+        else{
+            return results;
+        }
+    }
+    return results;
+}
+//gets index of constants
+function constant_getter(input, x){
+    let results = [];
+    for(let i = x - 1; i >= 0; i--){
+        if(!isNaN(input[i])){
+            results.push(i);
+        }
+        else{
+            return results;
+        }
+    }
+    return results;
+}
+
+
+
 function epicpictures(){
     const x = [
         "./Assets/Leib1.jpg",
