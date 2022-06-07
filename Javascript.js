@@ -31,11 +31,9 @@ function changeinput() {
     console.log(findingvalue);
 }
 function beeaans() { 
-
     var Beanss = String;
     Beanss = document.getElementById('input');
     Beanss = Beanss.value;
-    
     if (checkInput(Beanss))
     {
         document.getElementById("beans1").innerText = "f(x)=";
@@ -157,7 +155,7 @@ function derivitive(input)
         if (a.indexOf(")") < a.indexOf("("))
             return "wrong order of brackets";
         var q = (a.indexOf("("));
-        var intq = (parseInt(q));
+        var intq = (parseFloat(q));
         var l = 1  
         while (!(l == 0)){
             intq ++
@@ -170,10 +168,8 @@ function derivitive(input)
         arrayoffunctions.push(l);
         var p = arrayoffunctions.indexOf(l);
         var k = ("{" + p + "}");
-        if (l === "(x)")
-            a = a.replace("(x)", "x");
-        else
-            a = a.replace(l, k);
+        a = a.replace(l, k);
+        console.log("a is equal to : " + a);
     }
     if (a.includes("+")) {
         b = "";
@@ -234,8 +230,9 @@ function derivitive(input)
         dpartb = derivitive(partb);
         b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
-    else if ((a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")) && a.includes("x")){
+    else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
         if (a.includes("sin")){
+            console.log("a is equal to " + a)
             if (a.includes("{")){
                 a = a.replace("sin", "cos");
                 var m = a.indexOf("{");
@@ -353,7 +350,6 @@ function derivitive(input)
             var p = arrayoffunctions[o];
             var l = derivitive(p);
         }
-        
         else{
             var p = a.substring((a.indexOf("ln")) + 2);
             l = derivitive(p);
@@ -370,10 +366,10 @@ function derivitive(input)
             var locationofsign = 0;
             locationofsign = a.indexOf("^");
             power = a.substring((locationofsign + 1));
-            intpower = parseInt(power);
+            intpower = parseFloat(power);
             if (locationofsign != 1) {
                 constant = a.substring(0, (locationofsign - 1));
-                intconstant = parseInt(constant);
+                intconstant = parseFloat(constant);
                 intconstant = (intconstant * intpower);
                 constant = intconstant.toString();
             }
@@ -400,10 +396,10 @@ function derivitive(input)
             var v = o.length;
             locationofsign = a.indexOf("^");
             power = a.substring((locationofsign + 1));
-            intpower = parseInt(power);
+            intpower = parseFloat(power);
             if (a.indexOf("{") != 0) {
                 constant = a.substring(0, (locationofsign - v));
-                intconstant = parseInt(constant);
+                intconstant = parseFloat(constant);
                 intconstant = (intconstant * intpower);
                 constant = intconstant.toString();
             }
@@ -412,7 +408,7 @@ function derivitive(input)
             }
             intpower = (intpower - 1);
             power = intpower.toString();
-            if (power > 1)
+            if (power !== 1)
                 b = (constant + o + "^" + power + "*" + derivitive(o));
             else
                 b = (constant + o + "*" + derivitive(o))
@@ -543,7 +539,7 @@ function integral(input)
         return input + "x";
     else if(power == null && isTrigFunction(input) == false){
         power = 2;
-        constant = parseInt(constant);
+        constant = parseFloat(constant);
         constant = (constant / power);
         b = (constant + "x^" + power );
     }
@@ -628,6 +624,24 @@ function epicpictures(){
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
 }
 function calculate(input){
+    function sinner(input) {
+        console.log("sinnersays" + input);
+        let b = 1.0;
+        input = parseFloat(input);
+        while (input > 360)
+            input = (input - 360);
+        while (input < 0)
+            input = (input + 360);
+        if (input > 180){
+            input = (input - 180);
+            b = -1;
+        }
+        x = input;
+        console.log("sinnersays" + input);
+        b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
+        console.log("sinnersays" + b);
+        return b;
+    }
     console.log("inputting" + input);
     var a = String;
     a = input.toString();
@@ -638,7 +652,7 @@ function calculate(input){
         if (a.indexOf(")") < a.indexOf("("))
             return "wrong order of brackets";
         var q = (a.indexOf("("));
-        var intq = (parseInt(q));
+        var intq = (parseFloat(q));
         var intq2 = intq;
         var l = 1  
         while (!(l == 0)){
@@ -747,7 +761,7 @@ function calculate(input){
         var s = a.indexOf("^");
         var e = a.substring(0, (s - 1));
         var f = a.substring((s + 1))
-        var j = parseInt(f);
+        var j = parseFloat(f);
         while (j > 0){
             b = b * valueofx
             j --
@@ -775,26 +789,8 @@ function calculate(input){
                 b = (valueofx * 1);
     }
     else{
-        b = parseInt(input);
+        b = parseFloat(input);
     }
     console.log("outputting" + b);
     return (b);
-}
-function sinner(input) {
-console.log("sinnersays" + input);
-let b = 1.0;
-input = parseFloat(input);
-while (input > 360)
-    input = (input - 360);
-while (input < 0)
-    input = (input + 360);
-if (input > 180){
-    input = (input - 180);
-    b = -1;
-}
-x = input;
-console.log("sinnersays" + input);
-b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
-console.log("sinnersays" + b);
-return b;
 }
