@@ -134,10 +134,9 @@ function bakedbeans(){
             document.getElementById("beans3").innerText = "F(" + valueofx + ")=";
             document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
         } 
-        document.getElementById("beans4").innerText = (Beanssses);
+        document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
         epicpictures();
-        console.log(Term.InsertMultipleSymbol(Beanssses))
     }
     else{
         document.getElementById("beans3").innerText = "Invalid Input";
