@@ -421,21 +421,84 @@ function Salsfunfacts(){
     return x;
 }
 
-
+let Operator = {
+    addition : 0,
+    subtraction : 1,
+    multiplacation : 2,
+    division : 3,
+    exponent : 4
+}
 
 class Equasion {
 
-    constructor(){}
+    constructor( isEvlauated, operator, ...terms){
+        this.isEvlauated = isEvlauated
+        this.operator = operator
+        this.terms = terms
+    }
     
+    static split(funcInput, bedmasIntentifier = 0){
+
+        let inBrackets = 0 // if greater than 1 you are in brackets
+        let lastOperatorIndex = 0
+        let splitTerms = []
+        let bedmasDict = ["+","-","*","/","^",null]
+
+        for (i = 0; i < funcInput.length; i++){
+
+            let currentChar = funcInput[i]
+
+            //might be issure where there is a bracket at the very start of the funcInput so it is never split anywhere
+
+            if (currentChar == "("){
+                inBrackets++
+            }
+
+            if (currentChar == ")"){
+                inBrackets--
+            }
+
+            if(currentChar == bedmasDict[bedmasIntentifier] && inBrackets <= 0){
+                pushToSplitTerms(currentChar);
+            }
+
+            if(currentChar == bedmasDict[bedmasIntentifier + 1] && inBrackets <= 0){
+                pushToSplitTerms(currentChar);
+            }
+        }
+
+        function pushToSplitTerms(currentChar) {
+            splitTerms.push(funcInput.substring(lastOperatorIndex, currentChar));
+            lastOperatorIndex = i;
+        }
+
+        for (i = 0; i < splitTerms.length; i++){
+            
+            if (splitTerms[i]){
+                
+            }
+        }
+    }
+
+    evaluate(){
+        
+        for (i = 0; i < this.terms.length; i++){
+
+            if (!terms[i].isEvlauated){
+                terms[i].evaluate()
+            }
+        }
+
+        
+    }
 }
 
 class Term {
 
-    constructor(termConstant, exponent, base, evaluationPriority){
+    constructor(termConstant, exponent, base){
         this.termConstant = termConstant
         this.exponent = exponent
         this.base = base
-        this.evaluaionPriority = evaluationPriority
     }
 
     StoreFunctionValues(inputFunction) {
