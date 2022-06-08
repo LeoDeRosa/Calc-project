@@ -111,6 +111,15 @@ function bakedbeans(){
             Beanssses = Beanssses.replace("q","-cos");
             Beanssses = Beanssses.replace("z","sin");
         }
+        if (findingvalue){
+            var r = document.getElementById('input2');
+            r = r.value;
+            valueofx = parseFloat(r);
+            document.getElementById('beans8').innerText = ("=" + (intcalculator(Beanss, 0, 5, 100)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses));
+            document.getElementById("beans3").innerText = "F(" + valueofx + ")=";
+            document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
+        } 
         document.getElementById("beans4").innerText = (Beanssses);
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
         epicpictures();
