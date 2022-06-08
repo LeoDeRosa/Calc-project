@@ -439,32 +439,46 @@ class Equasion {
     
     static split(funcInput, bedmasIntentifier = 0){
 
-        let inBrackets = 0 // if greater than 1 you are in brackets
+        let inBrackets = 0 // if greater than 0 you are in brackets
         let lastOperatorIndex = 0
         let splitTerms = []
-        let bedmasDict = ["+","-","*","/","^",null]
+        let bedmasList = ["+","-","*","/","^",null]
+        let varList = ["x"]
+        //let isLetter = False;
 
         for (i = 0; i < funcInput.length; i++){
 
             let currentChar = funcInput[i]
+            let rightBracketIndex = 0
 
-            //might be issure where there is a bracket at the very start of the funcInput so it is never split anywhere
+            //might be issue where there is a bracket at the very start of the funcInput so it is never split anywhere
 
             if (currentChar == "("){
+
+                if (inBrackets = 0){
+                    rightBracketIndex = i 
+                }
+
                 inBrackets++
             }
 
             if (currentChar == ")"){
+
                 inBrackets--
+
+                if (inBrackets = 0){
+                    splitTerms.push(funcInput.substring(rightBracketIndex - 1, i + 1))
+                }
             }
 
-            if(currentChar == bedmasDict[bedmasIntentifier] && inBrackets <= 0){
+            if(currentChar == bedmasList[bedmasIntentifier] && inBrackets <= 0){
                 pushToSplitTerms(currentChar);
             }
 
-            if(currentChar == bedmasDict[bedmasIntentifier + 1] && inBrackets <= 0){
+            if(currentChar == bedmasList[bedmasIntentifier + 1] && inBrackets <= 0){
                 pushToSplitTerms(currentChar);
             }
+
         }
 
         function pushToSplitTerms(currentChar) {
@@ -474,8 +488,38 @@ class Equasion {
 
         for (i = 0; i < splitTerms.length; i++){
             
-            if (splitTerms[i]){
-                
+            let currentTerm = splitTerms[i]
+            let numOperators = 0
+            let numVaribles = 0
+            let numNumbers = 0
+            let isInNumber = true
+
+
+            for (e = 0; e < currentTerm.length; e++){
+                if (bedmasList.includes(currentTerm[e])){
+                    numOperators++
+                }
+
+                if (varList.includes(currentTerm[e])){
+                    numVaribles++
+                }
+
+                if (typeof(parseInt(currentTerm[e])) === "number"){
+                    if (!isInNumber){
+                        numNumbers++
+                    }
+
+                    isInNumber = true
+                }
+
+                else{
+                    isInNumber = false
+                }
+
+            }
+
+            if ((numNumbers + numVaribles) && numOperators <= 1){
+
             }
         }
     }
@@ -487,9 +531,7 @@ class Equasion {
             if (!terms[i].isEvlauated){
                 terms[i].evaluate()
             }
-        }
-
-        
+        }        
     }
 }
 
