@@ -13,6 +13,20 @@ class Term {
     StoreFunctionValues(inputFunction) {
         
     }
+
+    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
+        let output = String;
+        const things = ["x", "s", "c", "l","t"]
+        for(let i = 0; i <= input.length; i++){
+            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
+                console.log(i)
+                let a = input.slice(0,i);
+                let b = input.slice(i);
+                output = (a + "*" + b);
+            }
+        }
+        return output;
+    }
 }
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
@@ -123,6 +137,7 @@ function bakedbeans(){
         document.getElementById("beans4").innerText = (Beanssses);
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
         epicpictures();
+        console.log(Term.InsertMultipleSymbol(Beanssses))
     }
     else{
         document.getElementById("beans3").innerText = "Invalid Input";
