@@ -562,11 +562,13 @@ function integral(input)
         {
             b = (constant + "/" + power  + "x^" + power);
         }
+        if(xisbelow(input,x)){
+            b = input.replace("/","ln")
+        }
 
         return b;
 
     }
-
 
     if (isTrigFunction(input)){
         if(input.includes("sin")){
@@ -577,17 +579,25 @@ function integral(input)
         }
     }
 
+
     //straight up number
     if(input == 0 || input == '' )
         return "";
     else if(!input.includes("x"))
         return input + "x";
     else if(power == null && isTrigFunction(input) == false){
-        power = 2;
-        constant = parseFloat(constant);
-        constant = (constant / power);
-        b = (constant + "x^" + power );
+        if(xisbelow(input,x)){
+            b = input.replace("/","ln")
+        }
+        else{
+            power = 2;
+            constant = parseFloat(constant);
+            constant = (constant / power);
+            b = (constant + "x^" + power );
+        }
     }
+
+    
     return b;
 
     function isTrigFunction(input){
@@ -596,6 +606,13 @@ function integral(input)
             return true;
         else
             return false;
+    }
+    function xisbelow(input,x){
+        for(let i = x - 1; i >= 0; i--){
+            if (input[i] == "/")
+                return true;
+        }
+        return false;
     }
 }
 function getmenumber(input,power)
