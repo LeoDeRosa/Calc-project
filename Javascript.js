@@ -478,6 +478,39 @@ function integral(input)
     var constant = constant_getter(input,x);
     constant = constant.reverse();
     constant = getmenumber(input,constant);
+    //addition
+    if (input.includes("+")) {
+        {
+            b = '';
+            var x = String;
+            const chunksofa = input.split("+");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "+");
+                x = (chunksofa[q]);
+                console.log(x)
+                x = integral(x);
+                b = (b + x);
+            }
+        }
+    }
+
+    //subtractions
+    else if (input.includes("-")) {
+        {
+            b = '';
+            var x = String;
+            const chunksofa = input.split("-");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "-");
+                x = (chunksofa[q]);
+                x = integral(x);
+                b = (b + x);
+            }
+        }
+    }
+
     if (constant == '')
         constant = 1;
     if(input.includes("x") && input.includes("^"))
@@ -485,8 +518,7 @@ function integral(input)
         //power is the power for x, x is the index of x
         var power = power_getter(input,x);
         power = getmenumber(input,power);
-
-        //addition
+        power++;
         if (input.includes("+")) {
             {
                 b = '';
@@ -518,8 +550,14 @@ function integral(input)
                 }
             }
         }
-
-        
+    
+        //other trig stuff
+        else if(isTrigFunction(input)){
+            if(input.includes("sec^2"))
+                b = input.replace("sec^2","tan")
+            else if(input.includes("csc^2"))
+                b = input.replace("csc^2","-cot")
+        }
         else
         {
             b = (constant + "/" + power  + "x^" + power);
@@ -528,15 +566,14 @@ function integral(input)
         return b;
 
     }
+
+
     if (isTrigFunction(input)){
         if(input.includes("sin")){
             b = input.replace("sin","q");
         }
-        else if (input.includes("cos")){  
+        else if(input.includes("cos")){  
             b = input.replace("cos","z");
-        }
-        else{
-            return "we are way too dumb for those trig functions";
         }
     }
 
