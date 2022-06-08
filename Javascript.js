@@ -422,8 +422,15 @@ function Salsfunfacts(){
 }
 
 
+
+class Equasion {
+
+    constructor(){}
+    
+}
+
 class Term {
-    /*
+
     constructor(termConstant, exponent, base, evaluationPriority){
         this.termConstant = termConstant
         this.exponent = exponent
@@ -436,7 +443,6 @@ class Term {
         this.termConstant = constant_getter(inputFunction, xIndex)
         this.exponent = power_getter(inputFunction, xIndex)
     }
-    */
 }
 
 function simplify(input)
@@ -461,19 +467,27 @@ function simplify(input)
 
     let storedPolynomials = []
 
-    let polyIndex = 0
+    let numRightBrackets = rightBracketIndexes.length
+    let numLeftBrackets = leftBracketIndexes.length
 
-    for (i = 0; i < rightBracketIndexes.length; i++){
+    for (i = 0; i < numRightBrackets; i++){
 
-        for (e = 0; e < leftBracketIndexes.length; e++){
+        for (e = 0; e < numLeftBrackets; e++){
 
-            if (rightBracketIndexes[i] < leftBracketIndexes[e]) {
-
+            if (rightBracketIndexes[i] < leftBracketIndexes[e]) { 
+                /*
+                If the index of the first closed bracket is greater than the leftbracketIndex
+                than the variable current poly will be set to the value of the ending at the first closed bracket and 
+                starting at the first opening bracket the next set for brackets should then be evaluated.
+                */
                 let currentPoly = input.substring(leftBracketIndexes[e - 1] + 1, rightBracketIndexes[i])
                 storedPolynomials.push(currentPoly)
-                input.replace(currentPoly, "{" + polyIndex + "}")
-                
-                polyIndex++
+
+                leftBracketIndexes.splice(e-1, 1)
+                rightBracketIndexes.splice(i,1)
+
+                console.log(leftBracketIndexes)
+                console.log(rightBracketIndexes)
             }
         }
     }
