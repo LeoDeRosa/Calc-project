@@ -60,4 +60,5 @@ img{
     width: 12em;
     border-radius: 5px;
     margin: 2em;
+    visibility: hidden;
 }

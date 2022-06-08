@@ -127,7 +127,6 @@ function checkInput(input){
     const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
     const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^","log"]
     var p = Boolean;
-    var u = String;
     for (let x = 0; x < (input.length);) {
         p = false;
         if ((badInputs.indexOf(input.charAt(x))) != -1){
@@ -622,6 +621,7 @@ function epicpictures(){
     }
     document.getElementById("img").src = z;
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
+    img.style.visibility = 'visible';
 }
 function calculate(input){
     function sinner(input) {
@@ -870,4 +870,16 @@ function calculate(input){
     }
     console.log("outputting" + b);
     return (b);
+}
+function intcalculator(input, begin, end, accuracy){
+    var length = end - begin;
+    var sizeofslices = (length / accuracy);
+    var currentslice = begin;
+    var b = 0;
+    while (end > currentslice) {
+        valueofx = currentslice;
+        b = (b + (sizeofslices * calculate(input)));
+        currentslice = (currentslice + sizeofslices);
+    }
+    return b;
 }
