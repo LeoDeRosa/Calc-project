@@ -957,6 +957,7 @@ function intcalculator(input, begin, end, accuracy){
     var currentslice = begin;
     var b = 0;
     while (end > currentslice) {
+        console.log("leo has a very small cock")
         valueofx = currentslice;
         b = (b + (sizeofslices * calculate(input)));
         currentslice = (currentslice + sizeofslices);
