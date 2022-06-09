@@ -129,6 +129,9 @@ class Term {
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
         let output = String;
         const things = ["x", "s", "c", "l","t"]
+        output = input;
+        if(input == "+c")
+            return 0;
         for(let i = 0; i <= input.length; i++){
             if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
                 console.log(i)
