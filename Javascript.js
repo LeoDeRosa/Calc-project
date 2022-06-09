@@ -1117,6 +1117,7 @@ function calculate(input){
 function intcalculator(input, begin, end, accuracy){
     var length = end - begin;
     var sizeofslices = (length / accuracy);
+    print("size of slices = " + sizeofslices);
     var currentslice = begin;
     var b = 0;
     while (end > currentslice) {
@@ -1126,4 +1127,7 @@ function intcalculator(input, begin, end, accuracy){
         currentslice = (currentslice + sizeofslices);
     }
     return b;
+}
+function print(x){
+    console.log(x)
 }
