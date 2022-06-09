@@ -1,9 +1,33 @@
 const arrayoffunctions = [];
 var findingvalue = false;
 var valueofx;
+class Term {
 
+    constructor(termConstant, exponent, base){
 
+        this.termConstant = termConstant
+        this.exponent = exponent
+        this.base = base
+    }
 
+    StoreFunctionValues(inputFunction) {
+        
+    }
+
+    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
+        let output = String;
+        const things = ["x", "s", "c", "l","t"]
+        for(let i = 0; i <= input.length; i++){
+            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
+                console.log(i)
+                let a = input.slice(0,i);
+                let b = input.slice(i);
+                output = (a + "*" + b);
+            }
+        }
+        return output;
+    }
+}
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -15,15 +39,15 @@ function changeinput() {
     document.getElementById("findvalueat").innerText = "";
     document.getElementById("input2").type = "hidden";
     findingvalue = false;
+    document.getElementById('beans8').innerText = ("");
+    document.getElementById('beans9').innerText = ("");
     }
     console.log(findingvalue);
 }
 function beeaans() { 
-
     var Beanss = String;
     Beanss = document.getElementById('input');
     Beanss = Beanss.value;
-    
     if (checkInput(Beanss))
     {
         document.getElementById("beans1").innerText = "f(x)=";
@@ -84,19 +108,38 @@ function bakedbeans(){
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
         Beanssses = integral(Beanss);
-        /*while (Beanssses.includes("{")) {
+        Beanssses = Beanssses + "+c"
+
+        while (Beanssses.includes("{")) {
             var t = Beanssses.indexOf("{");
             var y = Beanssses.indexOf("}");
             var d = Beanssses.substring((t + 1), y);
             var bigd = parseInt(d);
             var i = arrayoffunctions[bigd];
             Beanssses = Beanssses.replace(("{" + d + "}"), i);
-        }*/
+        }
         while (Beanssses.includes("@")){
             Beanssses = Beanssses.replace("@", "-")
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
-        document.getElementById("beans4").innerText = (Beanssses);
+        while (Beanssses.includes("q") || Beanssses.includes("z")){
+            Beanssses = Beanssses.replace("q","-cos");
+            Beanssses = Beanssses.replace("z","sin");
+        }
+        if (findingvalue){
+            var r = document.getElementById('input2');
+            r = r.value;
+            const coolarray = r.split(",");
+            var s = coolarray[0];
+            var e = coolarray[1];
+            var x = coolarray[2];
+            valueofx = parseFloat(r);
+            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s, e, x));
+            document.getElementById("beans3").innerText = "F(" + e + ")=";
+            document.getElementById("beans1").innerText = "f(" + e + ")=";
+        } 
+        document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
         epicpictures();
     }
@@ -110,9 +153,8 @@ function bakedbeans(){
 }
 function checkInput(input){
     const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
-    const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^x","log"]
+    const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^","log"]
     var p = Boolean;
-    var u = String;
     for (let x = 0; x < (input.length);) {
         p = false;
         if ((badInputs.indexOf(input.charAt(x))) != -1){
@@ -131,20 +173,16 @@ function checkInput(input){
 }
 function derivitive(input)
 {
-//  "a" is the input 
     var a = String;
     a = input;
-//  "b" is the output 
     var b = String;
-
-    //chain rule
     while (a.includes("(")){
         if (!a.includes("(") && (a.includes(")")))
             return "error wrong amount of brackets";
         if (a.indexOf(")") < a.indexOf("("))
             return "wrong order of brackets";
         var q = (a.indexOf("("));
-        var intq = (parseInt(q));
+        var intq = (parseFloat(q));
         var l = 1  
         while (!(l == 0)){
             intq ++
@@ -157,12 +195,9 @@ function derivitive(input)
         arrayoffunctions.push(l);
         var p = arrayoffunctions.indexOf(l);
         var k = ("{" + p + "}");
-        if (l === "(x)")
-            a = a.replace("(x)", "x");
-        else
-            a = a.replace(l, k);
+        a = a.replace(l, k);
+        console.log("a is equal to : " + a);
     }
-    //sum rule
     if (a.includes("+")) {
         b = "";
         {
@@ -177,7 +212,6 @@ function derivitive(input)
             }
         }
     }
-    //difference rule
     else if (a.includes("-")) {
         {
             var x = String;
@@ -192,7 +226,6 @@ function derivitive(input)
             }
         }
     }
-    //product rule
     else if (a.includes("*")){
         const chunksofathesecond = a.split("*");
         var insert = String;
@@ -212,7 +245,6 @@ function derivitive(input)
             b = (b + insert);
         }
     }
-    //division rule
     else if (a.includes("/")){
         var positionofsign = a.indexOf("/");
         var parta = String;
@@ -225,9 +257,9 @@ function derivitive(input)
         dpartb = derivitive(partb);
         b = ("(" + dparta + "*" + partb + "-" + dpartb + "*" + parta + ")/(" + partb + ")^2");
     }
-    //trig rules
     else if (a.includes("sin") || a.includes("cos") ||  a.includes("tan") ||  a.includes("csc") ||  a.includes("sec") ||  a.includes("cot")){
         if (a.includes("sin")){
+            console.log("a is equal to " + a)
             if (a.includes("{")){
                 a = a.replace("sin", "cos");
                 var m = a.indexOf("{");
@@ -322,7 +354,35 @@ function derivitive(input)
             }
         }
     }
-    //power rule 
+    else if (a.includes("e^")){
+        if (a.includes("{")){
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            var p = arrayoffunctions[o];
+            var l = derivitive(p);
+        }
+        else{
+            var p = a.substring((a.indexOf("^")) + 1);
+            l = derivitive(p);
+        }
+        return ("e^" + p + "*" + l);
+            
+    }
+    else if (a.includes("ln")){
+        if (a.includes("{")){
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            var p = arrayoffunctions[o];
+            var l = derivitive(p);
+        }
+        else{
+            var p = a.substring((a.indexOf("ln")) + 2);
+            l = derivitive(p);
+        }
+        return (l + "/" + p);
+    }
     else {
         if (a.includes("^") && a.includes("x")){
             var constant = String;
@@ -333,10 +393,10 @@ function derivitive(input)
             var locationofsign = 0;
             locationofsign = a.indexOf("^");
             power = a.substring((locationofsign + 1));
-            intpower = parseInt(power);
+            intpower = parseFloat(power);
             if (locationofsign != 1) {
                 constant = a.substring(0, (locationofsign - 1));
-                intconstant = parseInt(constant);
+                intconstant = parseFloat(constant);
                 intconstant = (intconstant * intpower);
                 constant = intconstant.toString();
             }
@@ -363,10 +423,10 @@ function derivitive(input)
             var v = o.length;
             locationofsign = a.indexOf("^");
             power = a.substring((locationofsign + 1));
-            intpower = parseInt(power);
+            intpower = parseFloat(power);
             if (a.indexOf("{") != 0) {
                 constant = a.substring(0, (locationofsign - v));
-                intconstant = parseInt(constant);
+                intconstant = parseFloat(constant);
                 intconstant = (intconstant * intpower);
                 constant = intconstant.toString();
             }
@@ -375,7 +435,7 @@ function derivitive(input)
             }
             intpower = (intpower - 1);
             power = intpower.toString();
-            if (power > 1)
+            if (power !== 1)
                 b = (constant + o + "^" + power + "*" + derivitive(o));
             else
                 b = (constant + o + "*" + derivitive(o))
@@ -609,57 +669,56 @@ function simplify(input)
 
     return input
 }
-
 function integral(input)
 {
+
     //b is the output
     var b = String;
+
+    var x = input.indexOf("x");
+    var constant = constant_getter(input,x);
+    constant = constant.reverse();
+    constant = getmenumber(input,constant);
+    //addition
+    if (input.includes("+")) {
+        {
+            b = '';
+            var x = String;
+            const chunksofa = input.split("+");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "+");
+                x = (chunksofa[q]);
+                x = integral(x);
+                b = (b + x);
+            }
+        }
+    }
+
+    //subtractions
+    else if (input.includes("-")) {
+        {
+            b = '';
+            var x = String;
+            const chunksofa = input.split("-");
+            for(var q=0; q<chunksofa.length;q++){
+                if (q != 0)
+                    b = (b + "-");
+                x = (chunksofa[q]);
+                x = integral(x);
+                b = (b + x);
+            }
+        }
+    }
+
+    if (constant == '')
+        constant = 1;
     if(input.includes("x") && input.includes("^"))
     {
         //power is the power for x, x is the index of x
-        var x = input.indexOf("x");
         var power = power_getter(input,x);
         power = getmenumber(input,power);
-
-        var constant = constant_getter(input,x);
-        constant = constant.reverse();
-        constant = getmenumber(input,constant);
-        //adds up all the numbers for the power, 
-        function getmenumber(input,power)
-        {
-            var total = '';
-            for(let q = 0; q < power.length; q++){
-                total = total + input[power[q]];
-            }
-            return total;
-        }
-        //gets the index of all the numbers that x will be to the power of
-        function power_getter(input, x){
-            let results = [];
-            for(let i = x + 2; i < input.length; i++){
-                if(!isNaN(input[i])){
-                    results.push(i);
-                }
-                else{
-                    return results;
-                }
-            }
-            return results;
-        }
-        //gets index of constants
-        function constant_getter(input, x){
-            let results = [];
-            for(let i = x - 1; i >= 0; i--){
-                if(!isNaN(input[i])){
-                    results.push(i);
-                }
-                else{
-                    return results;
-                }
-            }
-            return results;
-        }
-        //addition
+        power++;
         if (input.includes("+")) {
             {
                 b = '';
@@ -690,48 +749,103 @@ function integral(input)
                 }
             }
         }
-
-        console.log("power" + power)
-        console.log("constant" + constant)
-        if(constant == '')
-        {
-            power = +power + 1;
-            b = ("1/" + power  + "x^" + power + "+c");
-        }
-        else if(power.length === 0)
-        {
-            power = 2;
-            constant = parseInt(constant);
-            constant = (constant / power);
-            console.log("k we are here"); //ERROR ON INPUT 2x 
-            b = (constant + "/" + power  + "x^" + power + "+c");
+    
+        //other trig stuff
+        else if(isTrigFunction(input)){
+            if(input.includes("sec^2"))
+                b = input.replace("sec^2","tan")
+            else if(input.includes("csc^2"))
+                b = input.replace("csc^2","-cot")
         }
         else
         {
-            power = +power + 1;
-            b = (constant + "/" + power  + "x^" + power + "+c");
+            b = (constant + "/" + power  + "x^" + power);
+        }
+        if(xisbelow(input,x)){
+            b = input.replace("/","ln")
         }
 
         return b;
+
     }
-    else if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot")){
+
+    if (isTrigFunction(input)){
         if(input.includes("sin")){
-
+            b = input.replace("sin","q");
         }
-        else if (input.includes("cos")){
-
+        else if(input.includes("cos")){  
+            b = input.replace("cos","z");
         }
-        else{
-            return " we are way too dumb for those trig functions";
-        }
-
     }
+
 
     //straight up number
     if(input == 0 || input == '' )
         return "";
     else if(!input.includes("x"))
         return input + "x";
+    else if(power == null && isTrigFunction(input) == false){
+        if(xisbelow(input,x)){
+            b = input.replace("/","ln")
+        }
+        else{
+            power = 2;
+            constant = parseFloat(constant);
+            constant = (constant / power);
+            b = (constant + "x^" + power );
+        }
+    }
+
+    
+    return b;
+
+    function isTrigFunction(input){
+        //checks if the input includes a trig function 
+        if (input.includes("sin") || input.includes("cos") ||  input.includes("tan") ||  input.includes("csc") ||  input.includes("sec") ||  input.includes("cot"))
+            return true;
+        else
+            return false;
+    }
+    function xisbelow(input,x){
+        for(let i = x - 1; i >= 0; i--){
+            if (input[i] == "/")
+                return true;
+        }
+        return false;
+    }
+}
+function getmenumber(input,power)
+{
+    var total = '';
+    for(let q = 0; q < power.length; q++){
+        total = total + input[power[q]];
+    }
+    return total;
+}
+function power_getter(input, x){
+    let results = [];
+    
+    for(let i = x + 2; i < input.length; i++){
+        if(!isNaN(input[i])){
+            results.push(i);
+        }
+        else{
+            return results;
+        }
+    }
+    return results;
+}
+function constant_getter(input, x){
+    let results = [];
+    for(let i = x - 1; i >= 0; i--){
+        if(!isNaN(input[i])){
+            results.push(i);
+        }
+        else{
+            return results;
+        }
+    }
+    return results;
 }
 function epicpictures(){
     const x = [
@@ -768,8 +882,27 @@ function epicpictures(){
     }
     document.getElementById("img").src = z;
     document.getElementById("Salsfunfactbox").style.border = '3px solid black';
+    img.style.visibility = 'visible';
 }
 function calculate(input){
+    function sinner(input) {
+        console.log("sinnersays" + input);
+        let b = 1.0;
+        input = parseFloat(input);
+        while (input > 360)
+            input = (input - 360);
+        while (input < 0)
+            input = (input + 360);
+        if (input > 180){
+            input = (input - 180);
+            b = -1;
+        }
+        x = input;
+        console.log("sinnersays" + input);
+        b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
+        console.log("sinnersays" + b);
+        return b;
+    }
     console.log("inputting" + input);
     var a = String;
     a = input.toString();
@@ -780,7 +913,7 @@ function calculate(input){
         if (a.indexOf(")") < a.indexOf("("))
             return "wrong order of brackets";
         var q = (a.indexOf("("));
-        var intq = (parseInt(q));
+        var intq = (parseFloat(q));
         var intq2 = intq;
         var l = 1  
         while (!(l == 0)){
@@ -796,53 +929,50 @@ function calculate(input){
         var z = calculate(h);
         a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
-    console.log("result of epic fuction = " + a);
-    //sum 
     if (a.includes("+")) {
         {
-            var x = 0;
+            let x = 0;
             const chunksofa = a.split("+");
-            for(var q=0; q<chunksofa.length;q++){
+            console.log(chunksofa);
+            for(let q=0; q<chunksofa.length; q++){
+                x = 0.0;
                 x = calculate(chunksofa[q]);
-                b = b + x;
+                b = (b + x);
             }
         }
     }
-    //difference 
     else if (a.includes("-")) {
         {
-            var x = 0;
+            let x = 0;
             const chunksofa = a.split("-");
-            for(var q=0; q<chunksofa.length;q++){
+            for(let q=0; q<chunksofa.length; q++){
                 x = calculate(chunksofa[q])
                 b = b - x;
             }
         }
     }
-    //product
-    if (a.includes("*")) {
+    else if (a.includes("*")) {
         {
-            var x = 0;
+            let x = 1;
+            b = 1;
             const chunksofa = a.split("*");
-            for(var q=0; q<chunksofa.length;q++){
+            for(let q=0; q<chunksofa.length; q++){
                 x = calculate(chunksofa[q])
                 b = b * x;
             }
-            alert;
         }
     }
-    //quotient 
     else if (a.includes("/")) {
         {
-            var x = 0;
+            let x = 0;
             const chunksofa = a.split("/");
-            for(var q=0; q<chunksofa.length;q++){
+            b = calculate(chunksofa[0]);
+            for(let q=1; q<chunksofa.length; q++){
                 x = calculate(chunksofa[q])
                 b = b / x;
             }
         }
     }
-    //sine
     else if (a.includes("sin")) {
         var t = a.indexOf("sin");
         var p;
@@ -857,7 +987,6 @@ function calculate(input){
             g = 1;
         b = (sinner(p) * g)
     }
-    //cosine
     else if (a.includes("cos")) {
         var t = a.indexOf("cos");
         var p;
@@ -874,60 +1003,145 @@ function calculate(input){
         if (g == "")
             g = 1;
         var w = calculate(p);
-        b = (sinner(w - 90) * g)
+        b = (sinner(w + 90) * g)
+    }
+    else if (a.includes("tan")){
+        var t = a.indexOf("tan");
+        var p;
+        if (a.includes("{")) {
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            p = arrayoffunctions[o];
+        }
+        else{
+            p = a.substring((a.indexOf("tan")) + 3)
+        }
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        var w = calculate(p);
+        b = (g * (sinner(w)) / (sinner(w + 90)))
+    }
+    else if (a.includes("csc")) {
+        var t = a.indexOf("csc");
+        var p;
+        p = a.substring((a.indexOf("csc")) + 3)
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        if (a.includes("x"))
+            var p = calculate(p);
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        b = (g / sinner(p))
+    }
+    else if (a.includes("sec")) {
+        var t = a.indexOf("sec");
+        var p;
+        p = a.substring((a.indexOf("sec")) + 3)
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        if (a.includes("x"))
+            var p = calculate(p);
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        b = (g / sinner(p + 90))
+    }
+    else if (a.includes("cot")){
+        var t = a.indexOf("cot");
+        var p;
+        if (a.includes("{")) {
+            var m = a.indexOf("{");
+            var n = a.indexOf("}");
+            var o = a.substring((m+1), n);
+            p = arrayoffunctions[o];
+        }
+        else{
+            p = a.substring((a.indexOf("cot")) + 3)
+        }
+        var g = ("" + a.substring(0, t));
+        if (g == "")
+            g = 1;
+        var w = calculate(p);
+        b = (g / (sinner(w)) / (sinner(w + 90)))
+    }
+    else if (a.includes("e^")){
+        var o = a.indexOf("e^");
+        var u = a.substring((o + 1));
+        if (o == 0){
+            var y = 1.0;
+        }
+        else{
+            var y = a.substring(0, o);
+        }
+        var p = calculate(u);
+        b = (y * (2.718281828459045 ** p))
     }
     else if (a.includes("x") && (a.includes("^"))){
-        b = 1.0;
-        s = a.indexOf("^");
-        e = a.substring(0, (s - 1));
-        f = a.substring((s + 1))
-        j = parseFloat(f);
+        var b = 1.0;
+        var s = a.indexOf("^");
+        var e = a.substring(0, (s - 1));
+        var f = a.substring((s + 1))
+        var j = parseFloat(f);
         while (j > 0){
             b = b * valueofx
             j --
         }
-        b = b * e;
+        if (s != 1)
+            b = b * e;
+    }
+    else if (a.includes("{") && (a.includes("^"))){
+        var b = 1.0;
+        var s = a.indexOf("^");
+        var e = a.substring(0, (s - 1));
+        var f = a.substring((s + 1))
+        var j = parseFloat(f);
+        while (j > 0){
+            b = b * valueofx
+            j --
+        }
+        if (s != 1)
+            b = b * e;
     }
     else if (a.includes("^")){
-        b = 1.0;
-        s = a.indexOf("^");
-        e = a.substring(0, (s));
-        f = a.substring((s + 1))
-        j = parseFloat(f);
+        var b = 1.0;
+        var s = a.indexOf("^");
+        var e = a.substring(0, (s));
+        var f = a.substring((s + 1))
+        var j = parseFloat(f);
         while (j > 0){
             b = b * e
             j --
         }
     }
     else if (a.includes("x")){
-        console.log("right spot")
             var r = a.indexOf("x");
             var c = a.substring(0, r);
             if (c != "")
-            b = (valueofx * parseFloat(c)); 
+                b = (valueofx * parseFloat(c)); 
             else
                 b = (valueofx * 1);
     }
     else{
-        b = parseInt(input);
+        b = parseFloat(input);
     }
     console.log("outputting" + b);
     return (b);
 }
-function sinner(input) {
-console.log("sinnersays" + input);
-let b = 1.0;
-input = parseFloat(input);
-while (input > 360)
-    input = (input - 360);
-while (input < 0)
-    input = (input + 360);
-if (input > 180){
-    input = (input - 180);
-    b = -1;
-}
-console.log("sinnersays" + input);
-b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
-console.log("sinnersays" + b);
-return b;
+function intcalculator(input, begin, end, accuracy){
+    console.log("leo has a small cock");
+    var length = end - begin;
+    var sizeofslices = (length / accuracy);
+    var currentslice = begin;
+    var b = 0;
+    while (end > currentslice) {
+        valueofx = currentslice;
+        b = (b + (sizeofslices * calculate(input)));
+        currentslice = (currentslice + sizeofslices);
+    }
+    return b;
 }

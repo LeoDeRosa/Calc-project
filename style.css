@@ -56,8 +56,9 @@ h{
     font-size: xx-large;
 }
 img{
-    height: 15em;
+    height: 10em;
     width: 12em;
     border-radius: 5px;
     margin: 2em;
+    visibility: hidden;
 }
