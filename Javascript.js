@@ -251,17 +251,18 @@ function bakedbeans(){
             Beanssses = Beanssses.replace("z","sin");
         }
         if (findingvalue){
-            var r = document.getElementById('input2');
-            r = r.value;
-            const coolarray = r.split(",")
+            const coolarray = ((document.getElementById('input2')).value).split(",")
             var s = coolarray[0];
+            print("s = " + s)
             var e = coolarray[1];
+            print("e = " + e)
             var x = coolarray[2];
-            valueofx = parseFloat(r);
+            print("x = " + x)
+            valueofx = parseFloat(e);
             document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
             document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s,e,x));
-            document.getElementById("beans3").innerText = "F(" + s + ")=";
-            document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
+            document.getElementById("beans3").innerText = "F(" + e + " - " + s + ")=";
+            document.getElementById("beans1").innerText = "f(" + e + ")=";
         } 
         document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
@@ -770,6 +771,8 @@ function integral(input)
         else if(input.includes("cos")){  
             b = input.replace("cos","z");
         }
+        else if(input.includes("secxtan"))
+            b = input.replace("secxtan","sec")
     }
 
 
@@ -1129,13 +1132,19 @@ function calculate(input){
 function intcalculator(input, begin, end, accuracy){
     var length = end - begin;
     var sizeofslices = (length / accuracy);
+    print("size of slices = " + sizeofslices);
     var currentslice = begin;
     var b = 0;
     while (end > currentslice) {
-        console.log("leo has a very small cock")
+        print("end = " + end);
+        print("currentslice = " + currentslice);
         valueofx = currentslice;
         b = (b + (sizeofslices * calculate(input)));
+        return "Genitals";
         currentslice = (currentslice + sizeofslices);
     }
     return b;
+}
+function print(x){
+    console.log(x)
 }
