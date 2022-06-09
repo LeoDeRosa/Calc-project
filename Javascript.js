@@ -134,10 +134,16 @@ function bakedbeans(){
             var e = coolarray[1];
             var x = coolarray[2];
             valueofx = parseFloat(r);
-            document.getElementById('beans8').innerText = ("=" + (calculator(Beanss)));
-            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses, s, e, x));
-            document.getElementById("beans3").innerText = "F(" + e + ")=";
-            document.getElementById("beans1").innerText = "f(" + e + ")=";
+<<<<<<< Updated upstream
+            document.getElementById('beans8').innerText = ("=" + (calculator(Beanss, 0, 5, 100)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses));
+            document.getElementById("beans3").innerText = "F(" + valueofx + ")=";
+=======
+            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s,e,x));
+            document.getElementById("beans3").innerText = "F(" + s + ")=";
+>>>>>>> Stashed changes
+            document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
         } 
         document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
