@@ -129,13 +129,13 @@ function bakedbeans(){
         if (findingvalue){
             var r = document.getElementById('input2');
             r = r.value;
-            const coolarray = r.split(",");
+            const coolarray = r.split(",")
             var s = coolarray[0];
             var e = coolarray[1];
             var x = coolarray[2];
             valueofx = parseFloat(r);
-            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
-            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s, e, x));
+            document.getElementById('beans8').innerText = ("=" + (calculator(Beanss)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses, s, e, x));
             document.getElementById("beans3").innerText = "F(" + e + ")=";
             document.getElementById("beans1").innerText = "f(" + e + ")=";
         } 
@@ -1133,7 +1133,6 @@ function calculate(input){
     return (b);
 }
 function intcalculator(input, begin, end, accuracy){
-    console.log("leo has a small cock");
     var length = end - begin;
     var sizeofslices = (length / accuracy);
     var currentslice = begin;
