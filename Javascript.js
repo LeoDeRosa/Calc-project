@@ -1,33 +1,7 @@
 const arrayoffunctions = [];
 var findingvalue = false;
 var valueofx;
-class Term {
 
-    constructor(termConstant, exponent, base){
-
-        this.termConstant = termConstant
-        this.exponent = exponent
-        this.base = base
-    }
-
-    StoreFunctionValues(inputFunction) {
-        
-    }
-
-    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
-        let output = String;
-        const things = ["x", "s", "c", "l","t"]
-        for(let i = 0; i <= input.length; i++){
-            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
-                console.log(i)
-                let a = input.slice(0,i);
-                let b = input.slice(i);
-                output = (a + "*" + b);
-            }
-        }
-        return output;
-    }
-}
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -134,15 +108,9 @@ function bakedbeans(){
             var e = coolarray[1];
             var x = coolarray[2];
             valueofx = parseFloat(r);
-<<<<<<< Updated upstream
-            document.getElementById('beans8').innerText = ("=" + (calculator(Beanss, 0, 5, 100)));
-            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses));
-            document.getElementById("beans3").innerText = "F(" + valueofx + ")=";
-=======
             document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
             document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s,e,x));
             document.getElementById("beans3").innerText = "F(" + s + ")=";
->>>>>>> Stashed changes
             document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
         } 
         document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
@@ -613,6 +581,19 @@ class Term {
         let xIndex = inputFunction.indexOf("x")
         this.termConstant = constant_getter(inputFunction, xIndex)
         this.exponent = power_getter(inputFunction, xIndex)
+    }
+    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
+        let output = String;
+        const things = ["x", "s", "c", "l","t"]
+        for(let i = 0; i <= input.length; i++){
+            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
+                console.log(i)
+                let a = input.slice(0,i);
+                let b = input.slice(i);
+                output = (a + "*" + b);
+            }
+        }
+        return output;
     }
 }
 
