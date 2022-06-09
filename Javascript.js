@@ -70,7 +70,8 @@ function beeaans() {
             Beanssses = Beanssses.replace("@", "-")
             Beanssses = Beanssses.replace("--", "+") // eventually this line should move to simplify
         }
-        document.getElementById("beans4").innerText = (Beanssses);
+        var o = simplify(Beanssses)
+        document.getElementById("beans4").innerText = (o);
         if (findingvalue){
             var r = document.getElementById('input2');
             r = r.value;
@@ -128,13 +129,13 @@ function bakedbeans(){
         if (findingvalue){
             var r = document.getElementById('input2');
             r = r.value;
-            const coolarray = r.split(",");
+            const coolarray = r.split(",")
             var s = coolarray[0];
             var e = coolarray[1];
             var x = coolarray[2];
             valueofx = parseFloat(r);
-            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
-            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s, e, x));
+            document.getElementById('beans8').innerText = ("=" + (calculator(Beanss)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses, s, e, x));
             document.getElementById("beans3").innerText = "F(" + e + ")=";
             document.getElementById("beans1").innerText = "f(" + e + ")=";
         } 
@@ -479,20 +480,201 @@ function Salsfunfacts(){
     x = z[y];
     return x;
 }
-function simplify(input)
-{
-    for (i=0; i < arrayoffunctions.length; i++){
-        let newTerm = new Term();
+
+let Operator = {
+    addition : 0,
+    subtraction : 1,
+    multiplacation : 2,
+    division : 3,
+    exponent : 4
+}
+
+class Equasion {
+
+    constructor( isEvlauated, operator, ...terms){
+        this.isEvlauated = isEvlauated
+        this.operator = operator
+        this.terms = terms
+    }
+    
+    static split(funcInput, bedmasIntentifier = 0){
+
+        let inBrackets = 0 // if greater than 0 you are in brackets
+        let lastOperatorIndex = 0
+        let splitTerms = []
+        let bedmasList = ["+","-","*","/","^",null]
+        let varList = ["x"]
+        //let isLetter = False;
+
+        for (i = 0; i < funcInput.length; i++){
+
+            let currentChar = funcInput[i]
+            let rightBracketIndex = 0
+
+            //might be issue where there is a bracket at the very start of the funcInput so it is never split anywhere
+
+            if (currentChar == "("){
+
+                if (inBrackets = 0){
+                    rightBracketIndex = i 
+                }
+
+                inBrackets++
+            }
+
+            if (currentChar == ")"){
+
+                inBrackets--
+
+                if (inBrackets = 0){
+                    splitTerms.push(funcInput.substring(rightBracketIndex - 1, i + 1))
+                }
+            }
+
+            if(currentChar == bedmasList[bedmasIntentifier] && inBrackets <= 0){
+                pushToSplitTerms(currentChar);
+            }
+
+            if(currentChar == bedmasList[bedmasIntentifier + 1] && inBrackets <= 0){
+                pushToSplitTerms(currentChar);
+            }
+
+        }
+
+        function pushToSplitTerms(currentChar) {
+            splitTerms.push(funcInput.substring(lastOperatorIndex, currentChar));
+            lastOperatorIndex = i;
+        }
+
+        for (i = 0; i < splitTerms.length; i++){
+            
+            let currentTerm = splitTerms[i]
+            let numOperators = 0
+            let numVaribles = 0
+            let numNumbers = 0
+            let isInNumber = true
+
+
+            for (e = 0; e < currentTerm.length; e++){
+                if (bedmasList.includes(currentTerm[e])){
+                    numOperators++
+                }
+
+                if (varList.includes(currentTerm[e])){
+                    numVaribles++
+                }
+
+                if (typeof(parseInt(currentTerm[e])) === "number"){
+                    if (!isInNumber){
+                        numNumbers++
+                    }
+
+                    isInNumber = true
+                }
+
+                else{
+                    isInNumber = false
+                }
+
+            }
+
+            if ((numNumbers + numVaribles) && numOperators <= 1){
+
+            }
+        }
     }
 
-    var b = String;
-    return output;
+    evaluate(){
+        
+        for (i = 0; i < this.terms.length; i++){
+
+            if (!terms[i].isEvlauated){
+                terms[i].evaluate()
+            }
+        }        
+    }
+}
+
+class Term {
+
+    constructor(termConstant, exponent, base){
+        this.termConstant = termConstant
+        this.exponent = exponent
+        this.base = base
+    }
+
+    StoreFunctionValues(inputFunction) {
+        let xIndex = inputFunction.indexOf("x")
+        this.termConstant = constant_getter(inputFunction, xIndex)
+        this.exponent = power_getter(inputFunction, xIndex)
+    }
+}
+
+function simplify(input)
+{
+    console.log("start")
+    let leftBracketIndexes = []
+    let rightBracketIndexes = []
+
+    for (i = 0; i < input.length; i++){
+
+        if (input[i] == "("){
+            leftBracketIndexes.push(i)
+        }
+
+        if (input[i] == ")"){
+            rightBracketIndexes.push(i)
+        }
+    }
+
+    console.log(leftBracketIndexes)
+    console.log(rightBracketIndexes)
+
+    let storedPolynomials = []
+
+    let numRightBrackets = rightBracketIndexes.length
+    let numLeftBrackets = leftBracketIndexes.length
+
+    for (i = 0; i < numRightBrackets; i++){
+
+        for (e = 0; e < numLeftBrackets; e++){
+
+            if (rightBracketIndexes[i] < leftBracketIndexes[e]) { 
+                /*
+                If the index of the first closed bracket is greater than the leftbracketIndex
+                than the variable current poly will be set to the value of the ending at the first closed bracket and 
+                starting at the first opening bracket the next set for brackets should then be evaluated.
+                */
+                let currentPoly = input.substring(leftBracketIndexes[e - 1] + 1, rightBracketIndexes[i])
+                storedPolynomials.push(currentPoly)
+
+                leftBracketIndexes.splice(e-1, 1)
+                rightBracketIndexes.splice(i,1)
+
+                console.log(leftBracketIndexes)
+                console.log(rightBracketIndexes)
+            }
+        }
+    }
+
+    console.log(storedPolynomials)
+
+    function storePolynomials(){
+        
+    }
+
+    function determineEvalPriority(input) {
+
+    }
+
+    return input
 }
 function integral(input)
 {
 
     //b is the output
     var b = String;
+
     var x = input.indexOf("x");
     var constant = constant_getter(input,x);
     constant = constant.reverse();
@@ -951,7 +1133,6 @@ function calculate(input){
     return (b);
 }
 function intcalculator(input, begin, end, accuracy){
-    console.log("leo has a small cock");
     var length = end - begin;
     var sizeofslices = (length / accuracy);
     var currentslice = begin;
