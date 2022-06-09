@@ -8,6 +8,7 @@ let Operator = {
     division : 3,
     exponent : 4
 }
+let bedmasList = ["+","-","*","/","^",null]
 class Equasion {
 
     constructor( isEvlauated, operator, ...terms){
@@ -21,7 +22,7 @@ class Equasion {
         let inBrackets = 0 // if greater than 0 you are in brackets
         let lastOperatorIndex = 0
         let splitTerms = []
-        let bedmasList = ["+","-","*","/","^",null]
+        let storedTermsAsClass = []
         let varList = ["x"]
         //let isLetter = False;
 
@@ -94,11 +95,12 @@ class Equasion {
                 else{
                     isInNumber = false
                 }
-
             }
 
             if ((numNumbers + numVaribles) && numOperators <= 1){
-
+                let newTerm = new Term()
+                newTerm.storeValues(currentTerm)
+                storedTermsAsClass.push(newTerm)
             }
         }
     }
@@ -121,11 +123,21 @@ class Term {
         this.base = base
     }
 
-    StoreFunctionValues(inputFunction) {
+    storeValues(inputFunction) {
+
+        for (i = 0; i < bedmasList.length; i++){
+            if (inputFunction[0] == bedmasList[i]){
+
+            }
+        }
+
+        /*
         let xIndex = inputFunction.indexOf("x")
         this.termConstant = constant_getter(inputFunction, xIndex)
         this.exponent = power_getter(inputFunction, xIndex)
+        */
     }
+
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
         let output = String;
         const things = ["x", "s", "c", "l","t"]
