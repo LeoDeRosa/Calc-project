@@ -128,10 +128,20 @@ function bakedbeans(){
         if (findingvalue){
             var r = document.getElementById('input2');
             r = r.value;
+            const coolarray = r.split(",")
+            var s = coolarray[0];
+            var e = coolarray[1];
+            var x = coolarray[2];
             valueofx = parseFloat(r);
+<<<<<<< Updated upstream
             document.getElementById('beans8').innerText = ("=" + (calculator(Beanss, 0, 5, 100)));
             document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses));
             document.getElementById("beans3").innerText = "F(" + valueofx + ")=";
+=======
+            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s,e,x));
+            document.getElementById("beans3").innerText = "F(" + s + ")=";
+>>>>>>> Stashed changes
             document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
         } 
         document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
@@ -486,6 +496,7 @@ function simplify(input)
 }
 function integral(input)
 {
+
     //b is the output
     var b = String;
     var x = input.indexOf("x");
