@@ -502,7 +502,6 @@ function integral(input)
                 if (q != 0)
                     b = (b + "+");
                 x = (chunksofa[q]);
-                console.log(x)
                 x = integral(x);
                 b = (b + x);
             }
@@ -542,7 +541,6 @@ function integral(input)
                     if (q != 0)
                         b = (b + "+");
                     x = (chunksofa[q]);
-                    console.log(x)
                     x = integral(x);
                     b = (b + x);
                 }
