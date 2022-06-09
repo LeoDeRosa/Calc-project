@@ -903,6 +903,7 @@ function calculate(input){
         console.log("sinnersays" + b);
         return b;
     }
+    
     console.log("inputting" + input);
     var a = String;
     a = input.toString();
@@ -1132,6 +1133,7 @@ function calculate(input){
     console.log("outputting" + b);
     return (b);
 }
+
 function intcalculator(input, begin, end, accuracy){
     console.log("leo has a small cock");
     var length = end - begin;
