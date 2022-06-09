@@ -584,7 +584,9 @@ class Term {
     }
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
         let output = String;
+        console.log("input is " + input)
         const things = ["x", "s", "c", "l","t"]
+        output = input;
         for(let i = 0; i <= input.length; i++){
             if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
                 console.log(i)
@@ -763,6 +765,8 @@ function integral(input)
         else if(input.includes("cos")){  
             b = input.replace("cos","z");
         }
+        else if(input.includes("secxtan"))
+            b = input.replace("secxtan","sec")
     }
 
 
