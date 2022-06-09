@@ -129,7 +129,7 @@ function bakedbeans(){
             var r = document.getElementById('input2');
             r = r.value;
             valueofx = parseFloat(r);
-            document.getElementById('beans8').innerText = ("=" + (intcalculator(Beanss, 0, 5, 100)));
+            document.getElementById('beans8').innerText = ("=" + (calculator(Beanss, 0, 5, 100)));
             document.getElementById('beans9').innerText = ("=" + intcalculator(Beanssses));
             document.getElementById("beans3").innerText = "F(" + valueofx + ")=";
             document.getElementById("beans1").innerText = "f(" + valueofx + ")=";
