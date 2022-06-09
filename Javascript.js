@@ -1,7 +1,145 @@
 const arrayoffunctions = [];
 var findingvalue = false;
 var valueofx;
+let Operator = {
+    addition : 0,
+    subtraction : 1,
+    multiplacation : 2,
+    division : 3,
+    exponent : 4
+}
+class Equasion {
 
+    constructor( isEvlauated, operator, ...terms){
+        this.isEvlauated = isEvlauated
+        this.operator = operator
+        this.terms = terms
+    }
+    
+    static split(funcInput, bedmasIntentifier = 0){
+
+        let inBrackets = 0 // if greater than 0 you are in brackets
+        let lastOperatorIndex = 0
+        let splitTerms = []
+        let bedmasList = ["+","-","*","/","^",null]
+        let varList = ["x"]
+        //let isLetter = False;
+
+        for (i = 0; i < funcInput.length; i++){
+
+            let currentChar = funcInput[i]
+            let rightBracketIndex = 0
+
+            //might be issue where there is a bracket at the very start of the funcInput so it is never split anywhere
+
+            if (currentChar == "("){
+
+                if (inBrackets = 0){
+                    rightBracketIndex = i 
+                }
+
+                inBrackets++
+            }
+
+            if (currentChar == ")"){
+
+                inBrackets--
+
+                if (inBrackets = 0){
+                    splitTerms.push(funcInput.substring(rightBracketIndex - 1, i + 1))
+                }
+            }
+
+            if(currentChar == bedmasList[bedmasIntentifier] && inBrackets <= 0){
+                pushToSplitTerms(currentChar);
+            }
+
+            if(currentChar == bedmasList[bedmasIntentifier + 1] && inBrackets <= 0){
+                pushToSplitTerms(currentChar);
+            }
+
+        }
+
+        function pushToSplitTerms(currentChar) {
+            splitTerms.push(funcInput.substring(lastOperatorIndex, currentChar));
+            lastOperatorIndex = i;
+        }
+
+        for (i = 0; i < splitTerms.length; i++){
+            
+            let currentTerm = splitTerms[i]
+            let numOperators = 0
+            let numVaribles = 0
+            let numNumbers = 0
+            let isInNumber = true
+
+
+            for (e = 0; e < currentTerm.length; e++){
+                if (bedmasList.includes(currentTerm[e])){
+                    numOperators++
+                }
+
+                if (varList.includes(currentTerm[e])){
+                    numVaribles++
+                }
+
+                if (typeof(parseInt(currentTerm[e])) === "number"){
+                    if (!isInNumber){
+                        numNumbers++
+                    }
+
+                    isInNumber = true
+                }
+
+                else{
+                    isInNumber = false
+                }
+
+            }
+
+            if ((numNumbers + numVaribles) && numOperators <= 1){
+
+            }
+        }
+    }
+
+    evaluate(){
+        
+        for (i = 0; i < this.terms.length; i++){
+
+            if (!terms[i].isEvlauated){
+                terms[i].evaluate()
+            }
+        }        
+    }
+}
+class Term {
+
+    constructor(termConstant, exponent, base){
+        this.termConstant = termConstant
+        this.exponent = exponent
+        this.base = base
+    }
+
+    StoreFunctionValues(inputFunction) {
+        let xIndex = inputFunction.indexOf("x")
+        this.termConstant = constant_getter(inputFunction, xIndex)
+        this.exponent = power_getter(inputFunction, xIndex)
+    }
+    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
+        let output = String;
+        const things = ["x", "s", "c", "l","t"]
+        for(let i = 0; i <= input.length; i++){
+            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
+                console.log(i)
+                let a = input.slice(0,i);
+                let b = input.slice(i);
+                output = (a + "*" + b);
+            }
+        }
+        return output;
+    }
+}
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -454,149 +592,6 @@ function Salsfunfacts(){
     x = z[y];
     return x;
 }
-
-let Operator = {
-    addition : 0,
-    subtraction : 1,
-    multiplacation : 2,
-    division : 3,
-    exponent : 4
-}
-
-class Equasion {
-
-    constructor( isEvlauated, operator, ...terms){
-        this.isEvlauated = isEvlauated
-        this.operator = operator
-        this.terms = terms
-    }
-    
-    static split(funcInput, bedmasIntentifier = 0){
-
-        let inBrackets = 0 // if greater than 0 you are in brackets
-        let lastOperatorIndex = 0
-        let splitTerms = []
-        let bedmasList = ["+","-","*","/","^",null]
-        let varList = ["x"]
-        //let isLetter = False;
-
-        for (i = 0; i < funcInput.length; i++){
-
-            let currentChar = funcInput[i]
-            let rightBracketIndex = 0
-
-            //might be issue where there is a bracket at the very start of the funcInput so it is never split anywhere
-
-            if (currentChar == "("){
-
-                if (inBrackets = 0){
-                    rightBracketIndex = i 
-                }
-
-                inBrackets++
-            }
-
-            if (currentChar == ")"){
-
-                inBrackets--
-
-                if (inBrackets = 0){
-                    splitTerms.push(funcInput.substring(rightBracketIndex - 1, i + 1))
-                }
-            }
-
-            if(currentChar == bedmasList[bedmasIntentifier] && inBrackets <= 0){
-                pushToSplitTerms(currentChar);
-            }
-
-            if(currentChar == bedmasList[bedmasIntentifier + 1] && inBrackets <= 0){
-                pushToSplitTerms(currentChar);
-            }
-
-        }
-
-        function pushToSplitTerms(currentChar) {
-            splitTerms.push(funcInput.substring(lastOperatorIndex, currentChar));
-            lastOperatorIndex = i;
-        }
-
-        for (i = 0; i < splitTerms.length; i++){
-            
-            let currentTerm = splitTerms[i]
-            let numOperators = 0
-            let numVaribles = 0
-            let numNumbers = 0
-            let isInNumber = true
-
-
-            for (e = 0; e < currentTerm.length; e++){
-                if (bedmasList.includes(currentTerm[e])){
-                    numOperators++
-                }
-
-                if (varList.includes(currentTerm[e])){
-                    numVaribles++
-                }
-
-                if (typeof(parseInt(currentTerm[e])) === "number"){
-                    if (!isInNumber){
-                        numNumbers++
-                    }
-
-                    isInNumber = true
-                }
-
-                else{
-                    isInNumber = false
-                }
-
-            }
-
-            if ((numNumbers + numVaribles) && numOperators <= 1){
-
-            }
-        }
-    }
-
-    evaluate(){
-        
-        for (i = 0; i < this.terms.length; i++){
-
-            if (!terms[i].isEvlauated){
-                terms[i].evaluate()
-            }
-        }        
-    }
-}
-
-class Term {
-
-    constructor(termConstant, exponent, base){
-        this.termConstant = termConstant
-        this.exponent = exponent
-        this.base = base
-    }
-
-    StoreFunctionValues(inputFunction) {
-        let xIndex = inputFunction.indexOf("x")
-        this.termConstant = constant_getter(inputFunction, xIndex)
-        this.exponent = power_getter(inputFunction, xIndex)
-    }
-    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
-        let output = String;
-        const things = ["x", "s", "c", "l","t"]
-        for(let i = 0; i <= input.length; i++){
-            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
-                console.log(i)
-                let a = input.slice(0,i);
-                let b = input.slice(i);
-                output = (a + "*" + b);
-            }
-        }
-        return output;
-    }
-}
-
 function simplify(input)
 {
     console.log("start")
