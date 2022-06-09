@@ -519,7 +519,7 @@ class Equasion {
             }
 
             if ((numNumbers + numVaribles) && numOperators <= 1){
-
+                
             }
         }
     }
