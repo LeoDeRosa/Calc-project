@@ -38,7 +38,7 @@ class Equasion {
                 if (inBrackets = 0){
                     rightBracketIndex = i 
                 }
-
+                
                 inBrackets++
             }
 
