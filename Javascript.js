@@ -4,14 +4,15 @@ var valueofx;
 let Operator = {
     addition : 0,
     subtraction : 1,
-    multiplacation : 2,
+    multiplication : 2,
     division : 3,
     exponent : 4
 }
 
 const bedmasList = ["+","-","*","/","^",null]
+const varList = ["x"]
 
-class Equasion {
+class Equation {
 
     constructor(isEvlauated = false, operator, terms){
         this.isEvlauated = isEvlauated
@@ -58,16 +59,18 @@ class Equasion {
         let inBrackets = 0 // if greater than 0 you are in brackets
         let lastOperatorIndex = 0
         let splitTerms = [] // store a list of the split strings (might be at the wrong scope)
-        let storedTermsAsClass = [] // stores a list of the terms and equasions in class form
-        const varList = ["x"]
+        let storedTermsAsClass = [] // stores a list of the terms and equations in class form
+
+        let [operator, newFuncInput] = Equation.findOperator(funcInput)
+
         //let isLetter = False;
 
-        for (let i = 0; i < funcInput.length; i++){
+        for (let i = 0; i < newFuncInput.length; i++){
 
-            let currentChar = funcInput[i]
+            let currentChar = newFuncInput[i]
             let rightBracketIndex = 0
 
-            //might be issue where there is a bracket at the very start of the funcInput so it is never split anywhere
+            //might be issue where there is a bracket at the very start of the newFuncInput so it is never split anywhere
 
             if (currentChar == "("){
                 console.log("entered if")
@@ -84,7 +87,7 @@ class Equasion {
                 inBrackets--
 
                 if (inBrackets = 0 && bedmasIdentifier == 5){
-                    splitTerms.push(funcInput.substring(rightBracketIndex - 1, i + 1))
+                    splitTerms.push(newFuncInput.substring(rightBracketIndex - 1, i + 1))
                 }
             }
 
@@ -105,7 +108,7 @@ class Equasion {
         console.log(splitTerms)
 
         function pushToSplitTerms(currentCharIndex) {
-            splitTerms.push(funcInput.substring(lastOperatorIndex, currentCharIndex));
+            splitTerms.push(newFuncInput.substring(lastOperatorIndex, currentCharIndex));
         }
 
         for (let i = 0; i < splitTerms.length; i++){
@@ -145,29 +148,27 @@ class Equasion {
                 console.log(currentTerm)
                 newTerm.storeValues(currentTerm)
                 storedTermsAsClass.push(newTerm)
-
-                console.log(splitTerms)
             }
 
             else {
-                storedTermsAsClass.push(Equasion.split(splitTerms[i], bedmasIdentifier + nextIdentifier))
+                storedTermsAsClass.push(Equation.split(splitTerms[i], bedmasIdentifier + nextIdentifier))
             }
         }
 
-        return new Equasion(undefined, Equasion.findOperator(funcInput), storedTermsAsClass)
+        return new Equation(undefined, operator, storedTermsAsClass)
     }
 
     static findOperator(inputFunction){
 
         for (let i = 0; i < bedmasList.length; i++){
             if (inputFunction[0] == bedmasList[i]){
-                return bedmasList[i]
-            }
+                inputFunction = inputFunction.substring(1)
 
-            else {
-                return "+"
+                return [bedmasList[i], inputFunction]
             }
         }
+
+        return ["+", inputFunction]
     }
 
     evaluate(){
@@ -183,7 +184,7 @@ class Equasion {
 
 class Term {
 
-    constructor(isEvaluated, base, operator){
+    constructor(isEvaluated = false, base, operator){
         this.isEvaluated = isEvaluated
         this.base = base
         this.operator = operator
@@ -193,24 +194,24 @@ class Term {
         inputFunction.replace(/\(/g, "")
         inputFunction.replace(/\)/g, "")
 
-        for (let i = 0; i < bedmasList.length; i++){
-            if (inputFunction[0] == bedmasList[i]){
-                this.operator = bedmasList[i]
-                inputFunction = inputFunction.substring(1)
+        let [operator, newInputFunction] = Equation.findOperator(inputFunction)
+        this.operator = operator
+
+        console.log(newInputFunction)
+
+        for (let i = 0; i < varList.length; i++){
+            if (newInputFunction !== varList[i]){
+                console.log("newInputFunc is number")
+                this.base = parseInt(newInputFunction.substring(0))
             }
 
             else {
-                this.operator = "+"
-            }
-        }
+                this.base = newInputFunction.substring(0)
 
-        for (let i = 0; i < inputFunction.length; i++){
-            if (typeof(parseInt(inputFunction[i])) === "number"){
-                this.base = parseInt(inputFunction.substring(0))
-            }
-
-            else {
-                this.base = inputFunction.substring(0)
+                if (typeof(this.base) === "undefined"){
+                    console.log("shis")
+                }
+                console.log("storing the base as:" + this.base)
             }
         }
     }
@@ -670,8 +671,8 @@ function Salsfunfacts(){
 }
 function simplify(input)
 {
-    let simplifiedEquasion = Equasion.split(Equasion.InsertMultipleSymbol(input))
-    console.log(simplifiedEquasion.terms)
+    let simplifiedEquation = Equation.split(Equation.InsertMultipleSymbol(input))
+    console.log(simplifiedEquation.terms)
 
     return input
 }
