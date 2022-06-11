@@ -14,8 +14,8 @@ const varList = ["x"]
 
 class Equation {
 
-    constructor(isEvlauated = false, operator, terms){
-        this.isEvlauated = isEvlauated
+    constructor(isEvaluated = false, operator, terms){
+        this.isEvaluated = isEvaluated
         this.operator = operator
         this.terms = terms
     }
@@ -23,37 +23,32 @@ class Equation {
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
         let output = String;
         const things = ["x", "s", "c", "l","t"]
-        output = input;
         if(input == "+c"){
-            console.log("why does this return zero?!?!?!?!?!")
+            console.log("why does this return zero just out of curiosity?")
             return 0;
         }
+
         for(let i = 0; i < input.length; i++){
             if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
                 console.log(i)
                 let a = input.slice(0,i);
                 let b = input.slice(i);
-                output = (a + "*" + b);
+                input = (a + "*" + b);
             }
         }
+
+        output = input;
+
         console.log(output);
         return output;
     }
     
     static split (funcInput, bedmasIdentifier = 0){
 
-        let nextIdentifier
+        let nextIdentifier = 2
         
         if (bedmasIdentifier > 5){
-            bedmasIdentifier == 0
-        }
-
-        if (bedmasIdentifier < 4){
-            nextIdentifier = 2
-        }
-
-        else{
-            nextIdentifier = 1
+            bedmasIdentifier = 0
         }
 
         let inBrackets = 0 // if greater than 0 you are in brackets
@@ -63,48 +58,45 @@ class Equation {
 
         let [operator, newFuncInput] = Equation.findOperator(funcInput)
 
+        console.log(newFuncInput)
+        console.log("the operator is " + operator)
+        console.log(bedmasIdentifier)
+
+        if (newFuncInput[0] == "(" && newFuncInput[newFuncInput.length - 1] == ")"){
+            console.log("removing encasing brackets")
+            newFuncInput = newFuncInput.substring(1, newFuncInput.length - 1)
+        }
+
         //let isLetter = False;
 
         for (let i = 0; i < newFuncInput.length; i++){
 
             let currentChar = newFuncInput[i]
-            let rightBracketIndex = 0
-
-            //might be issue where there is a bracket at the very start of the newFuncInput so it is never split anywhere
 
             if (currentChar == "("){
-                console.log("entered if")
-
-                if (inBrackets = 0 && bedmasIdentifier == 5){
-                    rightBracketIndex = i 
-                }
-                
+                console.log("entered if:check for open bracket")
                 inBrackets++
             }
 
             if (currentChar == ")"){
-                console.log("entered if")
+                console.log("entered if: check for closed bracket")
                 inBrackets--
-
-                if (inBrackets = 0 && bedmasIdentifier == 5){
-                    splitTerms.push(newFuncInput.substring(rightBracketIndex - 1, i + 1))
-                }
             }
 
             if(currentChar == bedmasList[bedmasIdentifier] && inBrackets <= 0){
-                console.log("entered if")
+                console.log("entered if: checked for:" + bedmasList[bedmasIdentifier])
                 pushToSplitTerms(i);
                 lastOperatorIndex = i;
             }
 
             if(currentChar == bedmasList[bedmasIdentifier + 1] && inBrackets <= 0){
-                console.log("entered if")
+                console.log("entered if: checked for:" + bedmasList[bedmasIdentifier + 1])
                 pushToSplitTerms(i);
                 lastOperatorIndex = i;
             }
         }
 
-        pushToSplitTerms() //this might be a big mistake...
+        pushToSplitTerms()
         console.log(splitTerms)
 
         function pushToSplitTerms(currentCharIndex) {
@@ -117,30 +109,30 @@ class Equation {
             let numOperators = 0
             let numVaribles = 0
             let numNumbers = 0
-            let isInNumber = true
+            let isInNumber = false
 
 
             for (let e = 0; e < currentTerm.length; e++){ //check if it is a term
                 if (bedmasList.includes(currentTerm[e])){
+                    isInNumber = false
                     numOperators++
                 }
 
-                if (varList.includes(currentTerm[e])){
+                else if (varList.includes(currentTerm[e])){
+                    isInNumber = false
                     numVaribles++
                 }
 
-                if (typeof(Number(currentTerm[e])) === "number"){
+                else {
                     if (!isInNumber){
                         numNumbers++
                     }
 
                     isInNumber = true
                 }
-
-                else {
-                    isInNumber = false
-                }
             }
+
+            console.log("for " + currentTerm + ": " + numNumbers + numVaribles)
 
             if ((numNumbers + numVaribles) <= 1 && numOperators <= 1){
 
@@ -173,9 +165,9 @@ class Equation {
 
     evaluate(){
         
-        for (let i = 0; i < this.terms.length; i++){
+        for (let i = 0; i < storedTermsAsClass; i++){
 
-            if (!terms[i].isEvlauated){
+            if (!storedTermsAsClass[i].isEvaluated){
                 terms[i].evaluate()
             }
         }        
@@ -191,8 +183,10 @@ class Term {
     }
 
     storeValues(inputFunction) {
-        inputFunction.replace(/\(/g, "")
-        inputFunction.replace(/\)/g, "")
+        inputFunction = inputFunction.replace(/\(/g, "")
+        inputFunction = inputFunction.replace(/\)/g, "")
+
+        console.log("replacedvalues     function: " + inputFunction)
 
         let [operator, newInputFunction] = Equation.findOperator(inputFunction)
         this.operator = operator
@@ -672,6 +666,7 @@ function Salsfunfacts(){
 function simplify(input)
 {
     let simplifiedEquation = Equation.split(Equation.InsertMultipleSymbol(input))
+    //simplifiedEquation = Equation.split(Equation.InsertMultipleSymbol(""))
     console.log(simplifiedEquation.terms)
 
     return input
