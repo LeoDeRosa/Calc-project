@@ -8,25 +8,61 @@ let Operator = {
     division : 3,
     exponent : 4
 }
-let bedmasList = ["+","-","*","/","^",null]
+
+const bedmasList = ["+","-","*","/","^",null]
+
 class Equasion {
 
-    constructor( isEvlauated, operator, ...terms){
+    constructor(isEvlauated = false, operator, terms){
         this.isEvlauated = isEvlauated
         this.operator = operator
         this.terms = terms
     }
+
+    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
+        let output = String;
+        const things = ["x", "s", "c", "l","t"]
+        output = input;
+        if(input == "+c"){
+            console.log("why does this return zero?!?!?!?!?!")
+            return 0;
+        }
+        for(let i = 0; i < input.length; i++){
+            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
+                console.log(i)
+                let a = input.slice(0,i);
+                let b = input.slice(i);
+                output = (a + "*" + b);
+            }
+        }
+        console.log(output);
+        return output;
+    }
     
-    static split(funcInput, bedmasIntentifier = 0){
+    static split (funcInput, bedmasIdentifier = 0){
+
+        let nextIdentifier
+        
+        if (bedmasIdentifier > 5){
+            bedmasIdentifier == 0
+        }
+
+        if (bedmasIdentifier < 4){
+            nextIdentifier = 2
+        }
+
+        else{
+            nextIdentifier = 1
+        }
 
         let inBrackets = 0 // if greater than 0 you are in brackets
         let lastOperatorIndex = 0
-        let splitTerms = []
-        let storedTermsAsClass = []
-        let varList = ["x"]
+        let splitTerms = [] // store a list of the split strings (might be at the wrong scope)
+        let storedTermsAsClass = [] // stores a list of the terms and equasions in class form
+        const varList = ["x"]
         //let isLetter = False;
 
-        for (i = 0; i < funcInput.length; i++){
+        for (let i = 0; i < funcInput.length; i++){
 
             let currentChar = funcInput[i]
             let rightBracketIndex = 0
@@ -34,8 +70,9 @@ class Equasion {
             //might be issue where there is a bracket at the very start of the funcInput so it is never split anywhere
 
             if (currentChar == "("){
+                console.log("entered if")
 
-                if (inBrackets = 0){
+                if (inBrackets = 0 && bedmasIdentifier == 5){
                     rightBracketIndex = i 
                 }
                 
@@ -43,30 +80,35 @@ class Equasion {
             }
 
             if (currentChar == ")"){
-
+                console.log("entered if")
                 inBrackets--
 
-                if (inBrackets = 0){
+                if (inBrackets = 0 && bedmasIdentifier == 5){
                     splitTerms.push(funcInput.substring(rightBracketIndex - 1, i + 1))
                 }
             }
 
-            if(currentChar == bedmasList[bedmasIntentifier] && inBrackets <= 0){
-                pushToSplitTerms(currentChar);
+            if(currentChar == bedmasList[bedmasIdentifier] && inBrackets <= 0){
+                console.log("entered if")
+                pushToSplitTerms(i);
+                lastOperatorIndex = i;
             }
 
-            if(currentChar == bedmasList[bedmasIntentifier + 1] && inBrackets <= 0){
-                pushToSplitTerms(currentChar);
+            if(currentChar == bedmasList[bedmasIdentifier + 1] && inBrackets <= 0){
+                console.log("entered if")
+                pushToSplitTerms(i);
+                lastOperatorIndex = i;
             }
-
         }
 
-        function pushToSplitTerms(currentChar) {
-            splitTerms.push(funcInput.substring(lastOperatorIndex, currentChar));
-            lastOperatorIndex = i;
+        pushToSplitTerms() //this might be a big mistake...
+        console.log(splitTerms)
+
+        function pushToSplitTerms(currentCharIndex) {
+            splitTerms.push(funcInput.substring(lastOperatorIndex, currentCharIndex));
         }
 
-        for (i = 0; i < splitTerms.length; i++){
+        for (let i = 0; i < splitTerms.length; i++){
             
             let currentTerm = splitTerms[i]
             let numOperators = 0
@@ -75,7 +117,7 @@ class Equasion {
             let isInNumber = true
 
 
-            for (e = 0; e < currentTerm.length; e++){
+            for (let e = 0; e < currentTerm.length; e++){ //check if it is a term
                 if (bedmasList.includes(currentTerm[e])){
                     numOperators++
                 }
@@ -84,7 +126,7 @@ class Equasion {
                     numVaribles++
                 }
 
-                if (typeof(parseInt(currentTerm[e])) === "number"){
+                if (typeof(Number(currentTerm[e])) === "number"){
                     if (!isInNumber){
                         numNumbers++
                     }
@@ -92,22 +134,45 @@ class Equasion {
                     isInNumber = true
                 }
 
-                else{
+                else {
                     isInNumber = false
                 }
             }
 
-            if ((numNumbers + numVaribles) && numOperators <= 1){
+            if ((numNumbers + numVaribles) <= 1 && numOperators <= 1){
+
                 let newTerm = new Term()
+                console.log(currentTerm)
                 newTerm.storeValues(currentTerm)
                 storedTermsAsClass.push(newTerm)
+
+                console.log(splitTerms)
+            }
+
+            else {
+                storedTermsAsClass.push(Equasion.split(splitTerms[i], bedmasIdentifier + nextIdentifier))
+            }
+        }
+
+        return new Equasion(undefined, Equasion.findOperator(funcInput), storedTermsAsClass)
+    }
+
+    static findOperator(inputFunction){
+
+        for (let i = 0; i < bedmasList.length; i++){
+            if (inputFunction[0] == bedmasList[i]){
+                return bedmasList[i]
+            }
+
+            else {
+                return "+"
             }
         }
     }
 
     evaluate(){
         
-        for (i = 0; i < this.terms.length; i++){
+        for (let i = 0; i < this.terms.length; i++){
 
             if (!terms[i].isEvlauated){
                 terms[i].evaluate()
@@ -115,44 +180,39 @@ class Equasion {
         }        
     }
 }
+
 class Term {
 
-    constructor(termConstant, exponent, base){
-        this.termConstant = termConstant
-        this.exponent = exponent
+    constructor(isEvaluated, base, operator){
+        this.isEvaluated = isEvaluated
         this.base = base
+        this.operator = operator
     }
 
     storeValues(inputFunction) {
+        inputFunction.replace(/\(/g, "")
+        inputFunction.replace(/\)/g, "")
 
-        for (i = 0; i < bedmasList.length; i++){
+        for (let i = 0; i < bedmasList.length; i++){
             if (inputFunction[0] == bedmasList[i]){
+                this.operator = bedmasList[i]
+                inputFunction = inputFunction.substring(1)
+            }
 
+            else {
+                this.operator = "+"
             }
         }
 
-        /*
-        let xIndex = inputFunction.indexOf("x")
-        this.termConstant = constant_getter(inputFunction, xIndex)
-        this.exponent = power_getter(inputFunction, xIndex)
-        */
-    }
+        for (let i = 0; i < inputFunction.length; i++){
+            if (typeof(parseInt(inputFunction[i])) === "number"){
+                this.base = parseInt(inputFunction.substring(0))
+            }
 
-    static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
-        let output = String;
-        const things = ["x", "s", "c", "l","t"]
-        output = input;
-        if(input == "+c")
-            return 0;
-        for(let i = 0; i <= input.length; i++){
-            if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
-                console.log(i)
-                let a = input.slice(0,i);
-                let b = input.slice(i);
-                output = (a + "*" + b);
+            else {
+                this.base = inputFunction.substring(0)
             }
         }
-        return output;
     }
 }
 function changeinput() {
@@ -610,60 +670,8 @@ function Salsfunfacts(){
 }
 function simplify(input)
 {
-    console.log("start")
-    let leftBracketIndexes = []
-    let rightBracketIndexes = []
-
-    for (i = 0; i < input.length; i++){
-
-        if (input[i] == "("){
-            leftBracketIndexes.push(i)
-        }
-
-        if (input[i] == ")"){
-            rightBracketIndexes.push(i)
-        }
-    }
-
-    console.log(leftBracketIndexes)
-    console.log(rightBracketIndexes)
-
-    let storedPolynomials = []
-
-    let numRightBrackets = rightBracketIndexes.length
-    let numLeftBrackets = leftBracketIndexes.length
-
-    for (i = 0; i < numRightBrackets; i++){
-
-        for (e = 0; e < numLeftBrackets; e++){
-
-            if (rightBracketIndexes[i] < leftBracketIndexes[e]) { 
-                /*
-                If the index of the first closed bracket is greater than the leftbracketIndex
-                than the variable current poly will be set to the value of the ending at the first closed bracket and 
-                starting at the first opening bracket the next set for brackets should then be evaluated.
-                */
-                let currentPoly = input.substring(leftBracketIndexes[e - 1] + 1, rightBracketIndexes[i])
-                storedPolynomials.push(currentPoly)
-
-                leftBracketIndexes.splice(e-1, 1)
-                rightBracketIndexes.splice(i,1)
-
-                console.log(leftBracketIndexes)
-                console.log(rightBracketIndexes)
-            }
-        }
-    }
-
-    console.log(storedPolynomials)
-
-    function storePolynomials(){
-        
-    }
-
-    function determineEvalPriority(input) {
-
-    }
+    let simplifiedEquasion = Equasion.split(Equasion.InsertMultipleSymbol(input))
+    console.log(simplifiedEquasion.terms)
 
     return input
 }
@@ -877,7 +885,6 @@ function epicpictures(){
 
         y = (y / 3);
         y = Math.round(y);
-        console.log(y)
         z = x[y];
     }
     document.getElementById("img").src = z;
