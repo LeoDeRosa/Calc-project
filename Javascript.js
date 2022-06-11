@@ -10,7 +10,9 @@ let Operator = {
 }
 
 const bedmasList = ["+","-","*","/","^",null]
-const varList = ["x"]
+const trigFunctions = ["cos","sin","sec","csc","tan","cot"]
+
+
 
 class Equation {
 
@@ -118,7 +120,7 @@ class Equation {
                     numOperators++
                 }
 
-                else if (varList.includes(currentTerm[e])){
+                else if (currentTerm[e] == "x"){
                     isInNumber = false
                     numVaribles++
                 }
@@ -193,19 +195,16 @@ class Term {
 
         console.log(newInputFunction)
 
-        for (let i = 0; i < varList.length; i++){
-            if (newInputFunction !== varList[i]){
+        for (let i = 0; i < trigFunctions.length; i++){
+            if (newInputFunction[0] !== "x"){
                 console.log("newInputFunc is number")
-                this.base = parseInt(newInputFunction.substring(0))
+                this.base = parseInt(newInputFunction)
             }
 
             else {
-                this.base = newInputFunction.substring(0)
-
-                if (typeof(this.base) === "undefined"){
-                    console.log("shis")
-                }
+                this.base = newInputFunction
                 console.log("storing the base as:" + this.base)
+                break
             }
         }
     }
@@ -666,7 +665,6 @@ function Salsfunfacts(){
 function simplify(input)
 {
     let simplifiedEquation = Equation.split(Equation.InsertMultipleSymbol(input))
-    //simplifiedEquation = Equation.split(Equation.InsertMultipleSymbol(""))
     console.log(simplifiedEquation.terms)
 
     return input
