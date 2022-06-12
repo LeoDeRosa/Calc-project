@@ -424,7 +424,7 @@ function bakedbeans(){
             document.getElementById("beans3").innerText = "F(" + e + " - " + s + ")=";
             document.getElementById("beans1").innerText = "f(" + e + ")=";
         } 
-        document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
+        document.getElementById("beans4").innerText = (Beanssses);
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
         epicpictures();
     }
