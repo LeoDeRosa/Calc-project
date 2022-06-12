@@ -19,10 +19,13 @@ const digits = [0,1,2,3,4,5,6,7,8,9]
 
 class Equation {
 
-    constructor(isEvaluated = false, operator, terms){
+    constructor(isEvaluated = false, operator, terms, base, exponent, coefficient){
         this.isEvaluated = isEvaluated
         this.operator = operator
         this.terms = terms
+        this.base = base
+        this.exponent = exponent
+        this.coefficient = coefficient
     }
 
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
@@ -53,25 +56,39 @@ class Equation {
         console.log("-----Split-----")
 
         let nextIdentifier = 2
-        
         if (bedmasIdentifier > 9){
             bedmasIdentifier = 0
         }
+
+        let [operator, newFuncInput] = Equation.findOperator(funcInput,true)
+        console.log("Currently spliting at: " + bedmasList[bedmasIdentifier] + " and " + (bedmasList[bedmasIdentifier + 1]))
 
         let inBrackets = 0 // if greater than 0 you are in brackets
         let lastOperatorIndex = 0
         let splitTerms = [] // store a list of the split strings (might be at the wrong scope)
         let storedTermsAsClass = [] // stores a list of the terms and equations in class form
 
-        let [operator, newFuncInput] = Equation.findOperator(funcInput,true)
-
         if (newFuncInput[0] == "(" && newFuncInput[newFuncInput.length - 1] == ")"){
-            console.log("removing encasing brackets")
-            newFuncInput = newFuncInput.substring(1, newFuncInput.length - 1)
-            bedmasIdentifier = 0
+            let isIncased = true
+
+            for (let i = 0; i < newFuncInput.length - 1; i++){
+                inBrackets = (newFuncInput[i] == "(") ? inBrackets + 1 : inBrackets
+                inBrackets = (newFuncInput[i] == ")") ? inBrackets - 1 : inBrackets
+
+                if (inBrackets == 0){
+                    isIncased = false
+                    break
+                }
+            }
+
+            if (isIncased){
+                console.log("removing encasing brackets")
+                newFuncInput = newFuncInput.substring(1, newFuncInput.length - 1)
+                bedmasIdentifier = 0
+            }
         }
 
-        console.log("Currently spliting at: " + bedmasList[bedmasIdentifier] + " and " + (bedmasList[bedmasIdentifier + 1]))
+        inBrackets = 0
 
         for (let i = 0; i < newFuncInput.length; i++){
 
@@ -119,8 +136,6 @@ class Equation {
             let numOperators = 0
             let numVaribles = 0
             let numNumbers = 0
-            //let numTrigFuncs = 0
-            //let numLn = 0
             let isInNumber = false
 
 
@@ -230,13 +245,46 @@ class Equation {
     }
 
     evaluate(){
-        
-        for (let i = 0; i < storedTermsAsClass; i++){
 
-            if (!storedTermsAsClass[i].isEvaluated){
-                terms[i].evaluate()
+        for (let i = 0; i < this.terms; i++){
+
+            let underClass = this.terms[i]
+
+            if (!underClass.isEvaluated){
+                underClass.evaluate()
             }
-        }        
+        }
+
+        let numIterations = this.terms.length
+
+        for (let i = 0; i < numIterations - 1; i++){
+            let firstClass = this.terms[0]
+            let secondClass = this.terms[1]
+
+            if (firstClass == Term && secondClass == Term){
+                let base = "x";
+                let coefficient = 0;
+                let exponent = 0;
+
+                if (digits.includes(firstClass.base) && digits.includes(secondClass.base)){
+                    //firstClass.base = (firstClass.operator == "-") ? firstClass.base - (2*firstClass.base) : firstClass.base
+
+                    if (secondClass.exponent == "^"){
+                        base = firstClass.base ** secondClass.base
+                    }
+
+                    else if (secondClass.exponent == "/"){
+                        if(firstClass.base % secondClass.base == 0){
+
+                        }
+
+                        else {
+                            result = firstClass.base + " / " + secondClass.base
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
