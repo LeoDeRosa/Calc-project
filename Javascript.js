@@ -9,14 +9,9 @@ let Operator = {
     division : 3,
     exponent : 4
 }
-
 const bedmasList = ["+","-","*","/","^",null,"c","s","t","l"]
 const functions = ["cos","sin","sec","csc","tan","cot","ln"]
 const digits = [0,1,2,3,4,5,6,7,8,9]
-
-
-
-
 class Equation {
 
     constructor(isEvaluated = false, operator, terms){
@@ -239,7 +234,6 @@ class Equation {
         }        
     }
 }
-
 class Term {
 
     constructor(isEvaluated = false, base, operator){
@@ -946,7 +940,6 @@ function epicpictures(){
 }
 function calculate(input){
     function sinner(input) {
-        console.log("sinnersays" + input);
         let b = 1.0;
         input = parseFloat(input);
         while (input > 360)
@@ -958,12 +951,9 @@ function calculate(input){
             b = -1;
         }
         x = input;
-        console.log("sinnersays" + input);
         b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
-        console.log("sinnersays" + b);
         return b;
     }
-    console.log("inputting" + input);
     var a = String;
     a = input.toString();
     var b = 0.0;
@@ -1189,21 +1179,16 @@ function calculate(input){
     else{
         b = parseFloat(input);
     }
-    console.log("outputting" + b);
     return (b);
 }
 function intcalculator(input, begin, end, accuracy){
     var length = end - begin;
     var sizeofslices = (length / accuracy);
-    print("size of slices = " + sizeofslices);
-    var currentslice = begin;
+    var currentslice = parseFloat(begin);
     var b = 0;
     while (end > currentslice) {
-        print("end = " + end);
-        print("currentslice = " + currentslice);
         valueofx = currentslice;
         b = (b + (sizeofslices * calculate(input)));
-        return "Genitals";
         currentslice = (currentslice + sizeofslices);
     }
     return b;
