@@ -1,7 +1,6 @@
 const arrayoffunctions = [];
 var findingvalue = false;
 var valueofx;
-
 let Operator = {
     addition : 0,
     subtraction : 1,
@@ -1027,24 +1026,20 @@ function calculate(input){
         var z = calculate(h);
         a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
-    if (a.includes("+")) {
-            let x = 0;
-            let b = 0.0;
-            const chunksofa = a.split("+");
-            for(let q=0; q<chunksofa.length; q++){
-                x = 0.0;
-                x = calculate(chunksofa[q]);
-                b = (b + x);
+    if (a.includes("+") || a.includes("-")) {
+            let x = 0.0;
+            if ((a.indexOf("+") < a.indexOf("-")) || (!a.includes("-"))){
+
             }
-            return b;
-    }
-    else if (a.includes("-")) {
-            let x = 0;
-            let b = 0.0;
-            const chunksofa = a.split("-");
-            for(let q=0; q<chunksofa.length; q++){
-                x = calculate(chunksofa[q])
-                b = b - x;
+            while(a.includes("+") || a.includes("-")){
+                if ((a.indexOf("+") < a.indexOf("-")) || (!a.includes("-"))){
+                    x = (-1.0);
+                }
+                else {
+                    x = calculate(1, indexOf("-"));
+                    b = (b - x);
+                    a = a.substring(a.indexOf("-"))
+                }
             }
             return b;
     }
