@@ -1026,20 +1026,24 @@ function calculate(input){
         var z = calculate(h);
         a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
-    if (a.includes("+") || a.includes("-")) {
-            let x = 0.0;
-            if ((a.indexOf("+") < a.indexOf("-")) || (!a.includes("-"))){
-
+    if (a.includes("+")) {
+            let x = 0;
+            let b = 0.0;
+            const chunksofa = a.split("+");
+            for(let q=0; q<chunksofa.length; q++){
+                x = 0.0;
+                x = calculate(chunksofa[q]);
+                b = (b + x);
             }
-            while(a.includes("+") || a.includes("-")){
-                if ((a.indexOf("+") < a.indexOf("-")) || (!a.includes("-"))){
-                    x = (-1.0);
-                }
-                else {
-                    x = calculate(1, indexOf("-"));
-                    b = (b - x);
-                    a = a.substring(a.indexOf("-"))
-                }
+            return b;
+    }
+    else if (a.includes("-")) {
+            let x = 0;
+            let b = 0.0;
+            const chunksofa = a.split("-");
+            for(let q=0; q<chunksofa.length; q++){
+                x = calculate(chunksofa[q])
+                b = b - x;
             }
             return b;
     }
@@ -1206,6 +1210,29 @@ function calculate(input){
             b = e ** j;
         }
     }
+    else if (a.includes("l")){
+        if (a.indexOf("l") == 0){
+            var b = 1.0
+        }
+        else{
+            var b = calculate(a.substring(0, a.indexOf("l")));
+        }
+        if (a.includes("log")){
+            if (a.includes(",")){
+                var q = calculate(a.substring((a.indexOf("g") + 1), indexOf(",")));
+                var r = calculate(a.substring((a.indexOf(",") + 1)));
+                b = b * ((Math.log10(r)) / (Math.log10(q)));
+            }
+            else{
+                var q = a.substring(a.indexOf("g") + 1);
+                b = b * ((Math.log10(q)));
+            }
+        }
+        else if (a.includes("ln")){
+            var q = a.substring(a.indexOf("g") + 1);
+            b = b * ((Math.log(q)));
+        }
+    }
     else if (a.includes("x")){
             var r = a.indexOf("x");
             var c = a.substring(0, r);
@@ -1232,10 +1259,10 @@ function intcalculator(input, begin, end, accuracy, choice){
     let currentslice = (parseFloat(begin));
     let b = 0;
     if (choice == 0){
-    while (end > currentslice) {
-        valueofx = currentslice;
-        b = (b + (sizeofslices * calculate(input)));
-        currentslice = (currentslice + sizeofslices);
+        for (let h = 0; h < (accuracy); h++) {
+            valueofx = currentslice;
+            b = (b + (sizeofslices * calculate(input)));
+            currentslice = (currentslice + sizeofslices);
     }
     }
     else if (choice == 1){
@@ -1259,7 +1286,7 @@ function intcalculator(input, begin, end, accuracy, choice){
     }
     else if (choice == 2){
         currentslice = (currentslice + (0.5 * sizeofslices));
-        while (end > currentslice) {
+        for (let h = 0; h < (accuracy); h++) {
             valueofx = currentslice;
             b = (b + (sizeofslices * calculate(input)));
             currentslice = (currentslice + sizeofslices);
@@ -1268,7 +1295,7 @@ function intcalculator(input, begin, end, accuracy, choice){
     else if (choice == 3){
         valueofx = (currentslice);
         b = (b + ((sizeofslices * calculate(input)) / 2));
-        while (end > (currentslice + sizeofslices)) {
+        for (let h = 1; h < (accuracy - 1); h++) {
             valueofx = (currentslice);
             b = (b + (sizeofslices * calculate(input)));
             currentslice = (currentslice + sizeofslices);
