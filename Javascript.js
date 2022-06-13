@@ -2,38 +2,29 @@ const arrayoffunctions = [];
 var findingvalue = false;
 var valueofx;
 
-let Operator = {
-    addition : 0,
-    subtraction : 1,
-    multiplication : 2,
-    division : 3,
-    exponent : 4
-}
-const bedmasList = ["+","-","*","/","^",null,"c","s","t","l"]
-const functions = ["cos","sin","sec","csc","tan","cot","ln"]
-const digits = [0,1,2,3,4,5,6,7,8,9]
-class Equation {
+const bedmasList = ["+","-","*","/","^",null,"c","s","t","l"];
+const functions = ["cos","sin","sec","csc","tan","cot","ln"];
+const digits = [0,1,2,3,4,5,6,7,8,9];
 
-    constructor(isEvaluated = false, operator, terms, base, exponent, coefficient){
-        this.isEvaluated = isEvaluated
-        this.operator = operator
-        this.terms = terms
-        this.base = base
-        this.exponent = exponent
-        this.coefficient = coefficient
+class Equation {
+    constructor(operator, objects){
+        this.operator = operator;
+        this.objects = objects;
+
+
     }
 
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
         let output = String;
-        const things = ["x", "s", "c", "l","t"]
+        const things = ["x", "s", "c", "l","t"];
         if(input == "+c"){
-            console.log("why does this return zero just out of curiosity?")
+            console.log("why does this return zero just out of curiosity?");
             return 0;
         }
 
         for(let i = 0; i < input.length; i++){
             if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
-                console.log("Inserted multiplier at:" + i)
+                console.log("Inserted multiplier at:" + i);
                 let a = input.slice(0,i);
                 let b = input.slice(i);
                 input = (a + "*" + b);
@@ -48,38 +39,38 @@ class Equation {
     
     static split (funcInput, bedmasIdentifier = 0){
 
-        console.log("-----Split-----")
+        console.log("-----Split-----");
 
-        let nextIdentifier = 2
+        let nextIdentifier = 2;
         if (bedmasIdentifier > 9){
-            bedmasIdentifier = 0
+            bedmasIdentifier = 0;
         }
 
-        let [operator, newFuncInput] = Equation.findOperator(funcInput,true)
-        console.log("Currently spliting at: " + bedmasList[bedmasIdentifier] + " and " + (bedmasList[bedmasIdentifier + 1]))
+        let [operator, newFuncInput] = Equation.findOperator(funcInput,true);
+        console.log("Currently spliting at: " + bedmasList[bedmasIdentifier] + " and " + (bedmasList[bedmasIdentifier + 1]));
 
-        let inBrackets = 0 // if greater than 0 you are in brackets
-        let lastOperatorIndex = 0
-        let splitTerms = [] // store a list of the split strings (might be at the wrong scope)
-        let storedTermsAsClass = [] // stores a list of the terms and equations in class form
+        let inBrackets = 0; // if greater than 0 you are in brackets
+        let lastOperatorIndex = 0;
+        let splitTerms = []; // store a list of the split strings (might be at the wrong scope)
+        let storedTermsAsClass = []; // stores a list of the objects and equations in class form
 
         if (newFuncInput[0] == "(" && newFuncInput[newFuncInput.length - 1] == ")"){
-            let isIncased = true
+            let isIncased = true;
 
             for (let i = 0; i < newFuncInput.length - 1; i++){
-                inBrackets = (newFuncInput[i] == "(") ? inBrackets + 1 : inBrackets
-                inBrackets = (newFuncInput[i] == ")") ? inBrackets - 1 : inBrackets
+                inBrackets = (newFuncInput[i] == "(") ? inBrackets + 1 : inBrackets;
+                inBrackets = (newFuncInput[i] == ")") ? inBrackets - 1 : inBrackets;
 
                 if (inBrackets == 0){
-                    isIncased = false
-                    break
+                    isIncased = false;
+                    break;
                 }
             }
 
             if (isIncased){
-                console.log("removing encasing brackets")
-                newFuncInput = newFuncInput.substring(1, newFuncInput.length - 1)
-                bedmasIdentifier = 0
+                console.log("removing encasing brackets");
+                newFuncInput = newFuncInput.substring(1, newFuncInput.length - 1);
+                bedmasIdentifier = 0;
             }
         }
 
@@ -87,39 +78,39 @@ class Equation {
 
         for (let i = 0; i < newFuncInput.length; i++){
 
-            let currentChar = newFuncInput[i]
+            let currentChar = newFuncInput[i];
 
             if (currentChar == "("){
-                console.log("Found open bracket")
-                inBrackets++
+                console.log("Found open bracket");
+                inBrackets++;
             }
 
             else if (currentChar == ")"){
-                console.log("Found closed bracket")
-                inBrackets--
+                console.log("Found closed bracket");
+                inBrackets--;
             }
 
             else if(currentChar == bedmasList[bedmasIdentifier] && inBrackets <= 0){
-                console.log("Split at: " + bedmasList[bedmasIdentifier])
+                console.log("Split at: " + bedmasList[bedmasIdentifier]);
                 pushToSplitTerms(i);
                 lastOperatorIndex = i;
 
-                i = (bedmasIdentifier > 5) ? i + 2 : i
+                i = (bedmasIdentifier > 5) ? i + 2 : i;
             }
 
             else if(currentChar == bedmasList[bedmasIdentifier + 1] && inBrackets <= 0){
-                console.log("Split at: " + bedmasList[bedmasIdentifier + 1])
+                console.log("Split at: " + bedmasList[bedmasIdentifier + 1]);
                 pushToSplitTerms(i);
                 lastOperatorIndex = i;
 
-                i = (bedmasIdentifier + 1 > 5) ? i + 2 : i
-                i = (bedmasIdentifier + 1 == 9) ? i - 1 : i
+                i = (bedmasIdentifier + 1 > 5) ? i + 2 : i;
+                i = (bedmasIdentifier + 1 == 9) ? i - 1 : i;
             }
         }
 
-        pushToSplitTerms()
+        pushToSplitTerms();
 
-        console.log("Currently we have split the input function into: " + splitTerms)
+        console.log("Currently we have split the input function into: " + splitTerms);
 
         function pushToSplitTerms(currentCharIndex) {
             splitTerms.push(newFuncInput.substring(lastOperatorIndex, currentCharIndex));
@@ -127,69 +118,69 @@ class Equation {
 
         for (let i = 0; i < splitTerms.length; i++){
             
-            let currentTerm = splitTerms[i]
-            let numOperators = 0
-            let numVaribles = 0
-            let numNumbers = 0
-            let isInNumber = false
+            let currentTerm = splitTerms[i];
+            let numOperators = 0;
+            let numVaribles = 0;
+            let numNumbers = 0;
+            let isInNumber = false;
 
 
             for (let e = 0; e < currentTerm.length; e++){ //check if it is a term
                 if (bedmasList.includes(currentTerm[e])){
-                    isInNumber = false
-                    numOperators++
+                    isInNumber = false;
+                    numOperators++;
 
                     if (bedmasList.includes(currentTerm[e], 9)){
-                        e++
+                        e++;
                     }
 
                     else if(bedmasList.includes(currentTerm[e], 6)){
-                        e += 2
+                        e += 2;
                     }
                 }
 
                 else if (currentTerm[e] == "x"){
-                    isInNumber = false
-                    numVaribles++
+                    isInNumber = false;
+                    numVaribles++;
                 }
 
                 else if (digits.includes(parseInt(currentTerm[e]))) {
                     if (!isInNumber){
-                        numNumbers++
+                        numNumbers++;
                     }
 
-                    isInNumber = true
+                    isInNumber = true;
                 }
             }
 
-            console.log("----Check Term----")
-            console.log("For " + currentTerm + ": " + "\nNumbers-" + numNumbers + "\nVars-" + numVaribles + "\nOperators-" + numOperators)
+            console.log("----Check Split----");
+            console.log("For " + currentTerm + ": " + "\nNumbers-" + numNumbers + "\nVars-" + numVaribles + "\nOperators-" + numOperators);
 
             if (numNumbers + numVaribles + numOperators == 0){
-                console.log("This split is empty")
+                console.log("This split is empty");
             }
-
+            /*
             else if(numNumbers + numVaribles == 0){
                 console.log("This split only has an operator")
-                // might use this to store terms without a base
+                // might use this to store objects without a base
             }
-
+            */
             else if ((numNumbers + numVaribles) <= 1 && numOperators <= 1){
 
-                console.log("Storing " + currentTerm + " as a term...")
+                console.log("Storing " + currentTerm + " as a term...");
 
-                let newTerm = new Term()
-                newTerm.storeValues(currentTerm)
-                storedTermsAsClass.push(newTerm)
+                let newTerm = new Split();
+                newTerm.storeValues(currentTerm);
+                storedTermsAsClass.push(newTerm);
             }
 
             else {
-                console.log("This split is not a term... storing as equation")
-                storedTermsAsClass.push(Equation.split(splitTerms[i], bedmasIdentifier + nextIdentifier))
+                console.log("This split is not a term... storing as equation");
+                storedTermsAsClass.push(Equation.split(splitTerms[i], bedmasIdentifier + nextIdentifier));
             }
         }
 
-        return new Equation(undefined, operator, storedTermsAsClass)
+        return new Equation(operator, storedTermsAsClass)
     }
 
     static findOperator(inputFunction, isEquasion){
@@ -197,119 +188,297 @@ class Equation {
         for (let i = 0; i < bedmasList.length; i++){
             if (inputFunction[0] == bedmasList[i]){
 
-                let operator = "+"
+                let operator = "+";
 
                 if (i < 5){
 
                     // definitly need to fix issue where the first and last brackets might not be the same set of brackets
 
                     if(inputFunction[1] == "(" && inputFunction[inputFunction.length - 1] == ")" && isEquasion){
-                        operator = bedmasList[i]
-                        inputFunction = inputFunction.substring(1)
+                        operator = bedmasList[i];
+                        inputFunction = inputFunction.substring(1);
                     }
 
                     else if(!isEquasion){
-                        operator = bedmasList[i]
-                        inputFunction = inputFunction.substring(1)
+                        operator = bedmasList[i];
+                        inputFunction = inputFunction.substring(1);
                     }
                 }
 
                 else{
                     if(inputFunction[3] == "(" && inputFunction[inputFunction.length - 1] == ")" && isEquasion){
-                        operator = inputFunction.slice(0,3)
-                        inputFunction = inputFunction.substring(3)
+                        operator = inputFunction.slice(0,3);
+                        inputFunction = inputFunction.substring(3);
                     }
 
                     else if(!isEquasion){
-                        operator = inputFunction.slice(0,3)
-                        inputFunction = inputFunction.substring(3)
+                        operator = inputFunction.slice(0,3);
+                        inputFunction = inputFunction.substring(3);
                     }
                 }
 
-                console.log("Current function: " + inputFunction)
-                console.log("the operator is " + operator)
+                console.log("Current function: " + inputFunction);
+                console.log("the operator is " + operator);
 
-                return [operator, inputFunction]
+                return [operator, inputFunction];
             }
         }
 
-        console.log("Current function: " + inputFunction)
-        console.log("the operator is +")
+        console.log("Current function: " + inputFunction);
+        console.log("the operator is +");
 
-        return ["+", inputFunction]
+        return ["+", inputFunction];
     }
 
-    evaluate(){
+    bedmasEval(){
 
-        for (let i = 0; i < this.terms; i++){
+        let returnValues = []; //array of equasions that contain 1 or more terms
+        
 
-            let underClass = this.terms[i]
-
-            if (!underClass.isEvaluated){
-                underClass.evaluate()
-            }
+        for (let i = 0; i < this.objects.length; i++){
+            console.log("Pushing values to returnValues")
+            returnValues.push(this.objects[i].bedmasEval());
+            
         }
 
-        let numIterations = this.terms.length
+        console.log("Current equations being simplified: ");
+        console.log(returnValues);
 
-        for (let i = 0; i < numIterations - 1; i++){
-            let firstClass = this.terms[0]
-            let secondClass = this.terms[1]
-
-            if (firstClass == Term && secondClass == Term){
-                let base = "x";
-                let coefficient = 0;
-                let exponent = 0;
-
-                if (digits.includes(firstClass.base) && digits.includes(secondClass.base)){
-                    //firstClass.base = (firstClass.operator == "-") ? firstClass.base - (2*firstClass.base) : firstClass.base
-
-                    if (secondClass.exponent == "^"){
-                        base = firstClass.base ** secondClass.base
-                    }
-
-                    else if (secondClass.exponent == "/"){
-                        if(firstClass.base % secondClass.base == 0){
-
-                        }
-
-                        else {
-                            result = firstClass.base + " / " + secondClass.base
-                        }
-                    }
-                }
-            }
-        }
+        return new Equation(this.operator, simplifyMathObj(returnValues)); //must retun a equasion with terms
     }
 }
-class Term {
 
-    constructor(isEvaluated = false, base, operator){
-        this.isEvaluated = isEvaluated
-        this.base = base
-        this.operator = operator
+function simplifyMathObj(operatingObj){//operationObj is a array of equasions that contain 1 or more terms
+
+    totals = [new Term()]
+
+    console.log("Checking integerity of Current equations...")
+    console.log(operatingObj)
+
+    for(let eqIndex in operatingObj){
+
+        console.log("The current total: ");
+        console.log(totals);
+
+        let equation = operatingObj[eqIndex];
+
+        switch (equation.operator){
+            case "+":
+                console.log("Adding terms...");
+
+                for (let termIndex in equation.objects){
+
+                    let doesContain = false;
+                    let term = equation.objects[termIndex]
+
+                    for (let term2Index in totals){
+
+                        let term2 = totals[term2Index];
+
+                        if (term.power == term2.power){
+                            term2.numerator = term2.numerator * term.denominator + term.numerator * term2.denominator;
+                            term2.denominator = term2.denominator * term.denominator;
+                            doesContain = true;
+                        }
+                    }
+
+                    //siplify term needs to be implemented
+
+                    if (!doesContain){
+                        totals.push(term);
+                    }
+                }
+
+            case "-":
+
+                for (let termIndex in equation.objects){//element.objects refers to a list of terms so term is a term... Great!
+
+                    let doesContain = false;
+                    let term = equation.objects[termIndex];
+
+                    for (let term2Index in totals){
+
+                        let term2 = totals[term2Index];
+
+                        if (term.power == term2.power){
+                            term2.numerator = term2.numerator * term.denominator - term.numerator * term2.denominator;
+                            term2.denominator = term2.denominator * term.denominator;
+                            doesContain = true;
+                        }
+                    }
+
+                    //simplify term here would be nice
+
+                    if (!doesContain){
+                        totals.push(term);
+                    }
+                }
+
+            case "*":
+                
+                for (let equationTerm in equation.objects){
+
+                    equationTerm = equation.objects[equationTerm];
+
+                    for (let totalsTerm in totals){
+
+                        totalsTerm = totals[totalsTerm];
+
+                        totalsTerm.numerator *= equationTerm.numerator;
+                        totalsTerm.denominator *= equationTerm.denominator;
+
+                        for (let equationPower in equationTerm.powers){
+                            
+                            equationPower = equationTerm.powers[equationPower];
+                            let doesContain = false;
+
+                            for (let totalPower in totalsTerm.powers){
+
+                                totalPower = totalsTerm.powers[totalPower];
+
+                                if(equationPower.base == totalPower.base){
+                                    totalPower.exponent += equationPower.exponent;
+                                    doesContain = true;
+                                }
+                            }
+
+                            if(!doesContain){
+                                totalsTerm.powers.push(equationPower);
+                            }
+                        }
+                    }
+                }
+
+            case "/":
+
+                for (let equationTerm in equation.objects){
+
+                    equationTerm = equation.objects[equationTerm];
+
+                    for (let totalsTerm in totals){
+
+                        totalsTerm = totals[totalsTerm];
+
+                        totalsTerm.numerator *= equationTerm.denominator;
+                        totalsTerm.denominator *= equationTerm.numerator;
+
+                        for (let equationPower in equationTerm.powers){
+
+                            equationPower = equationTerm.powers[equationPower];
+                            let doesContain = false;
+
+                            for (let totalPower in totalsTerm.powers){
+
+                                totalPower = totalsTerm.powers[totalPower]
+
+                                if(equationPower.base == totalPower.base){
+                                    totalPower.exponent -= equationPower.exponent;
+                                    doesContain = true;
+                                }
+                            }
+
+                            if(!doesContain){
+                                totalsTerm.powers.push(equationPower);
+                            }
+                        }
+                    }
+                }
+
+            case "^":
+                //if(){}
+                
+                for (let a = 1; a < equation.base; a++){
+
+                    let newTotals = {};
+    
+                    for(let key in totals){
+                        for(let key2 in totals){
+
+                            let termOfTotals = totals[key];
+                            let termOfTotals2 = totals[key2];
+
+                            let numeratorResult = termOfTotals.numerator * termOfTotals2.numerator;
+                            let denominatorResult = termOfTotals.denominator * termOfTotals2.denominator;
+
+                            for (let power2 in termOfTotals2.powers){
+
+                                let doesContain = false;
+
+                                for (let power in termOfTotals.powers){
+
+                                    if(power.base == power2.base){
+                                        power.exponent += power2.exponent;
+                                        doesContain = true;
+                                    }
+                                }
+
+                                if (!doesContain){
+                                    termOfTotals.powers.push(power2);
+                                }
+                            }
+                        }
+                    }
+                }       
+        }
+    }
+    return totals;
+}
+
+class Split {
+    constructor(base, operator){
+        this.base = base;
+        this.operator = operator;
     }
 
     storeValues(inputFunction) {
-        inputFunction = inputFunction.replace(/\(/g, "")
-        inputFunction = inputFunction.replace(/\)/g, "")
+        inputFunction = inputFunction.replace(/\(/g, "");
+        inputFunction = inputFunction.replace(/\)/g, "");
 
-        console.log("Removed unwanted brackets from: " + inputFunction)
+        console.log("Removed unwanted brackets from: " + inputFunction);
 
-        let [operator, newInputFunction] = Equation.findOperator(inputFunction,false)
-        this.operator = operator
+        let [operator, newInputFunction] = Equation.findOperator(inputFunction,false);
+        this.operator = operator;
 
         if (newInputFunction[0] !== "x"){
-            console.log("Storing " + newInputFunction + " as a number")
-            this.base = parseInt(newInputFunction)
+            console.log("Storing " + newInputFunction + " as a number");
+            this.base = parseInt(newInputFunction);
         }
 
         else {
-            this.base = newInputFunction
-            console.log("Storing " + this.base + " as a varible")
+            this.base = newInputFunction;
+            console.log("Storing " + this.base + " as a varible");
         }
     }
+
+    bedmasEval(){
+
+        console.log("Found term")
+
+        let newTerm = new Term([new Power()], this.base)
+
+        if(this.base == "x"){
+            newTerm = new Term([new Power(this.base)])
+        }
+
+        return new Equation(this.operator,[newTerm]);
+    }
 }
+
+class Term {
+    constructor(powers = [new Power()], numerator = 0, denominator = 1){
+        this.powers = powers;
+        this.numerator = numerator;
+        this.denominator = denominator;
+    }
+}
+
+class Power {
+    constructor(base = 1, exponent = 1){
+        this.base = base;
+        this.exponent = exponent;
+    }
+}
+
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -422,7 +591,7 @@ function bakedbeans(){
             document.getElementById("beans3").innerText = "F(" + e + " - " + s + ")=";
             document.getElementById("beans1").innerText = "f(" + e + ")=";
         } 
-        document.getElementById("beans4").innerText = (Term.InsertMultipleSymbol(Beanssses));
+        document.getElementById("beans4").innerText = (Equation.InsertMultipleSymbol(Beanssses));
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
         epicpictures();
     }
@@ -765,10 +934,19 @@ function Salsfunfacts(){
 }
 function simplify(input)
 {
-    let simplifiedEquation = Equation.split(Equation.InsertMultipleSymbol(input))
-    console.log(simplifiedEquation)
+    let simplifiedEquation = Equation.split(Equation.InsertMultipleSymbol(input));
 
-    return input
+    console.log(simplifiedEquation);
+    console.log("\n-----Splitting is Complete-----");
+    console.log("");
+
+    simplifiedEquation = simplifiedEquation.bedmasEval();
+    console.log(simplifiedEquation);
+
+    //let test = Equation.split(Equation.InsertMultipleSymbol("2x*x"));
+    //console.log(test);
+
+    return input;
 }
 function integral(input)
 {
