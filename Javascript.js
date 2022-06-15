@@ -667,6 +667,31 @@ function derivitive(input)
         }
         return (l + "/" + p);
     }
+    else if ((a.indexOf("^") < a.indexOf("x")) && (a.includes("^"))){
+        if (a.substring((a.indexOf("^")) + 1) == "x"){
+            return (a + "ln(" + (a.substring(0, a.indexOf("^"))) + ")");
+        }
+        else{
+            return (a + "ln(" + (a.substring(0, a.indexOf("^"))) + ")*(" + derivitive(a.substring(a.indexOf("^") + 1)) + ")");
+        }
+    }
+    else if (a.includes("log")){
+        if (a.includes(",")){
+            var r = a.substring(((a.indexOf("g")) + 1), a.indexOf(","));
+            var e = a.substring(((a.indexOf(",")) + 1));
+        }
+        else{
+            var r = "10";
+            var e = a.substring((a.indexOf("g")) + 1)
+        }
+        if (e == "x"){
+            var p = 1;
+        }
+        else{
+            var p = derivitive(e);
+        }
+        return (p + "/(" + e + "*ln" + r + ")");
+    }
     else {
         if (a.includes("^") && a.includes("x")){
             var constant = String;
