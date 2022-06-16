@@ -436,7 +436,7 @@ function bakedbeans(){
     }
 }
 function checkInput(input){
-    const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
+    const badInputs = ["a","b","c","d","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
     const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^","log"]
     var p = Boolean;
     for (let x = 0; x < (input.length);) {
@@ -661,6 +661,10 @@ function derivitive(input)
             var p = arrayoffunctions[o];
             var l = derivitive(p);
         }
+        else if (a.indexOf("ln") == 0){
+            var p = a.substring((a.indexOf("ln")) + 2);
+            l = "1";
+        }
         else{
             var p = a.substring((a.indexOf("ln")) + 2);
             l = derivitive(p);
@@ -672,7 +676,7 @@ function derivitive(input)
             return (a + "ln(" + (a.substring(0, a.indexOf("^"))) + ")");
         }
         else{
-            return (a + "ln(" + (a.substring(0, a.indexOf("^"))) + ")*(" + derivitive(a.substring(a.indexOf("^") + 1)) + ")");
+            return (a + "*ln(" + (a.substring(0, a.indexOf("^"))) + ")*(" + derivitive(a.substring(a.indexOf("^") + 1)) + ")");
         }
     }
     else if (a.includes("log")){
@@ -1051,44 +1055,151 @@ function calculate(input){
         var z = calculate(h);
         a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
-    if (a.includes("+")) {
-            let x = 0;
-            let b = 0.0;
-            const chunksofa = a.split("+");
-            for(let q=0; q<chunksofa.length; q++){
-                x = 0.0;
-                x = calculate(chunksofa[q]);
-                b = (b + x);
+    if (a.includes("+") || a.includes("-")){
+        if (((a.indexOf("+") < a.indexOf("-")) && (a.indexOf("+") != (-1))) || (a.indexOf("-") == (-1))){
+            var g = ("+");
+        }
+        else{
+            var g = ("-");
+        }
+        var w = calculate(a.substring(0, a.indexOf(g)));
+        a = a.substring(((a.indexOf(g))));
+        let p = 0.0;
+        let h = Boolean;
+        while(a.includes("+") || a.includes("-")){
+            h = (((a.indexOf("+") < a.indexOf("-")) && (a.indexOf("+") != (-1))) || (a.indexOf("-") == (-1)));
+            a = a.substring(1);
+            if (!(a.includes("+") || a.includes("-"))){
+                p = calculate(a);
+                a = "";
             }
-            return b;
+            else{
+                if (((a.indexOf("+") < a.indexOf("-")) && (a.indexOf("+") != (-1))) || (a.indexOf("-") == (-1))){
+                    g = ("+");
+                }
+                else{
+                    g = ("-");
+                }
+            p = calculate(a.substring(0, a.indexOf(g)));
+            a = a.substring(a.indexOf(g));
+            }
+            if (h){
+                w = w + p;
+            }
+            else{
+                w = w - p;
+            }
+        }
+        return(w)
     }
-    else if (a.includes("-")) {
-            let x = 0;
-            let b = 0.0;
-            const chunksofa = a.split("-");
-            for(let q=0; q<chunksofa.length; q++){
-                x = calculate(chunksofa[q])
-                b = b - x;
+    if (a.includes("*") || a.includes("/")){
+        if (((a.indexOf("*") < a.indexOf("/")) && (a.indexOf("*") != (-1))) || (a.indexOf("/") == (-1))){
+            var g = ("*");
+        }
+        else{
+            var g = ("/");
+        }
+        var w = calculate(a.substring(0, a.indexOf(g)));
+        a = a.substring(((a.indexOf(g))));
+        let p = 0.0;
+        let h = Boolean;
+        while(a.includes("*") || a.includes("/")){
+            h = (((a.indexOf("*") < a.indexOf("/")) && (a.indexOf("*") != (-1))) || (a.indexOf("/") == (-1)));
+            a = a.substring(1);
+            if (!(a.includes("*") || a.includes("/"))){
+                p = calculate(a);
+                a = "";
             }
-            return b;
+            else{
+                if (((a.indexOf("*") < a.indexOf("/")) && (a.indexOf("*") != (-1))) || (a.indexOf("/") == (-1))){
+                    g = ("*");
+                }
+                else{
+                    g = ("/");
+                }
+            p = calculate(a.substring(0, a.indexOf(g)));
+            a = a.substring(a.indexOf(g));
+            }
+            if (h){
+                w = (w * p);
+            }
+            else{
+                w = (w / p);
+            }
+        }
+        return(w)
     }
-    else if (a.includes("*")) {
-            let x = 1;
-            let b = 1.0;
-            const chunksofa = a.split("*");
-            for(let q=0; q<chunksofa.length; q++){
-                x = calculate(chunksofa[q])
-                b = b * x;
+    else if (a.includes("^")){
+        if (a.includes("e^")){
+            var o = a.indexOf("e^");
+            var u = a.substring((o + 1));
+            if (o == 0){
+                var y = 1.0;
             }
+            else{
+                var y = a.substring(0, o);
+            }
+            var p = calculate(u);
+            b = (y * (2.718281828459045 ** p))
+        }
+        else if (a.includes("x") && (a.includes("^"))){
+            var b = 1.0;
+            var s = a.indexOf("^");
+            var e = a.substring(0, (s - 1));
+            var f = a.substring((s + 1))
+            var j = parseFloat(f);
+            while (j > 0){
+                b = b * valueofx
+                j --
+            }
+            if (s != 1)
+                b = b * e;
+        }
+        else if (a.includes("{") && (a.includes("^"))){
+            var b = 1.0;
+            var s = a.indexOf("^");
+            var e = a.substring(0, (s - 1));
+            var f = a.substring((s + 1))
+            var j = parseFloat(f);
+            while (j > 0){
+                b = b * valueofx
+                j --
+            }
+            if (s != 1)
+                b = b * e;
+        }
+        else if (a.includes("^")){
+            var b = 1.0;
+            var s = a.indexOf("^");
+            var e = parseFloat(a.substring(0, (s)));
+            var j = parseFloat(a.substring((s + 1)));
+            b = e ** j;
+        }
     }
-    else if (a.includes("/")) {
-            let x = 0;
-            const chunksofa = a.split("/");
-            let b = calculate(chunksofa[0]);
-            for(let q=1; q<chunksofa.length; q++){
-                x = calculate(chunksofa[q])
-                b = b / x;
+    else if (a.includes("l")){
+        console.log("equal to  " + a);
+        if (a.indexOf("l") == 0){
+            var b = 1.0
+        }
+        else{
+            var b = calculate(a.substring(0, a.indexOf("l")));
+        }
+        if (a.includes("log")){
+            if (a.includes(",")){
+                var q = calculate(a.substring((a.indexOf("g") + 1), a.indexOf(",")));
+                var r = calculate(a.substring((a.indexOf(",") + 1)));
+                b = b * ((Math.log10(r)) / (Math.log10(q)));
             }
+            else{
+                var q = calculate(a.substring(a.indexOf("g") + 1));
+                b = b * ((Math.log10(q)));
+            }
+        }
+        else if (a.includes("ln")){
+            console.log("calculate" + (a.substring(a.indexOf("n") + 1)));
+            var q = calculate(a.substring(a.indexOf("n") + 1));
+            b = b * (Math.log(q));
+        }
     }
     else if (a.includes("n") || a.includes("c")){
         if (a.includes("sin")) {
@@ -1187,77 +1298,7 @@ function calculate(input){
             var w = calculate(p);
             b = (g / (sinner(w)) / (sinner(w + 90)))
         }  
-    }
-    else if (a.includes("^")){
-        if (a.includes("e^")){
-            var o = a.indexOf("e^");
-            var u = a.substring((o + 1));
-            if (o == 0){
-                var y = 1.0;
-            }
-            else{
-                var y = a.substring(0, o);
-            }
-            var p = calculate(u);
-            b = (y * (2.718281828459045 ** p))
-        }
-        else if (a.includes("x") && (a.includes("^"))){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = a.substring(0, (s - 1));
-            var f = a.substring((s + 1))
-            var j = parseFloat(f);
-            while (j > 0){
-                b = b * valueofx
-                j --
-            }
-            if (s != 1)
-                b = b * e;
-        }
-        else if (a.includes("{") && (a.includes("^"))){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = a.substring(0, (s - 1));
-            var f = a.substring((s + 1))
-            var j = parseFloat(f);
-            while (j > 0){
-                b = b * valueofx
-                j --
-            }
-            if (s != 1)
-                b = b * e;
-        }
-        else if (a.includes("^")){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = parseFloat(a.substring(0, (s)));
-            var j = parseFloat(a.substring((s + 1)));
-            b = e ** j;
-        }
-    }
-    else if (a.includes("l")){
-        if (a.indexOf("l") == 0){
-            var b = 1.0
-        }
-        else{
-            var b = calculate(a.substring(0, a.indexOf("l")));
-        }
-        if (a.includes("log")){
-            if (a.includes(",")){
-                var q = calculate(a.substring((a.indexOf("g") + 1), indexOf(",")));
-                var r = calculate(a.substring((a.indexOf(",") + 1)));
-                b = b * ((Math.log10(r)) / (Math.log10(q)));
-            }
-            else{
-                var q = a.substring(a.indexOf("g") + 1);
-                b = b * ((Math.log10(q)));
-            }
-        }
-        else if (a.includes("ln")){
-            var q = a.substring(a.indexOf("g") + 1);
-            b = b * ((Math.log(q)));
-        }
-    }
+    }    
     else if (a.includes("x")){
             var r = a.indexOf("x");
             var c = a.substring(0, r);
@@ -1265,6 +1306,14 @@ function calculate(input){
                 b = (valueofx * parseFloat(c)); 
             else
                 b = (valueofx * 1);
+    }
+    else if (a.includes("e")){
+        if (a == "e"){
+            return 2.718281828459045;
+        }
+        else{
+            return ((parseFloat(a.substring(0, a.indexOf("e")))) * 2.718281828459045);
+        }
     }
     else if (a != ""){
         return (parseFloat(input));
