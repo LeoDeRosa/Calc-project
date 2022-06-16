@@ -240,7 +240,6 @@ class Equation {
         return new Equation(this.operator, simplifyMathObj(returnValues)); //must retun a equasion with terms
     }
 }
-
 function gcdFunc(a, b){
 
     // Euclid's algorithm
@@ -250,7 +249,6 @@ function gcdFunc(a, b){
     }   
     return gcdFunc(b, a % b);
 }
-
 function sameArrayValues(a, b){
     //check if two arrays have the same values
     if (a.length != b.length){
@@ -261,7 +259,6 @@ function sameArrayValues(a, b){
     const arr2test = b.slice().sort()
     return !arr1test.some((val, idx) => !val.isEqual(arr2test[idx]))
 }
-
 function simplifyMathObj(operatingObj){//operationObj is a array of equasions that contain 1 or more terms
 
     let baseArrayOfTerms = [];
@@ -528,7 +525,6 @@ function simplifyMathObj(operatingObj){//operationObj is a array of equasions th
         }
     }
 }
-
 class Fraction{
     constructor(numerator, denominator = 1){
         this.numerator = numerator;
@@ -579,7 +575,6 @@ class Fraction{
         return this.numerator == fraction2.numerator && this.denominator == fraction2.denominator;
     }
 }
-
 class Split {
     constructor(base, operator){
         this.base = base;
@@ -619,7 +614,6 @@ class Split {
         return new Equation(this.operator,[newTerm]);
     }
 }
-
 class Term {
     constructor(powers = [], coefficients = new Fraction(0,1)) {
         this.powers = powers;
@@ -647,7 +641,6 @@ class Term {
         return string;
     }
 }
-
 class Power {
     constructor(base = 1, exponent = 1){
         this.base = base;
@@ -657,8 +650,6 @@ class Power {
         return this.base == power.base && this.exponent == power.exponent;
     }
 }
-
-
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -1181,6 +1172,7 @@ function integral(input)
                 x = integral(x);
                 b = (b + x);
             }
+            return b;
         }
     }
 
@@ -1197,6 +1189,7 @@ function integral(input)
                 x = integral(x);
                 b = (b + x);
             }
+            return b;
         }
     }
 
