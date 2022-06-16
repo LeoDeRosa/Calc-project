@@ -1130,51 +1130,19 @@ function calculate(input){
         return(w)
     }
     else if (a.includes("^")){
-        if (a.includes("e^")){
-            var o = a.indexOf("e^");
-            var u = a.substring((o + 1));
-            if (o == 0){
-                var y = 1.0;
+        var b = 1.0;
+        var s = a.indexOf("^");
+        if (a.charAt(s - 1) == "x" || a.charAt(s - 1) == "e"){
+            var e = calculate(a.charAt(s - 1));
+            if (s != 1){
+                b = parseFloat(a.substring(0, (s - 1)));
             }
-            else{
-                var y = a.substring(0, o);
-            }
-            var p = calculate(u);
-            b = (y * (2.718281828459045 ** p))
         }
-        else if (a.includes("x") && (a.includes("^"))){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = a.substring(0, (s - 1));
-            var f = a.substring((s + 1))
-            var j = parseFloat(f);
-            while (j > 0){
-                b = b * valueofx
-                j --
-            }
-            if (s != 1)
-                b = b * e;
+        else{
+            var e = calculate(a.substring(0, (s)));
         }
-        else if (a.includes("{") && (a.includes("^"))){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = a.substring(0, (s - 1));
-            var f = a.substring((s + 1))
-            var j = parseFloat(f);
-            while (j > 0){
-                b = b * valueofx
-                j --
-            }
-            if (s != 1)
-                b = b * e;
-        }
-        else if (a.includes("^")){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = parseFloat(a.substring(0, (s)));
-            var j = parseFloat(a.substring((s + 1)));
-            b = e ** j;
-        }
+        var j = calculate(a.substring((s + 1)));
+        return (b * (e ** j));
     }
     else if (a.includes("l")){
         console.log("equal to  " + a);
@@ -1369,7 +1337,7 @@ function intcalculator(input, begin, end, accuracy, choice){
     else if (choice == 3){
         valueofx = (currentslice);
         b = (b + ((sizeofslices * calculate(input)) / 2));
-        for (let h = 1; h < (accuracy - 1); h++) {
+        for (let h = 0; h < (accuracy); h++) {
             valueofx = (currentslice);
             b = (b + (sizeofslices * calculate(input)));
             currentslice = (currentslice + sizeofslices);
