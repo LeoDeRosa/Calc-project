@@ -14,7 +14,6 @@ class Equation {
         let output = String;
         const things = ["x", "s", "c", "l","t","("];
         if(input == "+c"){
-            console.log("why does this return zero just out of curiosity?");
             return 0;
         }
 
@@ -1381,10 +1380,11 @@ function integral(input)
             b = input.replace("/","ln")
         }
         else{
+            balls = String;
             power = 2;
             constant = parseFloat(constant);
-            constant = (constant / power);
-            b = (constant + "x^" + power );
+            balls = (constant + "/" + power);
+            b = (balls + "x^" + power );
         }
     }
 
@@ -1418,7 +1418,7 @@ function power_getter(input, x){
     let results = [];
     
     for(let i = x + 2; i < input.length; i++){
-        if(!isNaN(input[i])){
+        if(!isNaN(input[i]) || (input[i] == ".")){
             results.push(i);
         }
         else{
@@ -1430,7 +1430,7 @@ function power_getter(input, x){
 function constant_getter(input, x){
     let results = [];
     for(let i = x - 1; i >= 0; i--){
-        if(!isNaN(input[i])){
+        if(!isNaN(input[i]) || (input[i] == ".")){
             results.push(i);
         }
         else{
