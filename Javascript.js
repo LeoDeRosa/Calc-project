@@ -1,17 +1,13 @@
 const arrayoffunctions = [];
 var findingvalue = false;
 var valueofx;
-
 const bedmasList = ["+","-","*","/","^",null,"c","s","t","l"];
 const functions = ["cos","sin","sec","csc","tan","cot","ln"];
 const digits = [0,1,2,3,4,5,6,7,8,9];
-
 class Equation {
     constructor(operator, objects){
         this.operator = operator;
         this.objects = objects;
-
-
     }
 
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
@@ -233,12 +229,9 @@ class Equation {
     bedmasEval(){
 
         let returnValues = []; //array of equasions that contain 1 or more terms
-        
 
         for (let i = 0; i < this.objects.length; i++){
-            console.log("Pushing values to returnValues")
             returnValues.push(this.objects[i].bedmasEval());
-            
         }
 
         console.log("Current equations being simplified: ");
@@ -248,180 +241,343 @@ class Equation {
     }
 }
 
+function gcdFunc(a, b){
+
+    // Euclid's algorithm
+
+    if (b == 0) {
+        return a;
+    }   
+    return gcdFunc(b, a % b);
+}
+
+function sameArrayValues(a, b){
+    //check if two arrays have the same values
+    if (a.length != b.length){
+        return false;
+    }
+
+    const arr1test = a.slice().sort()
+    const arr2test = b.slice().sort()
+    return !arr1test.some((val, idx) => !val.isEqual(arr2test[idx]))
+}
+
 function simplifyMathObj(operatingObj){//operationObj is a array of equasions that contain 1 or more terms
 
-    totals = [new Term()]
+    let baseArrayOfTerms = [];
 
     console.log("Checking integerity of Current equations...")
     console.log(operatingObj)
 
     for(let eqIndex in operatingObj){
 
-        console.log("The current total: ");
-        console.log(totals);
+        if (eqIndex==0){
+            baseArrayOfTerms = operatingObj[eqIndex].objects;
+            continue;
+        }
 
         let equation = operatingObj[eqIndex];
+        console.log("The current total: ");
+        console.log(baseArrayOfTerms);
 
         switch (equation.operator){
             case "+":
-                console.log("Adding terms...");
 
-                for (let termIndex in equation.objects){
-
-                    let doesContain = false;
-                    let term = equation.objects[termIndex]
-
-                    for (let term2Index in totals){
-
-                        let term2 = totals[term2Index];
-
-                        if (term.power == term2.power){
-                            term2.numerator = term2.numerator * term.denominator + term.numerator * term2.denominator;
-                            term2.denominator = term2.denominator * term.denominator;
-                            doesContain = true;
-                        }
-                    }
-
-                    //siplify term needs to be implemented
-
-                    if (!doesContain){
-                        totals.push(term);
-                    }
-                }
+                baseArrayOfTerms = addPolynomials(baseArrayOfTerms, equation.objects);
+                break;
 
             case "-":
 
-                for (let termIndex in equation.objects){//element.objects refers to a list of terms so term is a term... Great!
-
-                    let doesContain = false;
-                    let term = equation.objects[termIndex];
-
-                    for (let term2Index in totals){
-
-                        let term2 = totals[term2Index];
-
-                        if (term.power == term2.power){
-                            term2.numerator = term2.numerator * term.denominator - term.numerator * term2.denominator;
-                            term2.denominator = term2.denominator * term.denominator;
-                            doesContain = true;
-                        }
-                    }
-
-                    //simplify term here would be nice
-
-                    if (!doesContain){
-                        totals.push(term);
-                    }
-                }
+                baseArrayOfTerms = subtractPolynomials(baseArrayOfTerms, equation.objects);
+                break;
 
             case "*":
                 
-                for (let equationTerm in equation.objects){
-
-                    equationTerm = equation.objects[equationTerm];
-
-                    for (let totalsTerm in totals){
-
-                        totalsTerm = totals[totalsTerm];
-
-                        totalsTerm.numerator *= equationTerm.numerator;
-                        totalsTerm.denominator *= equationTerm.denominator;
-
-                        for (let equationPower in equationTerm.powers){
-                            
-                            equationPower = equationTerm.powers[equationPower];
-                            let doesContain = false;
-
-                            for (let totalPower in totalsTerm.powers){
-
-                                totalPower = totalsTerm.powers[totalPower];
-
-                                if(equationPower.base == totalPower.base){
-                                    totalPower.exponent += equationPower.exponent;
-                                    doesContain = true;
-                                }
-                            }
-
-                            if(!doesContain){
-                                totalsTerm.powers.push(equationPower);
-                            }
-                        }
-                    }
-                }
+                baseArrayOfTerms = multiplyPolinomials(baseArrayOfTerms, equation.objects);
+                break;
 
             case "/":
 
-                for (let equationTerm in equation.objects){
+                baseArrayOfTerms = dividePolynomials(baseArrayOfTerms, equation.objects);
+                break;
 
-                    equationTerm = equation.objects[equationTerm];
+            case "^":
 
-                    for (let totalsTerm in totals){
+                // take two lists of terms and raise one of them to the power of the other
 
-                        totalsTerm = totals[totalsTerm];
+                baseArrayOfTerms = raisePolynomials(baseArrayOfTerms, equation.objects);
+                break;
+        }
+    }
+    console.log("The final total: ");
+    console.log(baseArrayOfTerms);
 
-                        totalsTerm.numerator *= equationTerm.denominator;
-                        totalsTerm.denominator *= equationTerm.numerator;
+    return baseArrayOfTerms;
 
-                        for (let equationPower in equationTerm.powers){
+    function addPolynomials(baseTermList, operatingTermList){
 
-                            equationPower = equationTerm.powers[equationPower];
-                            let doesContain = false;
+        let newTermList = baseTermList;
 
-                            for (let totalPower in totalsTerm.powers){
+        console.log("Adding Polynomials(Term Lists)");
+        console.log(baseTermList);
+        console.log(operatingTermList);
+    
+        for (let i = 0; i < operatingTermList.length; i++){
+    
+            let currentOperatingTerm = operatingTermList[i];
+            let doesContain = false;
+    
+            for (let e = 0; e < newTermList.length; e++){
+    
+                console.log("Checking if " + currentOperatingTerm.toString() + " is already in the list");
+                let currentBaseTerm = newTermList[e];
+                if (sameArrayValues(currentOperatingTerm.powers, currentBaseTerm.powers)){
+    
+                    doesContain = true;
+    
+                    console.log("Found a match");
+                    console.log(currentOperatingTerm);
+                    console.log(currentBaseTerm);
 
-                                totalPower = totalsTerm.powers[totalPower]
+                    currentBaseTerm.coefficients = currentOperatingTerm.coefficients.add(currentBaseTerm.coefficients);          
+                }
+            }
+    
+            if (!doesContain){
 
-                                if(equationPower.base == totalPower.base){
-                                    totalPower.exponent -= equationPower.exponent;
-                                    doesContain = true;
-                                }
-                            }
+                console.log("No match found");
+                console.log(currentOperatingTerm);
 
-                            if(!doesContain){
-                                totalsTerm.powers.push(equationPower);
+                newTermList.push(currentOperatingTerm);
+            }
+        }
+        return baseTermList;
+    }
+    
+    function subtractPolynomials(baseTermList, operatingTermList){
+
+        let newTermList = baseTermList;
+
+        console.log("Subtracting Polynomials(Term Lists)");
+        console.log(baseTermList);
+        console.log(operatingTermList);
+    
+        for (let i = 0; i < operatingTermList.length; i++){
+    
+            let currentOperatingTerm = operatingTermList[i];
+            let doesContain = false;
+    
+            for (let e = 0; e < baseTermList.length; e++){
+    
+                let currentBaseTerm = newTermList[e];
+    
+                if (sameArrayValues(currentOperatingTerm.powers, currentBaseTerm.powers)){
+    
+                    doesContain = true;
+    
+                    console.log("Found a match");
+                    console.log(currentOperatingTerm);
+                    console.log(currentBaseTerm);
+    
+                    currentBaseTerm.coefficients = currentBaseTerm.coefficients.subtract(currentOperatingTerm.coefficients);
+                }
+            }
+    
+            if (!doesContain){
+
+                console.log("No match found");
+                console.log(currentOperatingTerm);
+
+                newTermList.push(currentOperatingTerm);
+            }
+        }
+        return baseTermList;
+    }
+
+    function multiplyPolinomials(baseTermList, operatingTermList) {
+
+        newTermList = baseTermList;
+
+        console.log("Multiplying Polynomials(Term Lists)");
+        console.log(baseTermList);
+        console.log(operatingTermList);
+
+        for (let equationTerm in operatingTermList) {
+    
+            equationTerm = operatingTermList[equationTerm];
+    
+            for (let baseTerm in newTermList) {
+    
+                baseTerm = newTermList[baseTerm];
+    
+                baseTerm.coefficients = equationTerm.coefficients.multiply(baseTerm.coefficients);
+    
+                for (let equationPower in equationTerm.powers) {
+    
+                    equationPower = equationTerm.powers[equationPower];
+                    let doesContain = false;
+    
+                    for (let basePower in baseTerm.powers) {
+    
+                        basePower = baseTerm.powers[basePower];
+    
+                        // check if the powers have the same base
+                        if (equationPower.base == basePower.base) {
+
+                            // if they do, add the exponents together
+                            basePower.exponent = basePower.exponent + equationPower.exponent;
+                            doesContain = true;
+                        }
+                    }
+    
+                    if (!doesContain) {
+                        // if they don't, add the power to the base term
+                        baseTerm.powers.push(equationPower);
+                    }
+                }
+            }
+        }
+        return newTermList;
+    }
+
+    function dividePolynomials(baseTermList, operatingTermList) {
+            
+        let newTermList = baseTermList;
+
+        console.log("Dividing Polynomials(Term Lists)");
+        console.log(baseTermList);
+        console.log(operatingTermList);
+
+        for (let equationTerm in operatingTermList) {
+
+            equationTerm = operatingTermList[equationTerm];
+
+            for (let baseTerm in newTermList) {
+
+                baseTerm = newTermList[baseTerm];
+
+                baseTerm.coefficients = equationTerm.coefficients.divide(baseTerm.coefficients);
+
+                for (let equationPower in equationTerm.powers) {
+
+
+                    equationPower = equationTerm.powers[equationPower];
+                    let doesContain = false;
+
+                    for (let basePower in baseTerm.powers) {
+                        
+                        basePower = baseTerm.powers[basePower];
+
+                        // check if the powers have the same base
+
+                        if (equationPower.base == basePower.base) {
+                                
+
+                            // if they do, subtract the exponents from eachother
+                            basePower.exponent = basePower.exponent - equationPower.exponent;
+                            doesContain = true;
+
+                            if (basePower.exponent = 0) {
+                                // if the exponent is equal to 0, remove the power from the base term
+                                baseTerm.powers.splice(baseTerm.powers.indexOf(basePower), 1);
                             }
                         }
                     }
                 }
+            }
+        }
+        return newTermList;
+    }
 
-            case "^":
-                //if(){}
-                
-                for (let a = 1; a < equation.base; a++){
-
-                    let newTotals = {};
+    function raisePolynomials(equation) {
+        if (equation.objects.length == 1) {
+            if (equation.objects[0].power.base == 1) {
     
-                    for(let key in totals){
-                        for(let key2 in totals){
-
-                            let termOfTotals = totals[key];
-                            let termOfTotals2 = totals[key2];
-
-                            let numeratorResult = termOfTotals.numerator * termOfTotals2.numerator;
-                            let denominatorResult = termOfTotals.denominator * termOfTotals2.denominator;
-
-                            for (let power2 in termOfTotals2.powers){
-
-                                let doesContain = false;
-
-                                for (let power in termOfTotals.powers){
-
-                                    if(power.base == power2.base){
-                                        power.exponent += power2.exponent;
-                                        doesContain = true;
-                                    }
-                                }
-
-                                if (!doesContain){
-                                    termOfTotals.powers.push(power2);
+                //the base is 1 so we can just raise all of the terms in baseArrayOfTerms to the numerator of equation.objects[0]
+                for (let baseTerm in baseArrayOfTerms) {
+    
+                    baseTerm = baseArrayOfTerms[baseTerm];
+    
+                    for (let baseTerm2 in baseArrayOfTerms) {
+    
+                        baseTerm2 = baseArrayOfTerms[baseTerm2];
+    
+                        baseTerm.numerator *= baseTerm2.numerator;
+                        baseTerm.denominator *= baseTerm2.denominator;
+    
+                        [baseTerm.numerator, baseTerm.denominator] = simplifyFraction(baseTerm.numerator, baseTerm.denominator);
+    
+                        for (let basePower in baseTerm2.powers) {
+    
+                            basePower = baseTerm2.powers[basePower];
+                            let doesContain = false;
+    
+                            for (let basePower2 in baseTerm.powers) {
+    
+                                basePower2 = baseTerm.powers[basePower2];
+    
+                                if (basePower.base == basePower2.base) {
+                                    basePower.exponent += basePower2.exponent;
+                                    doesContain = true;
                                 }
                             }
                         }
                     }
-                }       
+                }
+            }
         }
     }
-    return totals;
+}
+
+class Fraction{
+    constructor(numerator, denominator = 1){
+        this.numerator = numerator;
+        this.denominator = denominator;
+    }
+
+    static simplify(fraction){
+        let gcd = gcdFunc(fraction.numerator, fraction.denominator);
+
+        return new Fraction(fraction.numerator / gcd, fraction.denominator / gcd);
+    }
+    
+    toString(){
+        return this.numerator + "/" + this.denominator;
+    }
+
+    add(fraction2){
+        console.log(this.numerator + " + " + fraction2.numerator);
+        let numerator = this.numerator * fraction2.denominator + fraction2.numerator * this.denominator;
+        let denominator = this.denominator * fraction2.denominator;
+
+        return Fraction.simplify(new Fraction(numerator, denominator));
+    }
+
+    subtract(fraction2){
+        console.log(this.numerator + " - " + fraction2.numerator);
+        let numerator = this.numerator * fraction2.denominator - fraction2.numerator * this.denominator;
+        let denominator = this.denominator * fraction2.denominator;
+
+        return Fraction.simplify(new Fraction(numerator, denominator));
+    }
+
+    multiply(fraction2){
+        let numerator = this.numerator * fraction2.numerator;
+        let denominator = this.denominator * fraction2.denominator;
+
+        return Fraction.simplify(new Fraction(numerator, denominator));
+    }
+
+    divide(fraction2){
+        let numerator = this.numerator * fraction2.denominator;
+        let denominator = this.denominator * fraction2.numerator;
+
+        return Fraction.simplify(new Fraction(numerator, denominator));
+    }
+
+    equals(fraction2){
+        return this.numerator == fraction2.numerator && this.denominator == fraction2.denominator;
+    }
 }
 
 class Split {
@@ -454,10 +610,10 @@ class Split {
 
         console.log("Found term")
 
-        let newTerm = new Term([new Power()], this.base)
+        let newTerm = new Term([], new Fraction(this.base));
 
         if(this.base == "x"){
-            newTerm = new Term([new Power(this.base)])
+            newTerm = new Term([new Power(this.base)], new Fraction(1));
         }
 
         return new Equation(this.operator,[newTerm]);
@@ -465,10 +621,30 @@ class Split {
 }
 
 class Term {
-    constructor(powers = [new Power()], numerator = 0, denominator = 1){
+    constructor(powers = [], coefficients = new Fraction(0,1)) {
         this.powers = powers;
-        this.numerator = numerator;
-        this.denominator = denominator;
+        this.coefficients = coefficients;
+    }
+
+    toString() {
+        let string = "";
+
+        if (this.coefficients.numerator == 1) {
+            string += " + ";
+        }
+        else if (this.coefficients.numerator == -1) {
+            string += " - ";
+        }
+        else {
+            string += " " + this.coefficients.numerator + " ";
+        }
+
+        for (let power in this.powers) {
+            power = this.powers[power];
+            string += power.base + "^" + power.exponent + " ";
+        }
+
+        return string;
     }
 }
 
@@ -477,7 +653,11 @@ class Power {
         this.base = base;
         this.exponent = exponent;
     }
+    isEqual(power){
+        return this.base == power.base && this.exponent == power.exponent;
+    }
 }
+
 
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
