@@ -786,7 +786,7 @@ function bakedbeans(){
     }
 }
 function checkInput(input){
-    const badInputs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
+    const badInputs = ["a","b","c","d","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z","A","B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","{","}"];
     const GoodInputs = ["cos","sin","tan","csc","sec","cot","ln","e^","log"]
     var p = Boolean;
     for (let x = 0; x < (input.length);) {
@@ -1011,11 +1011,40 @@ function derivitive(input)
             var p = arrayoffunctions[o];
             var l = derivitive(p);
         }
+        else if (a.indexOf("ln") == 0){
+            var p = a.substring((a.indexOf("ln")) + 2);
+            l = "1";
+        }
         else{
             var p = a.substring((a.indexOf("ln")) + 2);
             l = derivitive(p);
         }
         return (l + "/" + p);
+    }
+    else if ((a.indexOf("^") < a.indexOf("x")) && (a.includes("^"))){
+        if (a.substring((a.indexOf("^")) + 1) == "x"){
+            return ("(" + a + ")*ln(" + (a.substring(0, a.indexOf("^"))) + ")");
+        }
+        else{
+            return ("(" + a + ")*ln(" + (a.substring(0, a.indexOf("^"))) + ")*(" + derivitive(a.substring(a.indexOf("^") + 1)) + ")");
+        }
+    }
+    else if (a.includes("log")){
+        if (a.includes(",")){
+            var r = a.substring(((a.indexOf("g")) + 1), a.indexOf(","));
+            var e = a.substring(((a.indexOf(",")) + 1));
+        }
+        else{
+            var r = "10";
+            var e = a.substring((a.indexOf("g")) + 1)
+        }
+        if (e == "x"){
+            var p = 1;
+        }
+        else{
+            var p = derivitive(e);
+        }
+        return (p + "/(" + e + "*ln" + r + ")");
     }
     else {
         if (a.includes("^") && a.includes("x")){
@@ -1349,7 +1378,7 @@ function epicpictures(){
 function calculate(input){
     function sinner(input) {
         let b = 1.0;
-        input = parseFloat(input);
+        input = (parseFloat(input) * 57.295779513082321);
         while (input > 360)
             input = (input - 360);
         while (input < 0)
@@ -1360,7 +1389,7 @@ function calculate(input){
         }
         x = input;
         b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
-        return b;
+        return (b / 57.295779513082321);
     }
     let a = input.toString();
     while (a.includes("(")){
@@ -1385,40 +1414,119 @@ function calculate(input){
         var z = calculate(h);
         a = a.replace((a.substring(intq2, (intq + 1))), z)
     }
-    if (a.includes("+") || a.includes("-")) {
-            let x = 0.0;
-            if ((a.indexOf("+") < a.indexOf("-")) || (!a.includes("-"))){
-
+    if (a.includes("+") || a.includes("-")){
+        if (((a.indexOf("+") < a.indexOf("-")) && (a.indexOf("+") != (-1))) || (a.indexOf("-") == (-1))){
+            var g = ("+");
+        }
+        else{
+            var g = ("-");
+        }
+        var w = calculate(a.substring(0, a.indexOf(g)));
+        a = a.substring(((a.indexOf(g))));
+        let p = 0.0;
+        let h = Boolean;
+        while(a.includes("+") || a.includes("-")){
+            h = (((a.indexOf("+") < a.indexOf("-")) && (a.indexOf("+") != (-1))) || (a.indexOf("-") == (-1)));
+            a = a.substring(1);
+            if (!(a.includes("+") || a.includes("-"))){
+                p = calculate(a);
+                a = "";
             }
-            while(a.includes("+") || a.includes("-")){
-                if ((a.indexOf("+") < a.indexOf("-")) || (!a.includes("-"))){
-                    x = (-1.0);
+            else{
+                if (((a.indexOf("+") < a.indexOf("-")) && (a.indexOf("+") != (-1))) || (a.indexOf("-") == (-1))){
+                    g = ("+");
                 }
-                else {
-                    x = calculate(1, indexOf("-"));
-                    b = (b - x);
-                    a = a.substring(a.indexOf("-"))
+                else{
+                    g = ("-");
                 }
+            p = calculate(a.substring(0, a.indexOf(g)));
+            a = a.substring(a.indexOf(g));
             }
-            return b;
+            if (h){
+                w = w + p;
+            }
+            else{
+                w = w - p;
+            }
+        }
+        return(w)
     }
-    else if (a.includes("*")) {
-            let x = 1;
-            let b = 1.0;
-            const chunksofa = a.split("*");
-            for(let q=0; q<chunksofa.length; q++){
-                x = calculate(chunksofa[q])
-                b = b * x;
+    if (a.includes("*") || a.includes("/")){
+        if (((a.indexOf("*") < a.indexOf("/")) && (a.indexOf("*") != (-1))) || (a.indexOf("/") == (-1))){
+            var g = ("*");
+        }
+        else{
+            var g = ("/");
+        }
+        var w = calculate(a.substring(0, a.indexOf(g)));
+        a = a.substring(((a.indexOf(g))));
+        let p = 0.0;
+        let h = Boolean;
+        while(a.includes("*") || a.includes("/")){
+            h = (((a.indexOf("*") < a.indexOf("/")) && (a.indexOf("*") != (-1))) || (a.indexOf("/") == (-1)));
+            a = a.substring(1);
+            if (!(a.includes("*") || a.includes("/"))){
+                p = calculate(a);
+                a = "";
             }
+            else{
+                if (((a.indexOf("*") < a.indexOf("/")) && (a.indexOf("*") != (-1))) || (a.indexOf("/") == (-1))){
+                    g = ("*");
+                }
+                else{
+                    g = ("/");
+                }
+            p = calculate(a.substring(0, a.indexOf(g)));
+            a = a.substring(a.indexOf(g));
+            }
+            if (h){
+                w = (w * p);
+            }
+            else{
+                w = (w / p);
+            }
+        }
+        return(w)
     }
-    else if (a.includes("/")) {
-            let x = 0;
-            const chunksofa = a.split("/");
-            let b = calculate(chunksofa[0]);
-            for(let q=1; q<chunksofa.length; q++){
-                x = calculate(chunksofa[q])
-                b = b / x;
+    else if (a.includes("^")){
+        var b = 1.0;
+        var s = a.indexOf("^");
+        if (a.charAt(s - 1) == "x" || a.charAt(s - 1) == "e"){
+            var e = calculate(a.charAt(s - 1));
+            if (s != 1){
+                b = parseFloat(a.substring(0, (s - 1)));
             }
+        }
+        else{
+            var e = calculate(a.substring(0, (s)));
+        }
+        var j = calculate(a.substring((s + 1)));
+        return (b * (e ** j));
+    }
+    else if (a.includes("l")){
+        console.log("equal to  " + a);
+        if (a.indexOf("l") == 0){
+            var b = 1.0
+        }
+        else{
+            var b = calculate(a.substring(0, a.indexOf("l")));
+        }
+        if (a.includes("log")){
+            if (a.includes(",")){
+                var q = calculate(a.substring((a.indexOf("g") + 1), a.indexOf(",")));
+                var r = calculate(a.substring((a.indexOf(",") + 1)));
+                b = b * ((Math.log10(r)) / (Math.log10(q)));
+            }
+            else{
+                var q = calculate(a.substring(a.indexOf("g") + 1));
+                b = b * ((Math.log10(q)));
+            }
+        }
+        else if (a.includes("ln")){
+            console.log("calculate" + (a.substring(a.indexOf("n") + 1)));
+            var q = calculate(a.substring(a.indexOf("n") + 1));
+            b = b * (Math.log(q));
+        }
     }
     else if (a.includes("n") || a.includes("c")){
         if (a.includes("sin")) {
@@ -1451,7 +1559,7 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (sinner(w + 90) * g)
+            b = (sinner(w + 1.570796326794897) * g)
         }
         else if (a.includes("tan")){
             var t = a.indexOf("tan");
@@ -1469,7 +1577,7 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (g * (sinner(w)) / (sinner(w + 90)))
+            b = (g * (sinner(w)) / (sinner(w + 1.570796326794897)))
         }
         else if (a.includes("csc")) {
             var t = a.indexOf("csc");
@@ -1497,7 +1605,7 @@ function calculate(input){
             var g = ("" + a.substring(0, t));
             if (g == "")
                 g = 1;
-            b = (g / sinner(p + 90))
+            b = (g / sinner(p + 1.570796326794897))
         }
         else if (a.includes("cot")){
             var t = a.indexOf("cot");
@@ -1515,56 +1623,9 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (g / (sinner(w)) / (sinner(w + 90)))
+            b = (g * (sinner(w + 1.570796326794897))/ (sinner(w)));
         }  
-    }
-    else if (a.includes("^")){
-        if (a.includes("e^")){
-            var o = a.indexOf("e^");
-            var u = a.substring((o + 1));
-            if (o == 0){
-                var y = 1.0;
-            }
-            else{
-                var y = a.substring(0, o);
-            }
-            var p = calculate(u);
-            b = (y * (2.718281828459045 ** p))
-        }
-        else if (a.includes("x") && (a.includes("^"))){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = a.substring(0, (s - 1));
-            var f = a.substring((s + 1))
-            var j = parseFloat(f);
-            while (j > 0){
-                b = b * valueofx
-                j --
-            }
-            if (s != 1)
-                b = b * e;
-        }
-        else if (a.includes("{") && (a.includes("^"))){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = a.substring(0, (s - 1));
-            var f = a.substring((s + 1))
-            var j = parseFloat(f);
-            while (j > 0){
-                b = b * valueofx
-                j --
-            }
-            if (s != 1)
-                b = b * e;
-        }
-        else if (a.includes("^")){
-            var b = 1.0;
-            var s = a.indexOf("^");
-            var e = parseFloat(a.substring(0, (s)));
-            var j = parseFloat(a.substring((s + 1)));
-            b = e ** j;
-        }
-    }
+    }    
     else if (a.includes("x")){
             var r = a.indexOf("x");
             var c = a.substring(0, r);
@@ -1572,6 +1633,14 @@ function calculate(input){
                 b = (valueofx * parseFloat(c)); 
             else
                 b = (valueofx * 1);
+    }
+    else if (a.includes("e")){
+        if (a == "e"){
+            return 2.718281828459045;
+        }
+        else{
+            return ((parseFloat(a.substring(0, a.indexOf("e")))) * 2.718281828459045);
+        }
     }
     else if (a != ""){
         return (parseFloat(input));
@@ -1591,10 +1660,10 @@ function intcalculator(input, begin, end, accuracy, choice){
     let currentslice = (parseFloat(begin));
     let b = 0;
     if (choice == 0){
-    while (end > currentslice) {
-        valueofx = currentslice;
-        b = (b + (sizeofslices * calculate(input)));
-        currentslice = (currentslice + sizeofslices);
+        for (let h = 0; h < (accuracy); h++) {
+            valueofx = currentslice;
+            b = (b + (sizeofslices * calculate(input)));
+            currentslice = (currentslice + sizeofslices);
     }
     }
     else if (choice == 1){
@@ -1618,7 +1687,7 @@ function intcalculator(input, begin, end, accuracy, choice){
     }
     else if (choice == 2){
         currentslice = (currentslice + (0.5 * sizeofslices));
-        while (end > currentslice) {
+        for (let h = 0; h < (accuracy); h++) {
             valueofx = currentslice;
             b = (b + (sizeofslices * calculate(input)));
             currentslice = (currentslice + sizeofslices);
@@ -1627,7 +1696,7 @@ function intcalculator(input, begin, end, accuracy, choice){
     else if (choice == 3){
         valueofx = (currentslice);
         b = (b + ((sizeofslices * calculate(input)) / 2));
-        while (end > (currentslice + sizeofslices)) {
+        for (let h = 0; h < (accuracy); h++) {
             valueofx = (currentslice);
             b = (b + (sizeofslices * calculate(input)));
             currentslice = (currentslice + sizeofslices);
