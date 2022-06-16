@@ -1724,7 +1724,7 @@ function calculate(input){
     return (b);
 }
 function intcalculator(input, begin, end, accuracy, choice){
-    if (accuracy > 9){
+    if (accuracy > 8){
         return "too high accuracy";
     }
     accuracy = (10 ** accuracy);
