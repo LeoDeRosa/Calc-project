@@ -837,6 +837,22 @@ function bakedbeans(){
         document.getElementById('beans2').innerText = (Beanss);
         document.getElementById("beans3").innerText = "F(x)=";
         var Beanssses = String;
+        if (findingvalue){
+            const coolarray = ((document.getElementById('input2')).value).split(",")
+            var s = coolarray[0];
+            console.log("s = " + s)
+            var e = coolarray[1];
+            console.log("e = " + e)
+            var x = coolarray[2];
+            console.log("x = " + x)
+            var d = coolarray[3];
+            console.log("d = " + d)
+            valueofx = parseFloat(e);
+            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
+            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s,e,x,d));
+            document.getElementById("beans3").innerText = "F(" + e + " - " + s + ")=";
+            document.getElementById("beans1").innerText = "f(" + e + ")=";
+        } 
         Beanssses = integral(Beanss);
         Beanssses = Beanssses + "+c"
 
@@ -856,22 +872,7 @@ function bakedbeans(){
             Beanssses = Beanssses.replace("q","-cos");
             Beanssses = Beanssses.replace("z","sin");
         }
-        if (findingvalue){
-            const coolarray = ((document.getElementById('input2')).value).split(",")
-            var s = coolarray[0];
-            console.log("s = " + s)
-            var e = coolarray[1];
-            console.log("e = " + e)
-            var x = coolarray[2];
-            console.log("x = " + x)
-            var d = coolarray[3];
-            console.log("d = " + d)
-            valueofx = parseFloat(e);
-            document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
-            document.getElementById('beans9').innerText = ("=" + intcalculator(Beanss, s,e,x,d));
-            document.getElementById("beans3").innerText = "F(" + e + " - " + s + ")=";
-            document.getElementById("beans1").innerText = "f(" + e + ")=";
-        } 
+
         document.getElementById("beans4").innerText = (Beanssses);
         document.getElementById("Salsfunfacts2").innerText = (Salsfunfacts());
         epicpictures();
@@ -1752,7 +1753,7 @@ function calculate(input){
     return (b);
 }
 function intcalculator(input, begin, end, accuracy, choice){
-    if (accuracy > 9){
+    if (accuracy > 8){
         return "too high accuracy";
     }
     accuracy = (10 ** accuracy);
