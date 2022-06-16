@@ -12,7 +12,7 @@ class Equation {
 
     static InsertMultipleSymbol(input){  //this function adds * to wherever it is needed
         let output = String;
-        const things = ["x", "s", "c", "l","t"];
+        const things = ["x", "s", "c", "l","t","("];
         if(input == "+c"){
             console.log("why does this return zero just out of curiosity?");
             return 0;
@@ -20,6 +20,34 @@ class Equation {
 
         for(let i = 0; i < input.length; i++){
             if(things.includes(input[i]) && Number.isInteger(parseInt(input[i-1]))){
+                /*for (let j = i-1; j >= 0 ; j--){
+                    let numBrackets = 0;
+                    if (input[j] == ")"){
+                        numBrackets++;
+                        continue;
+                    }
+                    else if (input[j] == "("){
+                        numBrackets--;
+                    }
+                    if (isNaN(Number(input[j]))&&numBrackets <= 0){
+                        input = input.substring(0,j) + "(" + input.substring(j+1);
+                        break;
+                    }
+                }
+                for (let j = i+1; j < input.length; j++){
+                    let numBrackets = 0;
+                    if (input[j] == "("){ 
+                        numBrackets++;
+                        continue;
+                    }
+                    else if (input[j] == ")"){
+                        numBrackets--;  
+                    }
+                    if (isNaN(Number(input[j]))&&numBrackets <= 0){
+                        input = input.substring(0,j) + ")" + input.substring(j+1);  
+                        break;
+                    }
+                }*/
                 console.log("Inserted multiplier at:" + i);
                 let a = input.slice(0,i);
                 let b = input.slice(i);
