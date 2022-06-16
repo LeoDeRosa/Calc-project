@@ -1019,7 +1019,7 @@ function epicpictures(){
 function calculate(input){
     function sinner(input) {
         let b = 1.0;
-        input = parseFloat(input);
+        input = (parseFloat(input) * 57.295779513082321);
         while (input > 360)
             input = (input - 360);
         while (input < 0)
@@ -1030,7 +1030,7 @@ function calculate(input){
         }
         x = input;
         b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
-        return b;
+        return (b / 57.295779513082321);
     }
     let a = input.toString();
     while (a.includes("(")){
@@ -1200,7 +1200,7 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (sinner(w + 90) * g)
+            b = (sinner(w + 1.570796326794897) * g)
         }
         else if (a.includes("tan")){
             var t = a.indexOf("tan");
@@ -1218,7 +1218,7 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (g * (sinner(w)) / (sinner(w + 90)))
+            b = (g * (sinner(w)) / (sinner(w + 1.570796326794897)))
         }
         else if (a.includes("csc")) {
             var t = a.indexOf("csc");
@@ -1246,7 +1246,7 @@ function calculate(input){
             var g = ("" + a.substring(0, t));
             if (g == "")
                 g = 1;
-            b = (g / sinner(p + 90))
+            b = (g / sinner(p + 1.570796326794897))
         }
         else if (a.includes("cot")){
             var t = a.indexOf("cot");
@@ -1264,7 +1264,7 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (g / (sinner(w)) / (sinner(w + 90)))
+            b = (g * (sinner(w + 1.570796326794897))/ (sinner(w)));
         }  
     }    
     else if (a.includes("x")){
