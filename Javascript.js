@@ -255,7 +255,6 @@ class Equation {
         return this.operator+"["+this.objects.toString()+"]";
     }
 }
-
 function gcdFunc(a, b){
 
     // Euclid's algorithm
@@ -265,7 +264,6 @@ function gcdFunc(a, b){
     }   
     return gcdFunc(b, a % b);
 }
-
 function sameArrayValues(a, b){
     //check if two arrays have the same values
     if (a.length != b.length){
@@ -276,7 +274,6 @@ function sameArrayValues(a, b){
     const arr2test = b.slice().sort()
     return !arr1test.some((val, idx) => !val.isEqual(arr2test[idx]) );
 }
-
 function simplifyMathObj(operatingObj){//operationObj is a array of equasions that contain 1 or more terms
 
     let baseArrayOfTerms = [];
@@ -583,7 +580,6 @@ function simplifyMathObj(operatingObj){//operationObj is a array of equasions th
         }
     }
 }
-
 class Fraction{
     
     constructor(numerator, denominator = 1){
@@ -635,7 +631,6 @@ class Fraction{
         return this.numerator == fraction2.numerator && this.denominator == fraction2.denominator;
     }
 }
-
 class Split {
     constructor(base, operator){
         this.base = base;
@@ -675,7 +670,6 @@ class Split {
         return new Equation(this.operator,[newTerm]);
     }
 }
-
 class Term {
     constructor(coefficient = new Fraction(0,1), powers = []) {
         this.powers = powers;
@@ -709,7 +703,6 @@ class Term {
         return string;
     }
 }
-
 class Power {
     constructor(base = 1, exponent = 1){
         this.base = base;
@@ -723,8 +716,6 @@ class Power {
         return this.base + "^" + this.exponent;
     }
 }
-
-
 function changeinput() {
     var x = document.getElementById("checkbocks").checked;
     if (x){
@@ -773,7 +764,6 @@ function beeaans() {
             var r = document.getElementById('input2');
             r = r.value;
             valueofx = parseFloat(r);
-            console.log(valueofx);
             document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
             document.getElementById('beans9').innerText = ("=" + calculate(Beanssses));
             document.getElementById("beans3").innerText = "f'(" + valueofx + ")=";
@@ -1248,6 +1238,7 @@ function integral(input)
                 x = integral(x);
                 b = (b + x);
             }
+            return b;
         }
     }
 
@@ -1264,6 +1255,7 @@ function integral(input)
                 x = integral(x);
                 b = (b + x);
             }
+            return b;
         }
     }
 
@@ -1455,7 +1447,7 @@ function calculate(input){
         }
         x = input;
         b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
-        return (b / 57.295779513082321);
+        return (b);
     }
     let a = input.toString();
     while (a.includes("(")){
@@ -1625,7 +1617,9 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (sinner(w + 1.570796326794897) * g)
+            b = (sinner(w + 1.5707963267) * g);
+            console.log("b =  " + b);
+            console.log("w =  " + w);
         }
         else if (a.includes("tan")){
             var t = a.indexOf("tan");
