@@ -673,10 +673,10 @@ function derivitive(input)
     }
     else if ((a.indexOf("^") < a.indexOf("x")) && (a.includes("^"))){
         if (a.substring((a.indexOf("^")) + 1) == "x"){
-            return (a + "ln(" + (a.substring(0, a.indexOf("^"))) + ")");
+            return ("(" + a + ")*ln(" + (a.substring(0, a.indexOf("^"))) + ")");
         }
         else{
-            return (a + "*ln(" + (a.substring(0, a.indexOf("^"))) + ")*(" + derivitive(a.substring(a.indexOf("^") + 1)) + ")");
+            return ("(" + a + ")*ln(" + (a.substring(0, a.indexOf("^"))) + ")*(" + derivitive(a.substring(a.indexOf("^") + 1)) + ")");
         }
     }
     else if (a.includes("log")){
