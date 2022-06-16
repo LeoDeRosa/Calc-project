@@ -357,7 +357,6 @@ function beeaans() {
             var r = document.getElementById('input2');
             r = r.value;
             valueofx = parseFloat(r);
-            console.log(valueofx);
             document.getElementById('beans8').innerText = ("=" + (calculate(Beanss)));
             document.getElementById('beans9').innerText = ("=" + calculate(Beanssses));
             document.getElementById("beans3").innerText = "f'(" + valueofx + ")=";
@@ -1030,7 +1029,7 @@ function calculate(input){
         }
         x = input;
         b = (b * (((2 * x) * (180 - x))/(40500 - (x * (180 - x))) + (((31 * x) * (180 - x)) / (648000)) + (((x * x) * (180 - x) * (180 - x)) / 583200000)));
-        return (b / 57.295779513082321);
+        return (b);
     }
     let a = input.toString();
     while (a.includes("(")){
@@ -1200,7 +1199,9 @@ function calculate(input){
             if (g == "")
                 g = 1;
             var w = calculate(p);
-            b = (sinner(w + 1.570796326794897) * g)
+            b = (sinner(w + 1.5707963267) * g);
+            console.log("b =  " + b);
+            console.log("w =  " + w);
         }
         else if (a.includes("tan")){
             var t = a.indexOf("tan");
