@@ -1,17 +1,16 @@
 #bigdiv {
     display:flex;
     width: 34em;
-    background-color:rgb(228, 19, 148) ;
+    background-color:rgb(124, 124, 124) ;
     height: 44em;
     border-width: 3px;
     flex-direction: column;
     padding-top: 3em;
     padding-right: 3em;
     padding-left: 3em;
-    font-family:"Comic Sans MS", "Comic Sans", cursive;
     color:rgb(200,200,200);
-    border: 12px solid black;
-    border-radius: 24px;
+    border: 8px solid black;
+    border-radius: 10px;
 }
 body{
     background-color:rgb(33, 181, 222);
